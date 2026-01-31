@@ -1,0 +1,396 @@
+// Adicione seus estilos customizados aqui.
+
+body {
+    // Exemplo: Mudar a cor de fundo
+    // background-color: #f4f6f9;
+}
+
+// Estilos para o Select2
+.select2-container--bootstrap4 .select2-selection {
+    border: 1px solid #ced4da; // Borda padrão do form-control
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    height: auto;
+    min-height: 38px; // Altura padrão do form-control
+    line-height: 1.5;
+}
+
+.select2-container--bootstrap4.select2-container--focus .select2-selection {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: 0;
+}
+
+.select2-container--bootstrap4 .select2-selection--single .select2-selection__rendered {
+    padding-left: 0;
+    color: #495057;
+}
+
+.select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow {
+    height: 36px;
+    right: 6px;
+}
+
+.select2-container--bootstrap4 .select2-dropdown {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.select2-container--bootstrap4 .select2-results__option {
+    padding: 0.5rem 0.75rem;
+}
+
+.select2-container--bootstrap4 .select2-results__option--highlighted {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.brand-link {
+    background-color: #eaeaea !important;
+    min-height: 80px; // Define uma altura mínima para a div do logo
+    display: flex;
+    align-items: center;
+    justify-content: center; // Centraliza a imagem horizontalmente
+    padding: 10px; // Adiciona um pouco de espaço interno
+
+    .brand-image {
+        &.custom-logo {
+            max-width: 100%; // A imagem agora pode ocupar até 100% da largura
+            max-height: 100%; // E até 100% da altura da div
+            width: auto;
+            height: auto;
+        }
+    }
+}
+
+.pagination .page-link {
+    color: #555355;
+    border: 1px solid #dee2e6;
+    //padding: 0.5rem 1rem;
+    font-size: 20px;
+    line-height: 1.25;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+}
+
+.pagination .page-link:hover {
+    color: #eaeaea;
+    text-decoration: none;
+    background-color: #555355;
+    border-color: #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+    z-index: 3;
+    font-weight: 900;
+    font-size: 20px;
+    color: #eaeaea;
+    background-color: #555355;
+    border-color: #555355;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: default;
+}
+
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+    padding: 0.5rem 0.75rem;
+}
+
+/* Remove o texto "Showing 1 to 10 of 12 results" */
+.pagination .d-flex {
+    display: none !important;
+}
+
+/* Estilo para o texto da paginação */
+.pagination .d-flex {
+    font-size: 1.1rem !important;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Estilo para os números */
+.pagination .page-link {
+    font-size: 1rem;
+}
+
+// Estilo para campos desabilitados (bloqueados)
+input:disabled, textarea:disabled, select:disabled {
+    cursor: not-allowed !important;
+    background-color: #f8f9fa;
+    opacity: 1;
+}
+
+// Classe de Botão Customizada: .btn-system
+.btn-system {
+    color: #eaeaea;
+    background-color: #555355;
+    border-color: #555355; // Cor da borda igual ao fundo
+
+    &:hover,
+    &:focus {
+        color: #fff;
+        background-color: #4a4848; // Um pouco mais escuro no hover
+        border-color: #444242;
+        box-shadow: 0 0 0 0.2rem rgba(85, 83, 85, 0.5); // Sombra sutil com a cor do botão
+    }
+
+    &:active,
+    &.active {
+        color: #fff;
+        background-color: #444242; // Mais escuro ainda quando ativo/clicado
+        border-color: #3f3d3d;
+        box-shadow: 0 0 0 0.2rem rgba(85, 83, 85, 0.5);
+    }
+
+    &:focus {
+        // Adiciona o outline de foco do Bootstrap
+        outline: 0;
+    }
+
+    &:disabled,
+    &.disabled {
+        color: #fff;
+        background-color: #7c7b7b; // Cor mais clara para indicar desabilitado
+        border-color: #7c7b7b;
+        pointer-events: none; // Impede cliques
+        box-shadow: none;
+    }
+
+    // Para quando o botão estiver dentro de um <a> ou <button> e estiver focado
+    .show > &.dropdown-toggle {
+        color: #fff;
+        background-color: #4a4848;
+        border-color: #444242;
+    }
+
+    .show > &.dropdown-toggle:focus {
+        box-shadow: 0 0 0 0.2rem rgba(85, 83, 85, 0.5);
+    }
+}
+
+// Classe de Botão Outline Customizada: .btn-outline-system
+.btn-outline-system {
+    color: #555355;
+    background-color: transparent;
+    border-color: #555355;
+
+    &:hover,
+    &:focus {
+        color: #eaeaea;
+        background-color: #555355;
+        border-color: #555355;
+        box-shadow: 0 0 0 0.2rem rgba(85, 83, 85, 0.5);
+    }
+
+    &:active,
+    &.active {
+        color: #eaeaea;
+        background-color: #4a4848;
+        border-color: #4a4848;
+        box-shadow: 0 0 0 0.2rem rgba(85, 83, 85, 0.5);
+    }
+
+    &:focus {
+        outline: 0;
+    }
+
+    &:disabled,
+    &.disabled {
+        color: #7c7b7b;
+        background-color: transparent;
+        border-color: #7c7b7b;
+        pointer-events: none;
+        box-shadow: none;
+    }
+
+    .show > &.dropdown-toggle {
+        color: #eaeaea;
+        background-color: #555355;
+        border-color: #555355;
+    }
+
+    .show > &.dropdown-toggle:focus {
+        box-shadow: 0 0 0 0.2rem rgba(85, 83, 85, 0.5);
+    }
+}
+
+// Estilos para o seletor de idioma em dispositivos móveis
+.language-selector {
+    .btn-group {
+        flex-wrap: nowrap;
+        
+        .btn {
+            font-size: 0.75rem; // Um pouco menor em mobile
+            padding: 0.25rem 0.5rem;
+            min-width: auto;
+            
+            @media (max-width: 576px) {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.4rem;
+            }
+        }
+    }
+}
+
+// Layout de Tabela Customizado
+.table-system {
+    width: 100%;
+    border-collapse: separate; // Permite bordas arredondadas
+    border-spacing: 0;
+    border-radius: 0.1rem;
+    overflow: hidden; // Garante que o conteúdo respeite o border-radius
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    background-color: #fff;
+
+    // Cabeçalho (THs)
+    thead {
+        th {
+            background-color: #555355;
+            color: #eaeaea;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            padding: 1rem;
+            vertical-align: middle;
+            border: none; // Remove bordas padrão
+            text-align: left;
+        }
+    }
+
+    // Corpo da Tabela (TDs)
+    tbody {
+        tr {
+            transition: all 0.2s ease-in-out; // Transição suave para o hover
+
+            td {
+                padding: 1rem;
+                vertical-align: middle;
+                border-bottom: 1px solid #e9ecef; // Linha divisória sutil
+                color: #495057;
+                font-size: 0.95rem;
+            }
+
+            // Efeito de Hover na Linha
+            &:hover {
+                background-color: #eaeaea;
+                transform: scale(1.01); // Pequeno aumento para dar destaque
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+                td {
+                    color: #212529; // Escurece o texto no hover
+                    font-weight: 500;
+                }
+            }
+
+            // Remove a borda da última linha para não duplicar
+            &:last-child {
+                td {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+
+    // Estilo para linhas "zebradas" (opcional, pode ser ativado)
+    &.table-striped {
+        tbody tr:nth-of-type(odd) {
+            background-color: rgba(234, 234, 234, 0.3); // Fundo muito sutil para linhas ímpares
+        }
+    }
+}
+
+// Estilo para cards que contêm tabelas
+.card {
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        padding: 1.25rem;
+
+        .btn-system {
+            // Garante que o botão no header se destaque
+            box-shadow: 0 2px 4px rgba(85, 83, 85, 0.2);
+        }
+    }
+    .card-body {
+        padding: 1.25rem; // Restaura o padding para dar espaçamento
+
+        .table-system {
+            margin-bottom: 10px; // Remove margem da tabela
+        }
+    }
+}
+
+
+.navbar-white {
+    background-color: #eaeaea !important;;
+    color: #353535;
+}
+
+.main-sidebar {
+    background-color: #eaeaea !important;
+
+    .nav-sidebar {
+        .nav-link {
+            color: #353535 !important;
+
+            p, i {
+                color: #353535 !important;
+            }
+
+            &:hover, &.active {
+                background-color: rgba(121, 117, 117, 0.1) !important;
+                color: #353535 !important;
+
+                p, i {
+                    color: #353535 !important;
+                }
+            }
+        }
+
+        .nav-treeview {
+            .nav-link {
+                color: #b8b8b8 !important;
+
+                &:hover {
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+}
+
+.btn-outline-orange {
+    color: #eb830e;
+    border-color: #eb830e;
+}
+
+.btn-outline-orange:hover {
+    color: #fff;
+    background-color: #eb830e;
+    border-color: #eb830e;
+}
+
+.move:hover {
+    animation: gentle-swing 0.8s ease-in-out;
+}
+
+@keyframes gentle-swing {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-2px);
+    }
+    75% {
+        transform: translateX(2px);
+    }
+}
