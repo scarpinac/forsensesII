@@ -80,4 +80,63 @@ return [
     "menu.error.not_saved" => "Impossibile salvare il menu!",
     "menu.error.not_updated" => "Impossibile modificare il menu!",
     "menu.error.not_deleted" => "Impossibile eliminare il menu!",
+
+    // Permission - Labels
+    "permission.description" => "Descrizione",
+    "permission.new" => "Nuovo Permesso",
+    "permission.save" => "Salva",
+    "permission.save_changes" => "Salva Modifiche",
+    "permission.back" => "Indietro",
+    "permission.edit" => "Modifica",
+    "permission.visualize" => "Visualizza",
+    "permission.destroy" => "Elimina",
+    "permission.history" => "Cronologia",
+    "permission.actions" => "Azioni",
+
+    // Permission - Breadcrumbs
+    "permission.breadcrumb.home" => "Inizio",
+    "permission.breadcrumb.listing" => "Elenco Permessi",
+
+    // Permission - Titles
+    "permission.title.listing" => "Elenco Permessi",
+    "permission.title.create" => "Creazione Permesso",
+    "permission.title.edit" => "Modifica Permesso",
+    "permission.title.show" => "Visualizzazione Permesso",
+    "permission.title.destroy" => "Eliminazione Permesso",
+    "permission.title.history" => "Cronologia Permesso",
+    "permission.modal.details.title" => "Dettagli Modifica",
+    "permission.modal.close" => "Chiudi",
+    "permission.no.records" => "Nessun permesso trovato.",
+    "permission.no.history" => "Nessuna modifica trovata per questo permesso.",
+
+    // Permission - History
+    "permission.history.data.title" => "Dati Permesso",
+    "permission.history.changes.title" => "Cronologia Modifiche",
+    "permission.history.table.date" => "Data",
+    "permission.history.table.user" => "Utente",
+    "permission.history.table.type" => "Tipo Modifica",
+    "permission.history.table.actions" => "Azioni",
+    "permission.history.button.details" => "Dettagli",
+
+    // Permission - History Table Fields
+    "permission.history.fields.id" => "ID",
+    "permission.history.fields.descricao" => "Descrizione",
+    "permission.history.fields.icone" => "Icona",
+    "permission.history.fields.rota" => "Rotta",
+    "permission.history.fields.permissaoPai_id" => "Permesso Padre",
+    "permission.history.fields.permissao_id" => "Permesso",
+    "permission.history.fields.situacao_id" => "Situazione",
+    "permission.history.fields.created_at" => "Creato il",
+    "permission.history.fields.updated_at" => "Aggiornato il",
+    "permission.history.fields.deleted_at" => "Eliminato il",
+
+    // Permission - Success Messages
+    "permission.success.created" => "Permesso creato con successo!",
+    "permission.success.updated" => "Permesso aggiornato con successo!",
+    "permission.success.deleted" => "Permesso eliminato con successo!",
+
+    // Permission - Error Messages
+    "permission.error.not_saved" => "Impossibile salvare il permesso!",
+    "permission.error.not_updated" => "Impossibile modificare il permesso!",
+    "permission.error.not_deleted" => "Impossibile eliminare il permesso!",
 ];

@@ -11,16 +11,16 @@ return [
             'descricao' => [
                 'required' => 'The description field is required.',
                 'string' => 'The description field must be a string.',
-                'max' => 'The description field may not be greater than 255 characters.',
+                'max' => 'The description field may not be greater than 25 characters.',
             ],
             'icone' => [
                 'string' => 'The icon field must be a string.',
-                'max' => 'The icon field may not be greater than 255 characters.',
+                'max' => 'The icon field may not be greater than 50 characters.',
             ],
             'rota' => [
                 'required' => 'The route field is required.',
                 'string' => 'The route field must be a string.',
-                'max' => 'The route field may not be greater than 255 characters.',
+                'max' => 'The route field may not be greater than 80 characters.',
             ],
             'menuPai_id' => [
                 'exists' => 'The selected parent menu is invalid.',
@@ -32,6 +32,17 @@ return [
             'situacao_id' => [
                 'required' => 'The situation field is required.',
                 'exists' => 'The selected situation is invalid.',
+            ],
+        ],
+    ],
+    
+    // Permission Form Request Validation Messages
+    'permission' => [
+        'validation' => [
+            'descricao' => [
+                'required' => 'The description field is required.',
+                'string' => 'The description field must be a string.',
+                'max' => 'The description field may not be greater than 80 characters.',
             ],
         ],
     ],

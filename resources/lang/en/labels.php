@@ -80,4 +80,63 @@ return [
     "menu.error.not_saved" => "Could not save the menu!",
     "menu.error.not_updated" => "Could not update the menu!",
     "menu.error.not_deleted" => "Could not delete the menu!",
+
+    // Permission - Labels
+    "permission.description" => "Description",
+    "permission.new" => "New Permission",
+    "permission.save" => "Save",
+    "permission.save_changes" => "Save Changes",
+    "permission.back" => "Back",
+    "permission.edit" => "Edit",
+    "permission.visualize" => "View",
+    "permission.destroy" => "Delete",
+    "permission.history" => "History",
+    "permission.actions" => "Actions",
+
+    // Permission - Breadcrumbs
+    "permission.breadcrumb.home" => "Home",
+    "permission.breadcrumb.listing" => "Permission Listing",
+
+    // Permission - Titles
+    "permission.title.listing" => "Permission Listing",
+    "permission.title.create" => "Permission Creation",
+    "permission.title.edit" => "Permission Edit",
+    "permission.title.show" => "Permission View",
+    "permission.title.destroy" => "Permission Deletion",
+    "permission.title.history" => "Permission History",
+    "permission.modal.details.title" => "Change Details",
+    "permission.modal.close" => "Close",
+    "permission.no.records" => "No permission found.",
+    "permission.no.history" => "No changes found for this permission.",
+
+    // Permission - History
+    "permission.history.data.title" => "Permission Data",
+    "permission.history.changes.title" => "Change History",
+    "permission.history.table.date" => "Date",
+    "permission.history.table.user" => "User",
+    "permission.history.table.type" => "Change Type",
+    "permission.history.table.actions" => "Actions",
+    "permission.history.button.details" => "Details",
+
+    // Permission - History Table Fields
+    "permission.history.fields.id" => "ID",
+    "permission.history.fields.descricao" => "Description",
+    "permission.history.fields.icone" => "Icon",
+    "permission.history.fields.rota" => "Route",
+    "permission.history.fields.permissaoPai_id" => "Parent Permission",
+    "permission.history.fields.permissao_id" => "Permission",
+    "permission.history.fields.situacao_id" => "Situation",
+    "permission.history.fields.created_at" => "Created at",
+    "permission.history.fields.updated_at" => "Updated at",
+    "permission.history.fields.deleted_at" => "Deleted at",
+
+    // Permission - Success Messages
+    "permission.success.created" => "Permission created successfully!",
+    "permission.success.updated" => "Permission updated successfully!",
+    "permission.success.deleted" => "Permission deleted successfully!",
+
+    // Permission - Error Messages
+    "permission.error.not_saved" => "Could not save the permission!",
+    "permission.error.not_updated" => "Could not update the permission!",
+    "permission.error.not_deleted" => "Could not delete the permission!",
 ];

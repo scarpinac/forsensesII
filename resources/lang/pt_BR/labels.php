@@ -80,4 +80,63 @@ return [
     "menu.error.not_saved" => "Não foi possível salvar o menu!",
     "menu.error.not_updated" => "Não foi possível alterar o menu!",
     "menu.error.not_deleted" => "Não foi possível excluir o menu!",
+
+    // Permission - Labels
+    "permission.description" => "Descrição",
+    "permission.new" => "Nova Permissão",
+    "permission.save" => "Salvar",
+    "permission.save_changes" => "Salvar Alterações",
+    "permission.back" => "Voltar",
+    "permission.edit" => "Editar",
+    "permission.visualize" => "Visualizar",
+    "permission.destroy" => "Excluir",
+    "permission.history" => "Histórico",
+    "permission.actions" => "Ações",
+
+    // Permission - Breadcrumbs
+    "permission.breadcrumb.home" => "Início",
+    "permission.breadcrumb.listing" => "Listagem de Permissões",
+
+    // Permission - Titles
+    "permission.title.listing" => "Listagem de Permissões",
+    "permission.title.create" => "Cadastro de Permissão",
+    "permission.title.edit" => "Edição da Permissão",
+    "permission.title.show" => "Visualização da Permissão",
+    "permission.title.destroy" => "Deleção da Permissão",
+    "permission.title.history" => "Histórico da Permissão",
+    "permission.modal.details.title" => "Detalhes da Alteração",
+    "permission.modal.close" => "Fechar",
+    "permission.no.records" => "Nenhuma permissão encontrada.",
+    "permission.no.history" => "Nenhuma alteração encontrada para esta permissão.",
+
+    // Permission - History
+    "permission.history.data.title" => "Dados da Permissão",
+    "permission.history.changes.title" => "Histórico de Alterações",
+    "permission.history.table.date" => "Data",
+    "permission.history.table.user" => "Usuário",
+    "permission.history.table.type" => "Tipo de Alteração",
+    "permission.history.table.actions" => "Ações",
+    "permission.history.button.details" => "Detalhes",
+
+    // Permission - History Table Fields
+    "permission.history.fields.id" => "ID",
+    "permission.history.fields.descricao" => "Descrição",
+    "permission.history.fields.icone" => "Ícone",
+    "permission.history.fields.rota" => "Rota",
+    "permission.history.fields.permissaoPai_id" => "Permissão Pai",
+    "permission.history.fields.permissao_id" => "Permissão",
+    "permission.history.fields.situacao_id" => "Situação",
+    "permission.history.fields.created_at" => "Criado em",
+    "permission.history.fields.updated_at" => "Atualizado em",
+    "permission.history.fields.deleted_at" => "Excluído em",
+
+    // Permission - Success Messages
+    "permission.success.created" => "Permissão cadastrada com sucesso!",
+    "permission.success.updated" => "Permissão atualizada com sucesso!",
+    "permission.success.deleted" => "Permissão excluída com sucesso!",
+
+    // Permission - Error Messages
+    "permission.error.not_saved" => "Não foi possível salvar a permissão!",
+    "permission.error.not_updated" => "Não foi possível alterar a permissão!",
+    "permission.error.not_deleted" => "Não foi possível excluir a permissão!",
 ];

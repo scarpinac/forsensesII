@@ -177,16 +177,16 @@ return [
             'descricao' => [
                 'required' => 'Il campo descrizione è obbligatorio.',
                 'string' => 'Il campo descrizione deve essere un testo.',
-                'max' => 'Il campo descrizione non può avere più di 255 caratteri.',
+                'max' => 'Il campo descrizione non può avere più di 25 caratteri.',
             ],
             'icone' => [
                 'string' => 'Il campo icona deve essere un testo.',
-                'max' => 'Il campo icona non può avere più di 255 caratteri.',
+                'max' => 'Il campo icona non può avere più di 50 caratteri.',
             ],
             'rota' => [
                 'required' => 'Il campo rotta è obbligatorio.',
                 'string' => 'Il campo rotta deve essere un testo.',
-                'max' => 'Il campo rotta non può avere più di 255 caratteri.',
+                'max' => 'Il campo rotta non può avere più di 80 caratteri.',
             ],
             'menuPai_id' => [
                 'exists' => 'Il menu padre selezionato non è valido.',
@@ -198,6 +198,17 @@ return [
             'situacao_id' => [
                 'required' => 'Il campo situazione è obbligatorio.',
                 'exists' => 'La situazione selezionata non è valida.',
+            ],
+        ],
+    ],
+    
+    // Permission Form Request Validation Messages
+    'permission' => [
+        'validation' => [
+            'descricao' => [
+                'required' => 'Il campo descrizione è obbligatorio.',
+                'string' => 'Il campo descrizione deve essere un testo.',
+                'max' => 'Il campo descrizione non può avere più di 80 caratteri.',
             ],
         ],
     ],

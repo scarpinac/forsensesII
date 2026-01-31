@@ -3,6 +3,7 @@
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Sistema\MenuController;
+use App\Http\Controllers\Sistema\PermissaoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,7 +29,6 @@ Route::middleware(['auth', 'signed'])->group(function () {
             Route::get('/create', [MenuController::class, 'create'])->name('create');
             Route::post('/', [MenuController::class, 'store'])->name('store');
 
-            // Rotas que precisam ser definidas antes da rota 'show' para evitar conflitos
             Route::get('/{menu}/edit', [MenuController::class, 'edit'])->name('edit');
             Route::put('/{menu}', [MenuController::class, 'update'])->name('update');
             Route::get('/{menu}/destroy', [MenuController::class, 'destroy'])->name('destroy');
@@ -36,12 +36,26 @@ Route::middleware(['auth', 'signed'])->group(function () {
             Route::get('/{menu}/history', [MenuController::class, 'history'])->name('history');
             Route::get('/{menu}/history/{historico}/details', [MenuController::class, 'historyDetails'])->name('history.details');
 
-            // A rota 'show' por ser apenas GET, deve vir por último para não capturar as outras
             Route::get('/{menu}', [MenuController::class, 'show'])->name('show');
         });
 
+        # ROTAS DA PERMISSÃO
+        Route::prefix('permissao')->name('permissao.')->group(function () {
+            Route::get('/', [PermissaoController::class, 'index'])->name('index');
+            Route::get('/create', [PermissaoController::class, 'create'])->name('create');
+            Route::post('/', [PermissaoController::class, 'store'])->name('store');
+
+            Route::get('/{permissao}/edit', [PermissaoController::class, 'edit'])->name('edit');
+            Route::put('/{permissao}', [PermissaoController::class, 'update'])->name('update');
+            Route::get('/{permissao}/destroy', [PermissaoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{permissao}', [PermissaoController::class, 'delete'])->name('delete');
+            Route::get('/{permissao}/history', [PermissaoController::class, 'history'])->name('history');
+            Route::get('/{permissao}/history/{historico}/details', [PermissaoController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{permissao}', [PermissaoController::class, 'show'])->name('show');
+        });
+
         Route::get('/padrao', function () { return 'Página Padrão'; })->name('padrao.index');
-        Route::get('/permissao', function () { return 'Página Permissão'; })->name('permissao.index');
         Route::get('/usuario', function () { return 'Página Usuário'; })->name('usuario.index');
 
     });
