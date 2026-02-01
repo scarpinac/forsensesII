@@ -31,6 +31,14 @@ class Perfil extends Model
     }
 
     /**
+     * Get the perfil's usuarios.
+     */
+    public function perfilUsuarios(): HasMany
+    {
+        return $this->hasMany(PerfilUsuario::class, 'perfil_id');
+    }
+
+    /**
      * Get the perfil permissoes.
      */
     public function perfilPermissoes(): HasMany
@@ -44,5 +52,13 @@ class Perfil extends Model
     public function permissoes()
     {
         return $this->belongsToMany(Permissao::class, 'perfil_permissao', 'perfil_id', 'permissao_id');
+    }
+
+    /**
+     * Get the usuarios for the perfil.
+     */
+    public function usuarios()
+    {
+        return $this->belongsToMany(User::class, 'perfil_usuario', 'perfil_id', 'user_id');
     }
 }

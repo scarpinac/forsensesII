@@ -50,7 +50,7 @@
                                 <td class="text-center">
                                     @if(Auth::user()->canAccess('sistema.perfil.associate'))
                                         <a class="btn btn-outline-secondary move btn-sm" title="{{__('labels.access_level.associate')}}"
-                                           href="{{ URL::signedRoute('sistema.perfil.edit', ['perfil' => $perfil]) }}">
+                                           href="{{ URL::signedRoute('sistema.perfil.associate', ['perfil' => $perfil]) }}">
                                             <i class="fas fa-people-arrows"></i>
                                         </a>
                                     @endif

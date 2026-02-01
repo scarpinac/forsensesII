@@ -13,6 +13,7 @@ use App\Observers\PermissaoObserver;
 use App\Observers\UsuarioObserver;
 use App\Observers\PerfilObserver;
 use App\Observers\PerfilPermissaoObserver;
+use App\Services\MenuService;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -25,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(MenuService::class);
     }
 
     /**
@@ -40,36 +41,8 @@ class AppServiceProvider extends ServiceProvider
 //        PerfilPermissao::observe(PerfilPermissaoObserver::class);
 
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
-            $situacaoHabilitado = PadraoTipo::where('descricao', 'Habilitado')->first();
-
-            if (!$situacaoHabilitado) {
-                return;
-            }
-
-            $menus = Menu::with(['submenus' => function ($query) use ($situacaoHabilitado) {
-                    $query->where('situacao_id', $situacaoHabilitado->id)->orderBy('descricao', 'asc');
-                }])
-                ->whereNull('menuPai_id')
-                ->where('situacao_id', $situacaoHabilitado->id)
-                ->orderBy('descricao', 'asc')
-                ->get();
-
-            foreach ($menus as $menu) {
-                $submenuItems = [];
-                foreach ($menu->submenus as $submenu) {
-                    $submenuItems[] = [
-                        'text' => $submenu->descricao,
-                        'url' => URL::signedRoute($submenu->rota),
-                        'icon' => $submenu->icone ?: 'far fa-circle',
-                    ];
-                }
-
-                $event->menu->add([
-                    'text' => $menu->descricao,
-                    'icon' => $menu->icone,
-                    'submenu' => $submenuItems,
-                ]);
-            }
+            $menuService = app(MenuService::class);
+            $menuService->buildUserMenu($event);
         });
     }
 }

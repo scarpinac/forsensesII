@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PadraoTipo;
 use App\Models\Perfil;
 use App\Models\Permissao;
+use App\Models\User;
 use App\Http\Requests\Sistema\Perfil\StoreRequest;
 use App\Http\Requests\Sistema\Perfil\UpdateRequest;
 use Illuminate\Http\Request;
@@ -388,6 +389,20 @@ class PerfilController extends Controller
             $dadosNovos['permissoes'] = implode(', ', array_column($dadosNovos['permissoes'], 'descricao'));
         }
 
+        // Tratar usuários de forma especial
+        if (isset($dadosAnteriores['usuarios'])) {
+            $usuariosAnteriores = array_map(function($user) {
+                return $user['name'] . ' (' . $user['email'] . ')';
+            }, $dadosAnteriores['usuarios']);
+            $dadosAnteriores['usuarios'] = implode(', ', $usuariosAnteriores);
+        }
+        if (isset($dadosNovos['usuarios'])) {
+            $usuariosNovos = array_map(function($user) {
+                return $user['name'] . ' (' . $user['email'] . ')';
+            }, $dadosNovos['usuarios']);
+            $dadosNovos['usuarios'] = implode(', ', $usuariosNovos);
+        }
+
         if ($dadosAnteriores) {
             foreach ($dadosAnteriores as $key => $value) {
                 if (in_array($key, ['created_at', 'updated_at', 'deleted_at']) && $value) {
@@ -417,6 +432,7 @@ class PerfilController extends Controller
             'id' => __('labels.access_level.history.fields.id'),
             'descricao' => __('labels.access_level.history.fields.descricao'),
             'permissoes' => __('labels.access_level.history.fields.permissoes'),
+            'usuarios' => __('labels.access_level.history.fields.usuarios'),
             'created_at' => __('labels.access_level.history.fields.created_at'),
             'updated_at' => __('labels.access_level.history.fields.updated_at'),
             'deleted_at' => __('labels.access_level.history.fields.deleted_at'),
@@ -428,5 +444,89 @@ class PerfilController extends Controller
             'dadosNovos' => $dadosNovos,
             'camposTabela' => $camposTabela,
         ]);
+    }
+
+    /**
+     * Show the form for associating users to the profile.
+     */
+    public function associate(Perfil $perfil)
+    {
+        if (!Auth::user()->canAccess('sistema.perfil.associate')) {
+            abort(403);
+        }
+
+        // Buscar usuários que ainda não estão em nenhum perfil
+        $usuariosDisponiveis = User::whereDoesntHave('perfis')
+            ->orderBy('name')
+            ->get();
+
+        // Buscar usuários já associados a este perfil
+        $usuariosAssociados = $perfil->usuarios()
+            ->orderBy('name')
+            ->get();
+
+        return view('sistema.perfil.associate', compact('perfil', 'usuariosDisponiveis', 'usuariosAssociados'));
+    }
+
+    /**
+     * Update the users associated with the profile.
+     */
+    public function associateUpdate(Request $request, Perfil $perfil)
+    {
+        if (!Auth::user()->canAccess('sistema.perfil.associate.update')) {
+            abort(403);
+        }
+
+        $request->validate([
+            'usuarios' => 'nullable|array',
+            'usuarios.*' => 'integer|exists:users,id',
+        ]);
+
+        // Capturar usuários antigos antes de remover
+        $usuariosAntigos = $perfil->usuarios()
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email
+                ];
+            })
+            ->toArray();
+
+        // Remover todas as associações existentes
+        $perfil->perfilUsuarios()->delete();
+
+        // Adicionar novas associações
+        $novosUsuarios = [];
+        if ($request->has('usuarios')) {
+            foreach ($request->usuarios as $userId) {
+                $perfil->perfilUsuarios()->create([
+                    'user_id' => $userId
+                ]);
+                
+                // Buscar dados do novo usuário para histórico
+                $user = User::find($userId);
+                if ($user) {
+                    $novosUsuarios[] = [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email
+                    ];
+                }
+            }
+        }
+
+        // Registrar histórico das associações se houve alteração
+        if ($usuariosAntigos !== $novosUsuarios) {
+            $perfil->historicos()->create([
+                'user_id' => Auth::id(),
+                'dados_anteriores' => ['usuarios' => $usuariosAntigos],
+                'dados_novos' => ['usuarios' => $novosUsuarios],
+                'tipoAlteracao_id' => $this->getTipoAlteracaoId('Inclusão/Remoção de Usuários'),
+            ]);
+        }
+
+        return redirect()->signedRoute('sistema.perfil.index')->with('success', __('labels.access_level.success.associated'));
     }
 }

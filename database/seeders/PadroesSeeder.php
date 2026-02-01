@@ -49,6 +49,11 @@ class PadroesSeeder extends Seeder
             'padrao_id' => $tiposAlteracao->id,
         ]);
 
+        PadraoTipo::create([
+            'descricao' => 'Inclusão/Remoção de Usuários',
+            'padrao_id' => $tiposAlteracao->id,
+        ]);
+
         $decisaoSimNao = Padrao::create(['descricao' => 'Decisão - Sim e Não']);
 
         PadraoTipo::create([

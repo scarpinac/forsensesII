@@ -34,32 +34,9 @@ class LoadUserMenu
      */
     protected function buildAndStoreMenu()
     {
-        $user = Auth::user();
-
-        // Se for admin, carrega todos os menus
-        if ($user->admin) {
-            $menus = Menu::with('permissao', 'situacao', 'submenus')
-                ->whereNull('menuPai_id')
-                ->orderBy('descricao')
-                ->get();
-        } else {
-            // Se não for admin, carrega menus baseado nas permissões
-            $userPermissions = collect(session()->get('permissoes'))->flatten();
-
-            $menus = Menu::with('permissao', 'situacao', 'submenus')
-                ->whereNull('menuPai_id')
-                ->whereHas('permissao', function ($query) use ($userPermissions) {
-                    $query->whereIn('descricao', $userPermissions);
-                })
-                ->orderBy('descricao')
-                ->get();
-        }
-
-        // Formata o menu para a view do AdminLTE
-        $formattedMenu = $this->formatMenuForAdminLTE($menus);
-
-        // Armazena na sessão
-        session(['user_menu' => $formattedMenu]);
+        // O menu agora é construído dinamicamente pelo MenuService no AppServiceProvider
+        // Não precisamos mais armazenar na sessão aqui
+        // A sessão de permissões é populada no AuthenticatedSessionController
     }
 
     /**

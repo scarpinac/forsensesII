@@ -86,6 +86,8 @@ Route::middleware(['auth', 'signed'])->group(function () {
             Route::delete('/{perfil}', [PerfilController::class, 'delete'])->name('delete');
             Route::get('/{perfil}/history', [PerfilController::class, 'history'])->name('history');
             Route::get('/{perfil}/history/{historico}/details', [PerfilController::class, 'historyDetails'])->name('history.details');
+            Route::get('/{perfil}/associate', [PerfilController::class, 'associate'])->name('associate');
+            Route::put('/{perfil}/associate', [PerfilController::class, 'associateUpdate'])->name('associate.update');
 
             Route::get('/{perfil}', [PerfilController::class, 'show'])->name('show');
 
