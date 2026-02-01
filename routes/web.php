@@ -7,6 +7,8 @@ use App\Http\Controllers\Sistema\PermissaoController;
 use App\Http\Controllers\Sistema\UsuarioController;
 use App\Http\Controllers\Sistema\PerfilController;
 use App\Http\Controllers\Sistema\PerfilPermissaoController;
+use App\Http\Controllers\Sistema\PadraoController;
+use App\Http\Controllers\Sistema\PadraoTipoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -108,7 +110,37 @@ Route::middleware(['auth', 'signed'])->group(function () {
             });
         });
 
-        Route::get('/padrao', function () { return 'Página Padrão'; })->name('padrao.index');
+        # ROTAS DO PADRÃO
+        Route::prefix('padrao')->name('padrao.')->group(function () {
+            Route::get('/', [PadraoController::class, 'index'])->name('index');
+            Route::get('/create', [PadraoController::class, 'create'])->name('create');
+            Route::post('/', [PadraoController::class, 'store'])->name('store');
+
+            Route::get('/{padrao}/edit', [PadraoController::class, 'edit'])->name('edit');
+            Route::put('/{padrao}', [PadraoController::class, 'update'])->name('update');
+            Route::get('/{padrao}/destroy', [PadraoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{padrao}', [PadraoController::class, 'delete'])->name('delete');
+            Route::get('/{padrao}/history', [PadraoController::class, 'history'])->name('history');
+            Route::get('/{padrao}/history/{historico}/details', [PadraoController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{padrao}', [PadraoController::class, 'show'])->name('show');
+
+            # ROTAS DO PADRÃO TIPO (aninhadas dentro de padrão)
+            Route::prefix('{padrao}/padraoTipo')->name('padraoTipo.')->group(function () {
+                Route::get('/', [PadraoTipoController::class, 'index'])->name('index');
+                Route::get('/create', [PadraoTipoController::class, 'create'])->name('create');
+                Route::post('/', [PadraoTipoController::class, 'store'])->name('store');
+
+                Route::get('/{padraoTipo}/edit', [PadraoTipoController::class, 'edit'])->name('edit');
+                Route::put('/{padraoTipo}', [PadraoTipoController::class, 'update'])->name('update');
+                Route::get('/{padraoTipo}/destroy', [PadraoTipoController::class, 'destroy'])->name('destroy');
+                Route::delete('/{padraoTipo}', [PadraoTipoController::class, 'delete'])->name('delete');
+                Route::get('/{padraoTipo}/history', [PadraoTipoController::class, 'history'])->name('history');
+                Route::get('/{padraoTipo}/history/{historico}/details', [PadraoTipoController::class, 'historyDetails'])->name('history.details');
+
+                Route::get('/{padraoTipo}', [PadraoTipoController::class, 'show'])->name('show');
+            });
+        });
     });
 });
 

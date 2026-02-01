@@ -3,7 +3,7 @@
     @vite(['resources/scss/custom.scss'])
 @endpush
 @section('js')
-    @vite(['resources/js/sistema/menu.js'])
+    @vite(['resources/js/sistema/perfil.js'])
 @endsection
 @section('title', __('labels.access_level.title.destroy') )
 

@@ -29,16 +29,21 @@
             </div>
         @enderror
     </div>
-    <div class="form-group col-md-6">
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
         <label for="menuPai_id">{{ __('labels.menu.form.parent_menu') }}</label>
-        <select name="menuPai_id" {{isset($bloquearCampos) && $bloquearCampos ? 'disabled' : ''}} id="menuPai_id" class="form-control @error('menuPai_id') is-invalid @enderror">
-            <option value="">{{ __('labels.menu.form.none') }}</option>
-            @foreach($menus as $parentMenu)
-                <option value="{{ $parentMenu->id }}" {{ old('menuPai_id', $menu->menuPai_id ?? null) == $parentMenu->id ? 'selected' : '' }}>
-                    {{ $parentMenu->descricao }}
-                </option>
-            @endforeach
-        </select>
+        <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+            <div class="form-check mb-2">
+                <label class="form-check-label" for="menu_pai_none">
+                    <input class="form-check-input mr-2" type="radio" name="menuPai_id" value="" id="menu_pai_none" {{ old('menuPai_id', $menu->menuPai_id ?? null) == '' ? 'checked' : '' }}>
+                    <strong>{{ __('labels.menu.form.none') }}</strong>
+                </label>
+            </div>
+            @if(isset($htmlMenus))
+                {!! $htmlMenus !!}
+            @endif
+        </div>
         @error('menuPai_id')
             <div class="invalid-feedback font-weight-bold" role="alert">
                 {{ $message }}

@@ -11,6 +11,8 @@ export default defineConfig({
                 'resources/js/sistema/permissao.js',
                 'resources/js/sistema/perfil.js',
                 'resources/js/sistema/usuario.js',
+                'resources/js/sistema/padrao.js',
+                'resources/js/sistema/padraoTipo.js',
                 'resources/scss/custom.scss'
             ],
             refresh: true,

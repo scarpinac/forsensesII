@@ -1,4 +1,5 @@
-@extends('adminlte::page')
+@extends('layouts.adminlte-with-language')
+
 
 @push('css')
     @vite(['resources/scss/custom.scss'])

@@ -37,7 +37,12 @@ class MenuController extends Controller
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
         $situacoes = $situacaoPadrao ? $situacaoPadrao->tipos()->orderBy('descricao')->get() : collect();
 
-        return view('sistema.menu.create', compact('menus', 'permissoes', 'situacoes'));
+        // Carregar todos os menus não deletados para a árvore
+        $todosMenus = Menu::whereNull('deleted_at')->orderBy('descricao')->get();
+        $arvoreMenus = $this->organizarMenusEmArvore($todosMenus);
+        $htmlMenus = $this->renderizarArvoreMenus($arvoreMenus);
+
+        return view('sistema.menu.create', compact('menus', 'permissoes', 'situacoes', 'htmlMenus'));
     }
 
     /**
@@ -66,9 +71,14 @@ class MenuController extends Controller
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
         $situacoes = $situacaoPadrao ? $situacaoPadrao->tipos()->orderBy('descricao')->get() : collect();
 
+        // Carregar todos os menus não deletados para a árvore
+        $todosMenus = Menu::whereNull('deleted_at')->where('id', '!=', $menu->id)->orderBy('descricao')->get();
+        $arvoreMenus = $this->organizarMenusEmArvore($todosMenus);
+        $htmlMenus = $this->renderizarArvoreMenus($arvoreMenus, 0, $menu->menuPai_id);
+
         $bloquearCampos = true;
 
-        return view('sistema.menu.show', compact('menu', 'menus', 'permissoes', 'situacoes', 'bloquearCampos'));
+        return view('sistema.menu.show', compact('menu', 'menus', 'permissoes', 'situacoes', 'bloquearCampos', 'htmlMenus'));
     }
 
     /**
@@ -83,7 +93,12 @@ class MenuController extends Controller
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
         $situacoes = $situacaoPadrao ? $situacaoPadrao->tipos()->orderBy('descricao')->get() : collect();
 
-        return view('sistema.menu.edit', compact('menu', 'menus', 'permissoes', 'situacoes'));
+        // Carregar todos os menus não deletados para a árvore
+        $todosMenus = Menu::whereNull('deleted_at')->where('id', '!=', $menu->id)->orderBy('descricao')->get();
+        $arvoreMenus = $this->organizarMenusEmArvore($todosMenus);
+        $htmlMenus = $this->renderizarArvoreMenus($arvoreMenus, 0, $menu->menuPai_id);
+
+        return view('sistema.menu.edit', compact('menu', 'menus', 'permissoes', 'situacoes', 'htmlMenus'));
     }
 
     /**
@@ -109,9 +124,14 @@ class MenuController extends Controller
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
         $situacoes = $situacaoPadrao ? $situacaoPadrao->tipos()->orderBy('descricao')->get() : collect();
 
+        // Carregar todos os menus não deletados para a árvore
+        $todosMenus = Menu::whereNull('deleted_at')->where('id', '!=', $menu->id)->orderBy('descricao')->get();
+        $arvoreMenus = $this->organizarMenusEmArvore($todosMenus);
+        $htmlMenus = $this->renderizarArvoreMenus($arvoreMenus, 0, $menu->menuPai_id);
+
         $bloquearCampos = true;
 
-        return view('sistema.menu.destroy', compact('menu', 'menus', 'permissoes', 'situacoes', 'bloquearCampos'));
+        return view('sistema.menu.destroy', compact('menu', 'menus', 'permissoes', 'situacoes', 'bloquearCampos', 'htmlMenus'));
     }
 
     /**
@@ -202,6 +222,96 @@ class MenuController extends Controller
             'dadosNovos' => $dadosNovos,
             'camposTabela' => $camposTabela,
         ]);
+    }
+
+    /**
+     * Organiza os menus em estrutura de árvore
+     */
+    private function organizarMenusEmArvore($menus)
+    {
+        $arvore = [];
+        $menuMap = [];
+
+        // Primeiro, criar mapa de todos os menus
+        foreach ($menus as $menu) {
+            $menuMap[$menu->id] = [
+                'id' => $menu->id,
+                'descricao' => $menu->descricao,
+                'icone' => $menu->icone,
+                'rota' => $menu->rota,
+                'menuPai_id' => $menu->menuPai_id,
+                'filhos' => []
+            ];
+        }
+
+        // Depois, organizar em árvore
+        foreach ($menuMap as $id => $menu) {
+            if ($menu['menuPai_id'] && isset($menuMap[$menu['menuPai_id']])) {
+                $menuMap[$menu['menuPai_id']]['filhos'][] = &$menuMap[$id];
+            } else {
+                $arvore[] = &$menuMap[$id];
+            }
+        }
+
+        return $arvore;
+    }
+
+    /**
+     * Renderiza a árvore de menus como HTML com radio buttons
+     */
+    private function renderizarArvoreMenus($arvore, $nivel = 0, $menuSelecionadoId = null)
+    {
+        $html = '';
+
+        foreach ($arvore as $item) {
+            $temFilhos = !empty($item['filhos']);
+            $itemId = 'menu_' . $item['id'] . '_' . $nivel;
+            
+            // Calcular indentação baseada no nível
+            $indentacao = $nivel * 20; // 20px por nível
+            $estiloIndentacao = $nivel > 0 ? 'style="margin-left: ' . $indentacao . 'px;"' : '';
+
+            if ($temFilhos) {
+                // Nível pai - radio button para selecionar este menu
+                $checked = ($menuSelecionadoId == $item['id']) ? 'checked' : '';
+
+                $html .= '<div class="mb-1" ' . $estiloIndentacao . '>';
+
+                // Radio button do pai com botão de expandir
+                $html .= '<div class="form-check">';
+
+                $html .= '<label class="form-check-label d-flex align-items-center" for="' . $itemId . '_radio" style="cursor: pointer;">';
+                $html .= '<input class="form-check-input mr-2" type="radio" name="menuPai_id" value="' . $item['id'] . '" id="' . $itemId . '_radio" ' . $checked . '>';
+                $html .= '<button type="button" class="btn btn-sm btn-link p-0 mr-2" onclick="toggleCollapse(\'' . $itemId . '\', event)" style="flex-shrink: 0;">';
+                $html .= '<i class="fas fa-chevron-down" id="' . $itemId . '_icon"></i>';
+                $html .= '</button>';
+                $html .= '<strong>' . $item['descricao'] . '</strong>';
+                $html .= '</label>';
+                
+                $html .= '</div>';
+
+                // Container dos filhos (colapsável)
+                $html .= '<div id="' . $itemId . '_children" style="display: block;">';
+                $html .= $this->renderizarArvoreMenus($item['filhos'], $nivel + 1, $menuSelecionadoId);
+                $html .= '</div>';
+                $html .= '</div>';
+            } else {
+                // Nível folha - radio button normal
+                $checked = ($menuSelecionadoId == $item['id']) ? 'checked' : '';
+
+                $html .= '<div class="form-check mb-1" ' . $estiloIndentacao . '>';
+                $html .= '<label class="form-check-label" for="' . $itemId . '_radio">';
+                $html .= '<input class="form-check-input mr-2" type="radio" name="menuPai_id" value="' . $item['id'] . '" id="' . $itemId . '_radio" ' . $checked . '>';
+                $html .= $item['descricao'];
+                if ($item['rota']) {
+                    $html .= ' <small class="text-muted">(' . $item['rota'] . ')</small>';
+                }
+                $html .= '</label>';
+                $html .= '</div>';
+            }
+        }
+
+        return $html;
     }
 
 }
