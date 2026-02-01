@@ -10,6 +10,7 @@ use App\Models\Permissao;
 use App\Http\Requests\Sistema\Menu\StoreRequest;
 use App\Http\Requests\Sistema\Menu\UpdateRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
@@ -18,6 +19,8 @@ class MenuController extends Controller
      */
     public function index()
     {
+        abort_if (!Auth::user()->canAccess('sistema.menu.index'), 403, 'Acesso não autorizado');
+
         $menus = Menu::paginate();
         return view('sistema.menu.index', compact('menus'));
     }
@@ -27,6 +30,8 @@ class MenuController extends Controller
      */
     public function create()
     {
+        abort_if (!Auth::user()->canAccess('sistema.menu.create'), 403, 'Acesso não autorizado');
+
         $menus = Menu::whereNull('menuPai_id')->orderBy('descricao')->get();
         $permissoes = Permissao::orderBy('descricao')->get();
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
@@ -54,6 +59,8 @@ class MenuController extends Controller
      */
     public function show(Menu $menu)
     {
+        abort_if (!Auth::user()->canAccess('sistema.menu.show'), 403, 'Acesso não autorizado');
+
         $menus = Menu::whereNull('menuPai_id')->where('id', '!=', $menu->id)->orderBy('descricao')->get();
         $permissoes = Permissao::orderBy('descricao')->get();
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
@@ -69,6 +76,8 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
+        abort_if (!Auth::user()->canAccess('sistema.menu.edit'), 403, 'Acesso não autorizado');
+
         $menus = Menu::whereNull('menuPai_id')->where('id', '!=', $menu->id)->orderBy('descricao')->get();
         $permissoes = Permissao::orderBy('descricao')->get();
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
@@ -93,6 +102,8 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
+        abort_if (!Auth::user()->canAccess('sistema.menu.destroy'), 403, 'Acesso não autorizado');
+
         $menus = Menu::whereNull('menuPai_id')->where('id', '!=', $menu->id)->orderBy('descricao')->get();
         $permissoes = Permissao::orderBy('descricao')->get();
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
@@ -119,6 +130,8 @@ class MenuController extends Controller
      */
     public function history(Menu $menu)
     {
+        abort_if (!Auth::user()->canAccess('sistema.menu.history'), 403, 'Acesso não autorizado');
+
         $menus = Menu::whereNull('menuPai_id')->where('id', '!=', $menu->id)->orderBy('descricao')->get();
         $permissoes = Permissao::orderBy('descricao')->get();
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();

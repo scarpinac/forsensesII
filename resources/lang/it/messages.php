@@ -212,5 +212,54 @@ return [
             ],
         ],
     ],
+    
+    // Utente Form Request Validation Messages
+    'usuario' => [
+        'validation' => [
+            'name' => [
+                'required' => 'Il campo nome è obbligatorio.',
+                'string' => 'Il campo nome deve essere un testo.',
+                'max' => 'Il campo nome non può avere più di 255 caratteri.',
+            ],
+            'email' => [
+                'required' => 'Il campo e-mail è obbligatorio.',
+                'string' => 'Il campo e-mail deve essere un testo.',
+                'email' => 'Il campo e-mail deve essere un indirizzo email valido.',
+                'max' => 'Il campo e-mail non può avere più di 255 caratteri.',
+                'unique' => 'Questo e-mail è già in uso.',
+            ],
+            'password' => [
+                'required' => 'Il campo password è obbligatorio.',
+                'string' => 'Il campo password deve essere un testo.',
+                'min' => 'La password deve avere almeno 8 caratteri.',
+                'confirmed' => 'La conferma della password non corrisponde.',
+            ],
+            'admin' => [
+                'required' => 'Il campo amministratore è obbligatorio.',
+                'integer' => 'Il campo amministratore deve essere un numero.',
+                'in' => 'Selezionare un\'opzione valida per amministratore.',
+            ],
+            'avatar' => [
+                'mimes' => 'L\'avatar deve essere un\'immagine nei formati: JPEG, PNG, JPG, GIF o WebP.',
+                'max' => 'L\'avatar non può essere più grande di 2MB.',
+            ],
+        ],
+    ],
+    
+    // Access Level Form Request Validation Messages
+    'access_level' => [
+        'validation' => [
+            'descricao' => [
+                'required' => 'Il campo descrizione è obbligatorio.',
+                'string' => 'Il campo descrizione deve essere un testo.',
+                'max' => 'Il campo descrizione non può avere più di 80 caratteri.',
+            ],
+            'permissoes' => [
+                'array' => 'Il campo permessi deve essere un array.',
+                'integer' => 'Cgni permesso deve essere un numero intero.',
+                'exists' => 'Uno dei permessi selezionati non è valido.',
+            ],
+        ],
+    ],
 ];
 

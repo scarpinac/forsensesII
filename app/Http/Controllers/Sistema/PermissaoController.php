@@ -9,6 +9,7 @@ use App\Models\Padrao;
 use App\Http\Requests\Sistema\Permissao\StoreRequest;
 use App\Http\Requests\Sistema\Permissao\UpdateRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PermissaoController extends Controller
 {
@@ -17,6 +18,8 @@ class PermissaoController extends Controller
      */
     public function index()
     {
+        abort_if (!Auth::user()->canAccess('sistema.permissao.index'), 403, 'Acesso não autorizado');
+
         $permissoes = Permissao::paginate();
         return view('sistema.permissao.index', compact('permissoes'));
     }
@@ -26,6 +29,8 @@ class PermissaoController extends Controller
      */
     public function create()
     {
+        abort_if (!Auth::user()->canAccess('sistema.permissao.create'), 403, 'Acesso não autorizado');
+
         $permissao = new Permissao;
 
         return view('sistema.permissao.create', compact('permissao'));
@@ -50,6 +55,8 @@ class PermissaoController extends Controller
      */
     public function show(Permissao $permissao)
     {
+        abort_if (!Auth::user()->canAccess('sistema.permissao.show'), 403, 'Acesso não autorizado');
+
         $bloquearCampos = true;
 
         return view('sistema.permissao.show', compact('permissao', 'bloquearCampos'));
@@ -60,6 +67,8 @@ class PermissaoController extends Controller
      */
     public function edit(Permissao $permissao)
     {
+        abort_if (!Auth::user()->canAccess('sistema.permissao.edit'), 403, 'Acesso não autorizado');
+
         return view('sistema.permissao.edit', compact('permissao'));
     }
 
@@ -79,6 +88,8 @@ class PermissaoController extends Controller
      */
     public function destroy(Permissao $permissao)
     {
+        abort_if (!Auth::user()->canAccess('sistema.permissao.destroy'), 403, 'Acesso não autorizado');
+
         $bloquearCampos = true;
 
         return view('sistema.permissao.destroy', compact('permissao', 'bloquearCampos'));
@@ -100,6 +111,8 @@ class PermissaoController extends Controller
      */
     public function history(Permissao $permissao)
     {
+        abort_if (!Auth::user()->canAccess('sistema.permissao.history'), 403, 'Acesso não autorizado');
+
         $bloquearCampos = true;
 
         return view('sistema.permissao.history', compact('permissao', 'bloquearCampos'));

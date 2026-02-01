@@ -13,13 +13,11 @@ class LanguageController extends Controller
     public function switch(Request $request)
     {
         $locale = $request->input('locale');
-        
-        // Verifica se o idioma é suportado
+
         if (in_array($locale, ['pt_BR', 'en', 'it'])) {
             Session::put('locale', $locale);
         }
-        
-        // Redireciona de volta para a página anterior
+
         return redirect()->back();
     }
 }

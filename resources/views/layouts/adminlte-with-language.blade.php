@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <button type="submit" name="locale" value="pt_BR"
                                 class="btn btn-sm {{ app()->getLocale() === 'pt_BR' ? 'btn-system' : 'btn-outline-system' }}"
                                 title="Português (Brasil)">
-                            🇧🇷 PT
+                            🇧🇷 PT-BR
                         </button>
                     </form>
                     <form action="{{ route('language.switch') }}" method="POST" class="d-inline">
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <button type="submit" name="locale" value="en"
                                 class="btn btn-sm {{ app()->getLocale() === 'en' ? 'btn-system' : 'btn-outline-system' }}"
                                 title="English">
-                            🇺🇸 En
+                            🇺🇸 EN
                         </button>
                     </form>
                     <form action="{{ route('language.switch') }}" method="POST" class="d-inline">

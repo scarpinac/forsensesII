@@ -24,7 +24,7 @@ class MenuSeeder extends Seeder
             'icone' => 'fas fa-microchip',
             'rota' => '#',
             'menuPai_id' => null,
-            'permissao_id' => $permissaoSistema->id,
+            'permissao_id' => null,
             'situacao_id' => $situacaoHabilitado->id,
         ]);
 
@@ -47,6 +47,17 @@ class MenuSeeder extends Seeder
             'rota' => 'sistema.menu.index',
             'menuPai_id' => $menuSistema->id,
             'permissao_id' => $permissaoMenu->id,
+            'situacao_id' => $situacaoHabilitado->id,
+        ]);
+
+        // Submenu: Perfil
+        $permissaoPerfil = Permissao::where('descricao', 'sistema.perfil.index')->first();
+        Menu::create([
+            'descricao' => 'Perfil',
+            'icone' => 'fas fa-users-slash',
+            'rota' => 'sistema.perfil.index',
+            'menuPai_id' => $menuSistema->id,
+            'permissao_id' => $permissaoPerfil->id,
             'situacao_id' => $situacaoHabilitado->id,
         ]);
 

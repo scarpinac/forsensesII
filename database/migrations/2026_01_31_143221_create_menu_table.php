@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('icone', 50);
             $table->string('rota', 80);
             $table->foreignId('menuPai_id')->nullable()->constrained('menu');
-            $table->foreignId('permissao_id')->constrained('permissao');
+            $table->foreignId('permissao_id')->nullable()->constrained('permissao');
             $table->foreignId('situacao_id')->constrained('padrao_tipo');
             $table->timestamps();
             $table->softDeletes();

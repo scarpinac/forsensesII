@@ -6,15 +6,23 @@
     <div class="btn-group" role="group">
         <form action="{{ route('language.switch') }}" method="POST" class="d-inline">
             @csrf
-            <button type="submit" name="locale" value="pt_BR" 
+            <button type="submit" name="locale" value="pt_BR"
                     class="btn btn-sm {{ $currentLocale === 'pt_BR' ? 'btn-primary' : 'btn-outline-primary' }}"
                     title="Português (Brasil)">
-                🇧🇷 PT
+                🇧🇷 PT-BR
             </button>
         </form>
         <form action="{{ route('language.switch') }}" method="POST" class="d-inline">
             @csrf
-            <button type="submit" name="locale" value="it" 
+            <button type="submit" name="locale" value="en"
+                    class="btn btn-sm {{ $currentLocale === 'en' ? 'btn-primary' : 'btn-outline-primary' }}"
+                    title="English">
+                🇺🇸 EN
+            </button>
+        </form>
+        <form action="{{ route('language.switch') }}" method="POST" class="d-inline">
+            @csrf
+            <button type="submit" name="locale" value="it"
                     class="btn btn-sm {{ $currentLocale === 'it' ? 'btn-primary' : 'btn-outline-primary' }}"
                     title="Italiano">
                 🇮🇹 IT

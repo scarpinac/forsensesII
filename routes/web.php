@@ -4,6 +4,9 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Sistema\MenuController;
 use App\Http\Controllers\Sistema\PermissaoController;
+use App\Http\Controllers\Sistema\UsuarioController;
+use App\Http\Controllers\Sistema\PerfilController;
+use App\Http\Controllers\Sistema\PerfilPermissaoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -55,9 +58,55 @@ Route::middleware(['auth', 'signed'])->group(function () {
             Route::get('/{permissao}', [PermissaoController::class, 'show'])->name('show');
         });
 
-        Route::get('/padrao', function () { return 'Página Padrão'; })->name('padrao.index');
-        Route::get('/usuario', function () { return 'Página Usuário'; })->name('usuario.index');
+        # ROTAS DO USUÁRIO
+        Route::prefix('usuario')->name('usuario.')->group(function () {
+            Route::get('/', [UsuarioController::class, 'index'])->name('index');
+            Route::get('/create', [UsuarioController::class, 'create'])->name('create');
+            Route::post('/', [UsuarioController::class, 'store'])->name('store');
 
+            Route::get('/{usuario}/edit', [UsuarioController::class, 'edit'])->name('edit');
+            Route::put('/{usuario}', [UsuarioController::class, 'update'])->name('update');
+            Route::get('/{usuario}/destroy', [UsuarioController::class, 'destroy'])->name('destroy');
+            Route::delete('/{usuario}', [UsuarioController::class, 'delete'])->name('delete');
+            Route::get('/{usuario}/history', [UsuarioController::class, 'history'])->name('history');
+            Route::get('/{usuario}/history/{historico}/details', [UsuarioController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{usuario}', [UsuarioController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DO PERFIL
+        Route::prefix('perfil')->name('perfil.')->group(function () {
+            Route::get('/', [PerfilController::class, 'index'])->name('index');
+            Route::get('/create', [PerfilController::class, 'create'])->name('create');
+            Route::post('/', [PerfilController::class, 'store'])->name('store');
+
+            Route::get('/{perfil}/edit', [PerfilController::class, 'edit'])->name('edit');
+            Route::put('/{perfil}', [PerfilController::class, 'update'])->name('update');
+            Route::get('/{perfil}/destroy', [PerfilController::class, 'destroy'])->name('destroy');
+            Route::delete('/{perfil}', [PerfilController::class, 'delete'])->name('delete');
+            Route::get('/{perfil}/history', [PerfilController::class, 'history'])->name('history');
+            Route::get('/{perfil}/history/{historico}/details', [PerfilController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{perfil}', [PerfilController::class, 'show'])->name('show');
+
+            # ROTAS DO PERFIL PERMISSÃO (aninhadas dentro de perfil)
+            Route::prefix('{perfil}/permissao')->name('permissao.')->group(function () {
+                Route::get('/', [PerfilPermissaoController::class, 'index'])->name('index');
+                Route::get('/create', [PerfilPermissaoController::class, 'create'])->name('create');
+                Route::post('/', [PerfilPermissaoController::class, 'store'])->name('store');
+
+                Route::get('/{perfilPermissao}/edit', [PerfilPermissaoController::class, 'edit'])->name('edit');
+                Route::put('/{perfilPermissao}', [PerfilPermissaoController::class, 'update'])->name('update');
+                Route::get('/{perfilPermissao}/destroy', [PerfilPermissaoController::class, 'destroy'])->name('destroy');
+                Route::delete('/{perfilPermissao}', [PerfilPermissaoController::class, 'delete'])->name('delete');
+                Route::get('/{perfilPermissao}/history', [PerfilPermissaoController::class, 'history'])->name('history');
+                Route::get('/{perfilPermissao}/history/{historico}/details', [PerfilPermissaoController::class, 'historyDetails'])->name('history.details');
+
+                Route::get('/{perfilPermissao}', [PerfilPermissaoController::class, 'show'])->name('show');
+            });
+        });
+
+        Route::get('/padrao', function () { return 'Página Padrão'; })->name('padrao.index');
     });
 });
 

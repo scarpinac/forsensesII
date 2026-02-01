@@ -44,5 +44,22 @@ class PadroesSeeder extends Seeder
             'padrao_id' => $tiposAlteracao->id,
         ]);
 
+        PadraoTipo::create([
+            'descricao' => 'Inclusão/Remoção de Permissões',
+            'padrao_id' => $tiposAlteracao->id,
+        ]);
+
+        $decisaoSimNao = Padrao::create(['descricao' => 'Decisão - Sim e Não']);
+
+        PadraoTipo::create([
+            'descricao' => 'Sim',
+            'padrao_id' => $decisaoSimNao->id,
+        ]);
+
+        PadraoTipo::create([
+            'descricao' => 'Não',
+            'padrao_id' => $decisaoSimNao->id,
+        ]);
+
     }
 }

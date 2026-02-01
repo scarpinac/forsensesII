@@ -3,10 +3,16 @@
 namespace App\Providers;
 
 use App\Models\Menu;
+use App\Models\User;
 use App\Models\PadraoTipo;
 use App\Models\Permissao;
+use App\Models\Perfil;
+use App\Models\PerfilPermissao;
 use App\Observers\MenuObserver;
 use App\Observers\PermissaoObserver;
+use App\Observers\UsuarioObserver;
+use App\Observers\PerfilObserver;
+use App\Observers\PerfilPermissaoObserver;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -29,6 +35,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Menu::observe(MenuObserver::class);
         Permissao::observe(PermissaoObserver::class);
+        User::observe(UsuarioObserver::class);
+        Perfil::observe(PerfilObserver::class);
+//        PerfilPermissao::observe(PerfilPermissaoObserver::class);
 
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
             $situacaoHabilitado = PadraoTipo::where('descricao', 'Habilitado')->first();
