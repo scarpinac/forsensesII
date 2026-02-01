@@ -266,9 +266,9 @@ class MenuController extends Controller
         foreach ($arvore as $item) {
             $temFilhos = !empty($item['filhos']);
             $itemId = 'menu_' . $item['id'] . '_' . $nivel;
-            
+
             // Calcular indentação baseada no nível
-            $indentacao = $nivel * 20; // 20px por nível
+            $indentacao = $nivel * 40; // 20px por nível
             $estiloIndentacao = $nivel > 0 ? 'style="margin-left: ' . $indentacao . 'px;"' : '';
 
             if ($temFilhos) {
@@ -281,13 +281,13 @@ class MenuController extends Controller
                 $html .= '<div class="form-check">';
 
                 $html .= '<label class="form-check-label d-flex align-items-center" for="' . $itemId . '_radio" style="cursor: pointer;">';
-                $html .= '<input class="form-check-input mr-2" type="radio" name="menuPai_id" value="' . $item['id'] . '" id="' . $itemId . '_radio" ' . $checked . '>';
                 $html .= '<button type="button" class="btn btn-sm btn-link p-0 mr-2" onclick="toggleCollapse(\'' . $itemId . '\', event)" style="flex-shrink: 0;">';
                 $html .= '<i class="fas fa-chevron-down" id="' . $itemId . '_icon"></i>';
                 $html .= '</button>';
+                $html .= '<input class="form-check-input mr-2" type="radio" name="menuPai_id" value="' . $item['id'] . '" id="' . $itemId . '_radio" ' . $checked . '>';
                 $html .= '<strong>' . $item['descricao'] . '</strong>';
                 $html .= '</label>';
-                
+
                 $html .= '</div>';
 
                 // Container dos filhos (colapsável)

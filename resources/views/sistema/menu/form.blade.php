@@ -1,4 +1,37 @@
 @csrf
+<script>
+function toggleCollapse(itemId, event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const childrenContainer = document.getElementById(itemId + '_children');
+    const icon = document.getElementById(itemId + '_icon');
+    
+    console.log('Toggle collapse called for:', itemId);
+    console.log('Children container:', childrenContainer);
+    console.log('Icon:', icon);
+    
+    if (childrenContainer) {
+        const isHidden = childrenContainer.style.display === 'none';
+        
+        if (isHidden) {
+            childrenContainer.style.display = 'block';
+            if (icon) {
+                icon.className = 'fas fa-chevron-down';
+            }
+            console.log('Expanding:', itemId);
+        } else {
+            childrenContainer.style.display = 'none';
+            if (icon) {
+                icon.className = 'fas fa-chevron-right';
+            }
+            console.log('Collapsing:', itemId);
+        }
+    } else {
+        console.log('Children container not found for:', itemId);
+    }
+}
+</script>
 <div class="row">
     <div class="form-group col-md-6">
         <label for="descricao">{{ __('labels.menu.description') }}</label>

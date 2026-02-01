@@ -3,7 +3,7 @@
     @vite(['resources/scss/custom.scss'])
 @endpush
 @section('js')
-    @vite(['resources/js/sistema/usuario.js'])
+    @vite(['resources/js/sistema/menu.js'])
 @endsection
 @section('title', __('labels.user.title.create') )
 
