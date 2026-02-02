@@ -3,13 +3,13 @@
         <div class="flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
             <div>
                 <p class="small text-muted">
-                    Mostrando
+                    {{ __('pagination.showing') }}
                     <span class="fw-semibold">{{ $paginator->firstItem() }}</span>
-                    a
+                    {{ __('pagination.to') }}
                     <span class="fw-semibold">{{ $paginator->lastItem() }}</span>
-                    de
+                    {{ __('pagination.of') }}
                     <span class="fw-semibold">{{ $paginator->total() }}</span>
-                    registros
+                    {{ __('pagination.results') }}
                 </p>
             </div>
 

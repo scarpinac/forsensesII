@@ -21,6 +21,8 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@tinymce/tinymce-vue": "^6.3.0",
+        "jquery-textcomplete": "^1.8.5",
         "select2": "^4.1.0-rc.0"
     }
 }

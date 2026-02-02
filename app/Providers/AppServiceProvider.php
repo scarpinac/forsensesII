@@ -9,6 +9,7 @@ use App\Models\Permissao;
 use App\Models\Perfil;
 use App\Models\PerfilPermissao;
 use App\Models\Padrao;
+use App\Models\Notificacao;
 use App\Observers\MenuObserver;
 use App\Observers\PermissaoObserver;
 use App\Observers\UsuarioObserver;
@@ -16,6 +17,7 @@ use App\Observers\PerfilObserver;
 use App\Observers\PerfilPermissaoObserver;
 use App\Observers\PadraoObserver;
 use App\Observers\PadraoTipoObserver;
+use App\Observers\NotificacaoObserver;
 use App\Services\MenuService;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Facades\URL;
@@ -43,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
         Perfil::observe(PerfilObserver::class);
         Padrao::observe(PadraoObserver::class);
         PadraoTipo::observe(PadraoTipoObserver::class);
+        Notificacao::observe(NotificacaoObserver::class);
 //        PerfilPermissao::observe(PerfilPermissaoObserver::class);
 
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) {

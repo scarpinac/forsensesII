@@ -66,5 +66,50 @@ class PadroesSeeder extends Seeder
             'padrao_id' => $decisaoSimNao->id,
         ]);
 
+
+        $tipoNotificacao = Padrao::create(['descricao' => 'Tipo de Notificação']);
+
+        PadraoTipo::create([
+            'descricao' => 'Informação',
+            'padrao_id' => $tipoNotificacao->id,
+        ]);
+
+        PadraoTipo::create([
+            'descricao' => 'Aviso',
+            'padrao_id' => $tipoNotificacao->id,
+        ]);
+
+        PadraoTipo::create([
+            'descricao' => 'Perigo',
+            'padrao_id' => $tipoNotificacao->id,
+        ]);
+
+        PadraoTipo::create([
+            'descricao' => 'Sucesso',
+            'padrao_id' => $tipoNotificacao->id,
+        ]);
+
+        PadraoTipo::create([
+            'descricao' => 'Erro',
+            'padrao_id' => $tipoNotificacao->id,
+        ]);
+
+
+        $enviarNotificacao = Padrao::create(['descricao' => 'Enviar Notificação Para']);
+
+        PadraoTipo::create([
+            'descricao' => 'Todos os Usuários',
+            'padrao_id' => $enviarNotificacao->id,
+        ]);
+
+        PadraoTipo::create([
+            'descricao' => 'Usuários Específicos',
+            'padrao_id' => $enviarNotificacao->id,
+        ]);
+
+        PadraoTipo::create([
+            'descricao' => 'Perfis Específicos',
+            'padrao_id' => $enviarNotificacao->id,
+        ]);
     }
 }

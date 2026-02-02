@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\LoadUserMenu::class,
             \App\Http\Middleware\SetLocale::class,
+            \App\Http\Middleware\NotificacaoMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -9,7 +9,7 @@
             <button type="submit" name="locale" value="pt_BR"
                     class="btn btn-sm {{ $currentLocale === 'pt_BR' ? 'btn-primary' : 'btn-outline-primary' }}"
                     title="Português (Brasil)">
-                🇧🇷 PT-BR
+                🇧🇷 PT
             </button>
         </form>
         <form action="{{ route('language.switch') }}" method="POST" class="d-inline">

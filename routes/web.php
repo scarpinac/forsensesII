@@ -9,6 +9,7 @@ use App\Http\Controllers\Sistema\PerfilController;
 use App\Http\Controllers\Sistema\PerfilPermissaoController;
 use App\Http\Controllers\Sistema\PadraoController;
 use App\Http\Controllers\Sistema\PadraoTipoController;
+use App\Http\Controllers\Sistema\NotificacaoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -141,7 +142,32 @@ Route::middleware(['auth', 'signed'])->group(function () {
                 Route::get('/{padraoTipo}', [PadraoTipoController::class, 'show'])->name('show');
             });
         });
+
+
+        // Rotas de Notificações
+        Route::prefix('notificacao')->name('notificacao.')->group(function () {
+            Route::get('/', [NotificacaoController::class, 'index'])->name('index');
+            Route::get('/create', [NotificacaoController::class, 'create'])->name('create');
+            Route::post('/', [NotificacaoController::class, 'store'])->name('store');
+            Route::get('/{notificacao}', [NotificacaoController::class, 'show'])->name('show');
+            Route::get('/{notificacao}/edit', [NotificacaoController::class, 'edit'])->name('edit');
+            Route::put('/{notificacao}', [NotificacaoController::class, 'update'])->name('update');
+            Route::delete('/{notificacao}', [NotificacaoController::class, 'destroy'])->name('destroy');
+
+            Route::get('/{notificacao}/history', [NotificacaoController::class, 'history'])->name('history');
+            Route::get('/{notificacao}/history/{historico}/details', [NotificacaoController::class, 'historyDetails'])->name('history.details');
+
+        });
+
+        // API Routes de Notificações (sem assinatura URL)
+        Route::prefix('notificacao')->name('notificacao.')->middleware('auth')->group(function () {
+            Route::post('/marcar-como-lida', [NotificacaoController::class, 'marcarComoLida'])->name('marcar-como-lida');
+            Route::post('/marcar-todas-como-lidas', [NotificacaoController::class, 'marcarTodasComoLidas'])->name('marcar-todas-como-lidas');
+            Route::get('/notificacoes-usuario', [NotificacaoController::class, 'getNotificacoesUsuario'])->name('notificacoes-usuario');
+        });
+
     });
+
 });
 
 require __DIR__.'/auth.php';

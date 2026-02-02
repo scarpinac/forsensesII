@@ -64,7 +64,7 @@ class MenuSeeder extends Seeder
         // Submenu: Permissão
         $permissaoPermissao = Permissao::where('descricao', 'sistema.permissao.index')->first();
         Menu::create([
-            'descricao' => 'Permissões',
+            'descricao' => 'Permissão',
             'icone' => 'fas fa-user-shield',
             'rota' => 'sistema.permissao.index',
             'menuPai_id' => $menuSistema->id,
@@ -80,6 +80,17 @@ class MenuSeeder extends Seeder
             'rota' => 'sistema.usuario.index',
             'menuPai_id' => $menuSistema->id,
             'permissao_id' => $permissaoUsuario->id,
+            'situacao_id' => $situacaoHabilitado->id,
+        ]);
+
+        // Submenu: Usuário
+        $permissaoNotificacao = Permissao::where('descricao', 'sistema.notificacao.index')->first();
+        Menu::create([
+            'descricao' => 'Notificação',
+            'icone' => 'fas fa-bell',
+            'rota' => 'sistema.notificacao.index',
+            'menuPai_id' => $menuSistema->id,
+            'permissao_id' => $permissaoNotificacao->id,
             'situacao_id' => $situacaoHabilitado->id,
         ]);
     }

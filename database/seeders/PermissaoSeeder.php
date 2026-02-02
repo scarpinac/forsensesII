@@ -56,6 +56,13 @@ class PermissaoSeeder extends Seeder
             'sistema.perfil.destroy',
             'sistema.perfil.show',
             'sistema.perfil.history',
+
+            'sistema.notificacao.index',
+            'sistema.notificacao.create',
+            'sistema.notificacao.edit',
+            'sistema.notificacao.destroy',
+            'sistema.notificacao.show',
+            'sistema.notificacao.history',
         ];
 
         foreach ($permissoes as $permissao) {

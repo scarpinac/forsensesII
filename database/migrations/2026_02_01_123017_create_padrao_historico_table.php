@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('padrao_historico', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('padrao_id')->constrained('padrao')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('padrao_id')->constrained('padrao');
             $table->json('dados_anteriores')->nullable();
             $table->json('dados_novos')->nullable();
-            $table->foreignId('tipoAlteracao_id')->nullable()->constrained('padrao_tipo')->onDelete('set null');
+            $table->foreignId('tipoAlteracao_id')->nullable()->constrained('padrao_tipo');
             $table->timestamps();
             $table->softDeletes();
         });

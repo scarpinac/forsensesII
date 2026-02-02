@@ -17,6 +17,12 @@ class Padrao extends Model
         'descricao',
     ];
 
+    const Situacao = 1;
+    const TiposAlteracao = 2;
+    const DecisaoSimNao = 3;
+    const TipoNotificacao = 4;
+    const EnviarNotificacaoPara = 5;
+
     /**
      * Get the tipos for the padrao.
      */

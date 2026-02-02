@@ -5,6 +5,42 @@ body {
     // background-color: #f4f6f9;
 }
 
+// Estilos para a toolbar de mensagem
+.mensagem-toolbar {
+    .btn-group {
+        .btn {
+            font-size: 12px;
+            padding: 4px 8px;
+            
+            &:hover {
+                background-color: #e9ecef;
+                border-color: #adb5bd;
+            }
+            
+            i {
+                font-size: 12px;
+            }
+        }
+        
+        .dropdown-menu {
+            a.dropdown-item {
+                font-size: 13px;
+                padding: 4px 12px;
+                
+                &:hover {
+                    background-color: #f8f9fa;
+                }
+            }
+        }
+    }
+}
+
+.mensagem-textarea {
+    font-family: 'Courier New', monospace;
+    resize: vertical;
+    min-height: 200px;
+}
+
 // Estilos para o Select2
 .select2-container--bootstrap4 .select2-selection {
     border: 1px solid #ced4da; // Borda padrão do form-control
@@ -226,12 +262,12 @@ input:disabled, textarea:disabled, select:disabled {
 .language-selector {
     .btn-group {
         flex-wrap: nowrap;
-        
+
         .btn {
             font-size: 0.75rem; // Um pouco menor em mobile
             padding: 0.25rem 0.5rem;
             min-width: auto;
-            
+
             @media (max-width: 576px) {
                 font-size: 0.7rem;
                 padding: 0.2rem 0.4rem;
