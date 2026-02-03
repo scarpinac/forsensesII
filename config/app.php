@@ -82,6 +82,22 @@ return [
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'pt_BR'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Supported Locales
+    |--------------------------------------------------------------------------
+    |
+    | This array contains all the locales that are supported by the application.
+    | These locales can be used for language switching functionality.
+    |
+    */
+    'supported_locales' => [
+        'pt_BR' => 'Português (Brasil)',
+        'en' => 'English',
+        'it' => 'Italiano',
+        'es' => 'Español',
+    ],
+
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
     /*

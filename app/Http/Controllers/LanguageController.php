@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Config;
 
 class LanguageController extends Controller
 {
@@ -13,8 +14,9 @@ class LanguageController extends Controller
     public function switch(Request $request)
     {
         $locale = $request->input('locale');
+        $supportedLocales = array_keys(Config::get('app.supported_locales', []));
 
-        if (in_array($locale, ['pt_BR', 'en', 'it'])) {
+        if (in_array($locale, $supportedLocales)) {
             Session::put('locale', $locale);
         }
 

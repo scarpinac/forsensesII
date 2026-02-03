@@ -1,15 +1,16 @@
 <?php
 
 return [
-    // Autenticação
+
+    // Autenticazione
     "auth.email" => "E-mail",
     "auth.password" => "Password",
     "auth.forgot_password" => "Hai dimenticato la password?",
     "auth.login" => "Accedi",
-    "auth.forgot_password_message" => "Hai dimenticato la password? Nessun problema. Facci sapere il tuo indirizzo email e ti invieremo un link per reimpostare la password che ti permetterà di sceglierne una nuova.",
+    "auth.forgot_password_message" => "Hai dimenticato la password? Nessun problema. Inserisci il tuo indirizzo email e ti invieremo un link per reimpostare la password.",
     "auth.email_password_reset" => "Invia email per il reset della password",
 
-    // Menu - Botões e Ações
+    // Menu - Pulsanti e Azioni
     "menu.new" => "Nuovo Menu",
     "menu.save" => "Salva",
     "menu.save_changes" => "Salva Modifiche",
@@ -23,20 +24,20 @@ return [
 
     // Menu - Campi del Modulo
     "menu.form.icon" => "Icona",
-    "menu.form.route" => "Rotta",
+    "menu.form.route" => "Percorso",
     "menu.form.parent_menu" => "Menu Padre",
     "menu.form.permission" => "Permesso",
-    "menu.form.situation" => "Situazione",
+    "menu.form.situation" => "Stato",
     "menu.form.none" => "Nessuno",
     "menu.form.select_permission" => "Seleziona un permesso",
-    "menu.form.select_situation" => "Seleziona una situazione",
+    "menu.form.select_situation" => "Seleziona uno stato",
 
-    // Menu - Briciole di Pane (Breadcrumb)
+    // Menu - Breadcrumb
     "menu.breadcrumb.home" => "Home",
     "menu.breadcrumb.listing" => "Elenco Menu",
     "menu.breadcrumb.create" => "Creazione Menu",
     "menu.breadcrumb.edit" => "Modifica Menu",
-    "menu.breadcrumb.show" => "Visualizzazione Menu",
+    "menu.breadcrumb.show" => "Visualizza Menu",
     "menu.breadcrumb.destroy" => "Eliminazione Menu",
     "menu.breadcrumb.history" => "Cronologia Menu",
 
@@ -44,13 +45,15 @@ return [
     "menu.title.listing" => "Elenco Menu",
     "menu.title.create" => "Creazione Menu",
     "menu.title.edit" => "Modifica Menu",
-    "menu.title.show" => "Visualizzazione Menu",
+    "menu.title.show" => "Visualizza Menu",
     "menu.title.destroy" => "Eliminazione Menu",
     "menu.title.history" => "Cronologia Menu",
     "menu.modal.details.title" => "Dettagli Modifica",
     "menu.modal.close" => "Chiudi",
     "menu.no.records" => "Nessun menu trovato.",
     "menu.no.history" => "Nessuna modifica trovata per questo menu.",
+
+    // Menu - Cronologia
     "menu.history.data.title" => "Dati Menu",
     "menu.history.changes.title" => "Cronologia Modifiche",
     "menu.history.table.date" => "Data",
@@ -59,29 +62,29 @@ return [
     "menu.history.table.actions" => "Azioni",
     "menu.history.button.details" => "Dettagli",
 
-    // Menu - Campi della Tabella di Cronologia
+    // Menu - Campi Cronologia
     "menu.history.fields.id" => "ID",
     "menu.history.fields.descricao" => "Descrizione",
     "menu.history.fields.icone" => "Icona",
-    "menu.history.fields.rota" => "Rotta",
+    "menu.history.fields.rota" => "Percorso",
     "menu.history.fields.menuPai_id" => "Menu Padre",
     "menu.history.fields.permissao_id" => "Permesso",
-    "menu.history.fields.situacao_id" => "Situazione",
+    "menu.history.fields.situacao_id" => "Stato",
     "menu.history.fields.created_at" => "Creato il",
     "menu.history.fields.updated_at" => "Aggiornato il",
     "menu.history.fields.deleted_at" => "Eliminato il",
 
-    // Menu - Mensagens de Sucesso
+    // Menu - Successo
     "menu.success.created" => "Menu creato con successo!",
     "menu.success.updated" => "Menu aggiornato con successo!",
     "menu.success.deleted" => "Menu eliminato con successo!",
 
-    // Menu - Mensagens de Erro
+    // Menu - Errori
     "menu.error.not_saved" => "Impossibile salvare il menu!",
     "menu.error.not_updated" => "Impossibile modificare il menu!",
     "menu.error.not_deleted" => "Impossibile eliminare il menu!",
 
-    // Permission - Labels
+    // Permessi
     "permission.description" => "Descrizione",
     "permission.new" => "Nuovo Permesso",
     "permission.save" => "Salva",
@@ -93,15 +96,15 @@ return [
     "permission.history" => "Cronologia",
     "permission.actions" => "Azioni",
 
-    // Permission - Breadcrumbs
-    "permission.breadcrumb.home" => "Inizio",
+    // Permission - Breadcrumb
+    "permission.breadcrumb.home" => "Home",
     "permission.breadcrumb.listing" => "Elenco Permessi",
 
-    // Permission - Titles
+    // Permission - Titoli
     "permission.title.listing" => "Elenco Permessi",
     "permission.title.create" => "Creazione Permesso",
     "permission.title.edit" => "Modifica Permesso",
-    "permission.title.show" => "Visualizzazione Permesso",
+    "permission.title.show" => "Visualizza Permesso",
     "permission.title.destroy" => "Eliminazione Permesso",
     "permission.title.history" => "Cronologia Permesso",
     "permission.modal.details.title" => "Dettagli Modifica",
@@ -109,38 +112,7 @@ return [
     "permission.no.records" => "Nessun permesso trovato.",
     "permission.no.history" => "Nessuna modifica trovata per questo permesso.",
 
-    // Permission - History
-    "permission.history.data.title" => "Dati Permesso",
-    "permission.history.changes.title" => "Cronologia Modifiche",
-    "permission.history.table.date" => "Data",
-    "permission.history.table.user" => "Utente",
-    "permission.history.table.type" => "Tipo Modifica",
-    "permission.history.table.actions" => "Azioni",
-    "permission.history.button.details" => "Dettagli",
-
-    // Permission - History Table Fields
-    "permission.history.fields.id" => "ID",
-    "permission.history.fields.descricao" => "Descrizione",
-    "permission.history.fields.icone" => "Icona",
-    "permission.history.fields.rota" => "Rotta",
-    "permission.history.fields.permissaoPai_id" => "Permesso Padre",
-    "permission.history.fields.permissao_id" => "Permesso",
-    "permission.history.fields.situacao_id" => "Situazione",
-    "permission.history.fields.created_at" => "Creato il",
-    "permission.history.fields.updated_at" => "Aggiornato il",
-    "permission.history.fields.deleted_at" => "Eliminato il",
-
-    // Permission - Success Messages
-    "permission.success.created" => "Permesso creato con successo!",
-    "permission.success.updated" => "Permesso aggiornato con successo!",
-    "permission.success.deleted" => "Permesso eliminato con successo!",
-
-    // Permission - Error Messages
-    "permission.error.not_saved" => "Impossibile salvare il permesso!",
-    "permission.error.not_updated" => "Impossibile modificare il permesso!",
-    "permission.error.not_deleted" => "Impossibile eliminare il permesso!",
-
-    // Livello di Accesso (Access Level)
+    // Livello di Accesso
     "access_level.new" => "Nuovo Livello di Accesso",
     "access_level.save" => "Salva",
     "access_level.save_changes" => "Salva Modifiche",
@@ -158,113 +130,7 @@ return [
     "access_level.expand_all" => "Espandi Tutti",
     "access_level.collapse_all" => "Comprimi Tutti",
 
-    // Livello di Accesso - Briciole di Pane (Breadcrumb)
-    "access_level.breadcrumb.home" => "Home",
-    "access_level.breadcrumb.listing" => "Elenco Livelli di Accesso",
-    "access_level.breadcrumb.create" => "Creazione Livello di Accesso",
-    "access_level.breadcrumb.edit" => "Modifica Livello di Accesso",
-    "access_level.breadcrumb.show" => "Visualizzazione Livello di Accesso",
-    "access_level.breadcrumb.destroy" => "Eliminazione Livello di Accesso",
-    "access_level.breadcrumb.history" => "Cronologia Livello di Accesso",
-
-    // Livello di Accesso - Titoli e Messaggi
-    "access_level.title.listing" => "Elenco Livelli di Accesso",
-    "access_level.title.create" => "Creazione Livello di Accesso",
-    "access_level.title.edit" => "Modifica Livello di Accesso",
-    "access_level.title.show" => "Visualizzazione Livello di Accesso",
-    "access_level.title.destroy" => "Eliminazione Livello di Accesso",
-    "access_level.title.history" => "Cronologia Livello di Accesso",
-    "access_level.modal.details.title" => "Dettagli Modifica",
-    "access_level.modal.close" => "Chiudi",
-    "access_level.no.history" => "Nessuna modifica trovata per questo livello.",
-    "access_level.no.records" => "Nessun livello trovato.",
-    "access_level.history.data.title" => "Dati Livello",
-    "access_level.history.changes.title" => "Cronologia Modifiche",
-    "access_level.history.table.date" => "Data",
-    "access_level.history.table.user" => "Utente",
-    "access_level.history.table.type" => "Tipo Modifica",
-    "access_level.history.table.actions" => "Azioni",
-    "access_level.history.button.details" => "Dettagli",
-
-    // Livello di Accesso - Campi della Tabella di Cronologia
-    "access_level.history.fields.id" => "ID",
-    "access_level.history.fields.descricao" => "Descrizione",
-    "access_level.history.fields.permissoes" => "Permessi",
-    "access_level.history.fields.usuarios" => "Utenti",
-    "access_level.history.fields.created_at" => "Creato il",
-    "access_level.history.fields.updated_at" => "Aggiornato il",
-    "access_level.history.fields.deleted_at" => "Eliminato il",
-
-    // Livello di Accesso - Messaggi di Successo
-    "access_level.success.created" => "Livello creato con successo!",
-    "access_level.success.updated" => "Livello aggiornato con successo!",
-    "access_level.success.deleted" => "Livello eliminato con successo!",
-
-    // Livello di Accesso - Associazione Utenti
-    "access_level.associate.title" => "Associa Utenti al Profilo",
-    "access_level.associate.profile" => "Profilo",
-    "access_level.associate.available_users" => "Utenti Disponibili",
-    "access_level.associate.associated_users" => "Utenti Associati",
-    "access_level.associate.name" => "Nome",
-    "access_level.associate.email" => "E-mail",
-    "access_level.associate.no_available_users" => "Nessun utente disponibile per l'associazione.",
-    "access_level.associate.no_associated_users" => "Nessun utente associato a questo profilo.",
-    "access_level.associate.save" => "Salva Associazioni",
-    "access_level.success.associated" => "Utenti associati con successo!",
-    "access_level.error.not_saved" => "Impossibile salvare il livello!",
-    "access_level.error.not_updated" => "Impossibile modificare il livello!",
-    "access_level.error.not_deleted" => "Impossibile eliminare il livello!",
-
-    // Permessi Livello di Accesso
-    "access_level.permissao.new" => "Nuovo Permesso Livello",
-    "access_level.permissao.save" => "Salva",
-    "access_level.permissao.save_changes" => "Salva Modifiche",
-    "access_level.permissao.back" => "Indietro",
-    "access_level.permissao.actions" => "Azioni",
-    "access_level.permissao.edit" => "Modifica",
-    "access_level.permissao.visualize" => "Visualizza",
-    "access_level.permissao.destroy" => "Elimina",
-    "access_level.permissao.history" => "Cronologia",
-
-    // Permessi Livello di Accesso - Titoli e Messaggi
-    "access_level.permissao.title.listing" => "Permessi Livello",
-    "access_level.permissao.title.create" => "Aggiungi Permesso Livello",
-    "access_level.permissao.title.edit" => "Modifica Permesso Livello",
-    "access_level.permissao.title.show" => "Visualizza Permesso Livello",
-    "access_level.permissao.title.destroy" => "Elimina Permesso Livello",
-    "access_level.permissao.title.history" => "Cronologia Permesso Livello",
-    "access_level.permissao.modal.details.title" => "Dettagli Modifica",
-    "access_level.permissao.modal.close" => "Chiudi",
-    "access_level.permissao.no.history" => "Nessuna modifica trovata per questo permesso.",
-    "access_level.permissao.no.records" => "Nessun permesso trovato.",
-    "access_level.permissao.history.data.title" => "Dati Permesso",
-    "access_level.permissao.history.changes.title" => "Cronologia Modifiche",
-    "access_level.permissao.history.table.date" => "Data",
-    "access_level.permissao.history.table.user" => "Utente",
-    "access_level.permissao.history.table.type" => "Tipo Modifica",
-    "access_level.permissao.history.table.actions" => "Azioni",
-    "access_level.permissao.history.button.details" => "Dettagli",
-
-    // Permessi Livello di Accesso - Campi della Tabella di Cronologia
-    "access_level.permissao.history.fields.id" => "ID",
-    "access_level.permissao.history.fields.perfil_id" => "Livello",
-    "access_level.permissao.history.fields.permissao_id" => "Permesso",
-    "access_level.permissao.history.fields.created_at" => "Creato il",
-    "access_level.permissao.history.fields.updated_at" => "Aggiornato il",
-    "access_level.permissao.history.fields.deleted_at" => "Eliminato il",
-
-    // Permessi Livello di Accesso - Messaggi di Successo
-    "access_level.permissao.success.created" => "Permesso aggiunto con successo!",
-    "access_level.permissao.success.updated" => "Permesso aggiornato con successo!",
-    "access_level.permissao.success.deleted" => "Permesso eliminato con successo!",
-
-    // Permessi Livello di Accesso - Messaggi di Errore
-    "access_level.permissao.error.not_saved" => "Impossibile salvare il permesso!",
-    "access_level.permissao.error.not_updated" => "Impossibile modificare il permesso!",
-    "access_level.permissao.error.not_deleted" => "Impossibile eliminare il permesso!",
-    "access_level.permissao.error.already_exists" => "Questo permesso è già associato a questo livello.",
-
-    // Utente - Pulsanti e Azioni
+    // Utente
     "user.new" => "Nuovo Utente",
     "user.save" => "Salva",
     "user.save_changes" => "Salva Modifiche",
@@ -274,173 +140,17 @@ return [
     "user.visualize" => "Visualizza",
     "user.destroy" => "Elimina",
     "user.history" => "Cronologia",
-
-    // Utente - Campi del Formulario
     "user.name" => "Nome",
     "user.email" => "E-mail",
     "user.password" => "Password",
     "user.password.required" => "Password (obbligatoria)",
-    "user.password.optional" => "Password (lasciare vuoto per mantenere attuale)",
+    "user.password.optional" => "Password (lasciare vuoto per mantenere quella attuale)",
     "user.password_confirmation" => "Conferma Password",
-    "user.password_confirmation.placeholder" => "Conferma password",
     "user.admin" => "Amministratore",
-    "user.admin.yes" => "Sì",
-    "user.admin.no" => "No",
     "user.avatar" => "Avatar",
     "user.avatar.current" => "Avatar attuale",
 
-    // Utente - Breadcrumbs
-    "user.breadcrumb.home" => "Home",
-    "user.breadcrumb.listing" => "Elenco Utenti",
-    "user.breadcrumb.create" => "Registrazione Utente",
-    "user.breadcrumb.edit" => "Modifica Utente",
-    "user.breadcrumb.show" => "Visualizza Utente",
-    "user.breadcrumb.destroy" => "Eliminazione Utente",
-    "user.breadcrumb.history" => "Cronologia Utente",
-
-    // Utente - Titoli e Messaggi
-    "user.title.listing" => "Elenco Utenti",
-    "user.title.create" => "Registrazione Utente",
-    "user.title.edit" => "Modifica Utente",
-    "user.title.show" => "Visualizza Utente",
-    "user.title.destroy" => "Eliminazione Utente",
-    "user.title.history" => "Cronologia Utente",
-    "user.modal.details.title" => "Dettagli Modifica",
-    "user.modal.close" => "Chiudi",
-    "user.no.history" => "Nessuna modifica trovata per questo utente.",
-    "user.history.data.title" => "Dati Utente",
-    "user.history.changes.title" => "Cronologia Modifiche",
-    "user.history.table.date" => "Data",
-    "user.history.table.user" => "Utente",
-    "user.history.table.type" => "Tipo Modifica",
-    "user.history.table.actions" => "Azioni",
-    "user.history.button.details" => "Dettagli",
-
-    // Utente - Messaggi di Successo ed Errore
-    "user.success.created" => "Utente creato con successo!",
-    "user.success.updated" => "Utente aggiornato con successo!",
-    "user.success.deleted" => "Utente eliminato con successo!",
-    "user.error.not_saved" => "Impossibile salvare l'utente.",
-    "user.error.not_updated" => "Impossibile aggiornare l'utente.",
-    "user.error.not_deleted" => "Impossibile eliminare l'utente.",
-
-    // Utente - Cronologia
-    "user.history.fields.id" => "ID",
-    "user.history.fields.name" => "Nome",
-    "user.history.fields.email" => "E-mail",
-    "user.history.fields.admin" => "Amministratore",
-    "user.history.fields.avatar" => "Avatar",
-    "user.history.fields.created_at" => "Creato il",
-    "user.history.fields.updated_at" => "Aggiornato il",
-    "user.history.fields.deleted_at" => "Eliminato il",
-
-    // Standard
-    "padrao" => "Standard",
-    "padrao.new" => "Nuovo Standard",
-    "padrao.save" => "Salva Standard",
-    "padrao.save_changes" => "Salva Modifiche",
-    "padrao.back" => "Indietro",
-    "padrao.description" => "Descrizione",
-    "padrao.actions" => "Azioni",
-    "padrao.edit" => "Modifica",
-    "padrao.visualize" => "Visualizza",
-    "padrao.destroy" => "Elimina",
-    "padrao.history" => "Cronologia",
-    "padrao.padraoTipo" => "Tipi di Standard",
-    "padrao.no_records" => "Nessun record trovato",
-    "padrao.success.created" => "Standard creato con successo!",
-    "padrao.success.updated" => "Standard aggiornato con successo!",
-    "padrao.success.deleted" => "Standard eliminato con successo!",
-    "padrao.error.not_saved" => "Impossibile salvare lo standard!",
-    "padrao.error.not_updated" => "Impossibile modificare lo standard!",
-    "padrao.error.not_deleted" => "Impossibile eliminare lo standard!",
-
-    // Standard - Briciole di Pane (Breadcrumb)
-    "padrao.breadcrumb.home" => "Home",
-    "padrao.breadcrumb.listing" => "Elenco Standard",
-    "padrao.breadcrumb.create" => "Creazione Standard",
-    "padrao.breadcrumb.edit" => "Modifica Standard",
-    "padrao.breadcrumb.show" => "Visualizzazione Standard",
-    "padrao.breadcrumb.destroy" => "Eliminazione Standard",
-    "padrao.breadcrumb.history" => "Cronologia Standard",
-
-    // Standard - Fields
-    "padrao.fields.id" => "ID",
-    "padrao.fields.descricao" => "Descrizione",
-    "padrao.fields.actions" => "Azioni",
-
-    // Standard - Cronologia
-    "padrao.history.fields.id" => "ID",
-    "padrao.history.fields.descricao" => "Descrizione",
-    "padrao.history.fields.created_at" => "Creato il",
-    "padrao.history.fields.updated_at" => "Aggiornato il",
-    "padrao.history.fields.deleted_at" => "Eliminato il",
-    "padrao.history.data.title" => "Dati Standard",
-    "padrao.history.changes.title" => "Cronologia Modifiche",
-    "padrao.history.table.date" => "Data",
-    "padrao.history.table.user" => "Utente",
-    "padrao.history.table.type" => "Tipo Modifica",
-    "padrao.history.table.actions" => "Azioni",
-    "padrao.history.button.details" => "Dettagli",
-    "padrao.no.history" => "Nessuna cronologia trovata",
-    "padrao.modal.details.title" => "Dettagli Cronologia",
-    "padrao.modal.close" => "Chiudi",
-
-    // Tipo Standard
-    "padraoTipo" => "Tipo Standard",
-    "padraoTipo.new" => "Nuovo Tipo Standard",
-    "padraoTipo.save" => "Salva Tipo Standard",
-    "padraoTipo.save_changes" => "Salva Modifiche",
-    "padraoTipo.back" => "Indietro",
-    "padraoTipo.description" => "Descrizione",
-    "padraoTipo.actions" => "Azioni",
-    "padraoTipo.edit" => "Modifica",
-    "padraoTipo.visualize" => "Visualizza",
-    "padraoTipo.destroy" => "Elimina",
-    "padraoTipo.history" => "Cronologia",
-    "padraoTipo.padrao" => "Standard",
-    "padraoTipo.no_records" => "Nessun record trovato",
-    "padraoTipo.success.created" => "Tipo Standard creato con successo!",
-    "padraoTipo.success.updated" => "Tipo Standard aggiornato con successo!",
-    "padraoTipo.success.deleted" => "Tipo Standard eliminato con successo!",
-    "padraoTipo.error.not_saved" => "Impossibile salvare il tipo standard!",
-    "padraoTipo.error.not_updated" => "Impossibile modificare il tipo standard!",
-    "padraoTipo.error.not_deleted" => "Impossibile eliminare il tipo standard!",
-
-    // Tipo Standard - Briciole di Pane (Breadcrumb)
-    "padraoTipo.breadcrumb.home" => "Home",
-    "padraoTipo.breadcrumb.listing" => "Elenco Tipi Standard",
-    "padraoTipo.breadcrumb.create" => "Creazione Tipo Standard",
-    "padraoTipo.breadcrumb.edit" => "Modifica Tipo Standard",
-    "padraoTipo.breadcrumb.show" => "Visualizzazione Tipo Standard",
-    "padraoTipo.breadcrumb.destroy" => "Eliminazione Tipo Standard",
-    "padraoTipo.breadcrumb.history" => "Cronologia Tipo Standard",
-
-    // Tipo Standard - Fields
-    "padraoTipo.fields.id" => "ID",
-    "padraoTipo.fields.descricao" => "Descrizione",
-    "padraoTipo.fields.padrao" => "Standard",
-    "padraoTipo.fields.actions" => "Azioni",
-
-    // Tipo Standard - Cronologia
-    "padraoTipo.history.fields.id" => "ID",
-    "padraoTipo.history.fields.descricao" => "Descrizione",
-    "padraoTipo.history.fields.padrao_id" => "ID Standard",
-    "padraoTipo.history.fields.created_at" => "Creato il",
-    "padraoTipo.history.fields.updated_at" => "Aggiornato il",
-    "padraoTipo.history.fields.deleted_at" => "Eliminato il",
-    "padraoTipo.history.data.title" => "Dati Tipo Standard",
-    "padraoTipo.history.changes.title" => "Cronologia Modifiche",
-    "padraoTipo.history.table.date" => "Data",
-    "padraoTipo.history.table.user" => "Utente",
-    "padraoTipo.history.table.type" => "Tipo Modifica",
-    "padraoTipo.history.table.actions" => "Azioni",
-    "padraoTipo.history.button.details" => "Dettagli",
-    "padraoTipo.no.history" => "Nessuna cronologia trovata",
-    "padraoTipo.modal.details.title" => "Dettagli Cronologia",
-    "padraoTipo.modal.close" => "Chiudi",
-    
-    // Notifica
+    // Notifiche
     "notification.title.index" => "Notifiche",
     "notification.title.create" => "Nuova Notifica",
     "notification.title.edit" => "Modifica Notifica",
@@ -451,29 +161,24 @@ return [
     "notification.breadcrumb.listing" => "Elenco Notifiche",
     "notification.title" => "Titolo",
     "notification.message" => "Messaggio",
-    "notification.menssage_placeholder" => "Digita il messaggio della notifica...",
-    "notification.notification_type" => "Tipo Notifica",
+    "notification.menssage_placeholder" => "Scrivi il messaggio della notifica...",
+    "notification.notification_type" => "Tipo di Notifica",
     "notification.icon" => "Icona",
-    "notification.icon_help" => "Nome icona FontAwesome (es: fas fa-bell)",
-    "notification.send_at" => "Data/Ora Invio",
+    "notification.icon_help" => "Nome dell’icona FontAwesome (es: fas fa-bell)",
+    "notification.send_at" => "Data/Ora di Invio",
     "notification.send_at_help" => "Data e ora in cui la notifica verrà inviata",
     "notification.destiny" => "Destinatari",
-    "notification.select_destiny" => "Seleziona tipo destinatario",
+    "notification.select_destiny" => "Seleziona il tipo di destinatario",
     "notification.destino_todos" => "Tutti gli Utenti",
     "notification.destiny_users" => "Utenti Specifici",
     "notification.destiny_profiles" => "Profili Specifici",
-    "notification.usuarios" => "Utenti",
-    "notification.usuarios_help" => "Seleziona gli utenti che riceveranno la notifica",
-    "notification.perfis" => "Profili",
-    "notification.perfis_help" => "Seleziona i profili che riceveranno la notifica",
-    "notification.sendTo" => "Invia A",
-    "notification.sendAt" => "Data/Ora Invio",
-    "notification.sended" => "Inviato",
-    "notification.expiredAt" => "Data Scadenza",
+    "notification.sendTo" => "Invia a",
+    "notification.sendAt" => "Data/Ora di Invio",
+    "notification.sended" => "Inviata",
+    "notification.expiredAt" => "Data di Scadenza",
     "notification.actions" => "Azioni",
     "notification.new" => "Nuova Notifica",
-    "notification.type" => "Tipo Notifica",
-    "notification.create" => "Nuova Notifica",
+    "notification.type" => "Tipo di Notifica",
     "notification.edit" => "Modifica",
     "notification.show" => "Visualizza",
     "notification.destroy" => "Elimina",
@@ -481,24 +186,11 @@ return [
     "notification.back" => "Indietro",
     "notification.save" => "Salva",
     "notification.save_changes" => "Salva Modifiche",
-    "notification.history.data.title" => "Dati Notifica",
-    "notification.history.changes.title" => "Cronologia Modifiche",
-    "notification.history.table.date" => "Data",
-    "notification.history.table.user" => "Utente",
-    "notification.history.table.type" => "Tipo Modifica",
-    "notification.history.table.actions" => "Azioni",
-    "notification.history.button.details" => "Dettagli",
-    "notification.history.fields.id" => "ID",
-    "notification.history.fields.descricao" => "Descrizione",
-    "notification.history.fields.created_at" => "Data Creazione",
-    "notification.history.fields.updated_at" => "Data Aggiornamento",
-    "notification.history.fields.deleted_at" => "Data Eliminazione",
-    "notification.modal.details.title" => "Dettagli Modifica",
-    "notification.modal.close" => "Chiudi",
     "notification.no.records" => "Nessuna notifica trovata.",
     "notification.no.history" => "Nessuna cronologia trovata.",
     "notification.yes" => "Sì",
     "notification.no" => "No",
-    
+
+    // Logout
     "Log Out" => "Esci",
 ];

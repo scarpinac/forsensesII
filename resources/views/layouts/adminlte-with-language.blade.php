@@ -87,6 +87,14 @@
                                 🇮🇹 IT
                             </button>
                         </form>
+                        <form action="{{ route('language.switch') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" name="locale" value="es"
+                                class="btn btn-sm {{ app()->getLocale() === 'es' ? 'btn-system' : 'btn-outline-system' }}"
+                                    title="Español">
+                                🇪🇸 ES
+                            </button>
+                        </form>
                     </div>
                 </div>`;
 

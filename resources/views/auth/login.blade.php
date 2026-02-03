@@ -6,34 +6,77 @@
         @csrf
 
         <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('labels.auth.email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="mb-3">
+            <label for="email" class="form-label">
+                {{ __('labels.auth.email') }}
+            </label>
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <input id="email"
+                       type="email"
+                       class="form-control with-icon"
+                       name="email"
+                       value="{{ old('email') }}"
+                       placeholder="Digite seu e-mail"
+                       required
+                       autofocus
+                       autocomplete="username">
+            </div>
+            @error('email')
+                <div class="alert alert-danger mt-2 mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>{{ $message }}
+                </div>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('labels.auth.password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="mb-4">
+            <label for="password" class="form-label">
+                {{ __('labels.auth.password') }}
+            </label>
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                </span>
+                <input id="password"
+                       type="password"
+                       class="form-control with-icon"
+                       name="password"
+                       placeholder="Digite sua senha"
+                       required
+                       autocomplete="current-password">
+            </div>
+            @error('password')
+                <div class="alert alert-danger mt-2 mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>{{ $message }}
+                </div>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <!-- Submit Button -->
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-login btn-block">
+                <i class="fas fa-sign-in-alt me-2"></i>{{ __('labels.auth.login') }}
+            </button>
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="text-center mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('labels.auth.forgot_password') }}
+                <a class="forgot-link" href="{{ route('password.request') }}">
+                    <i class="fas fa-question-circle me-1"></i>{{ __('labels.auth.forgot_password') }}
                 </a>
             @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('labels.auth.login') }}
-            </x-primary-button>
         </div>
     </form>
+
+    <!-- Additional Info -->
+    <div class="text-center mt-4">
+        <small class="text-muted">
+            <i class="fas fa-shield-alt me-1"></i>
+            Acesso seguro e criptografado
+        </small>
+    </div>
 </x-guest-layout>
