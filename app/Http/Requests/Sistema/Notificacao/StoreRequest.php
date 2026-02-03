@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
             'tipoNotificacao_id' => 'required|exists:padrao_tipo,id',
             'enviarNotificacaoPara_id' => 'nullable|in:15,16,17|exists:padrao_tipo,id',
             'icone' => 'nullable|string|max:30',
-            'enviar_em' => 'required|date|after:now',
+            'enviar_em' => 'required|date',
             'usuarios' => 'required_if:enviarNotificacaoPara_id,16|array',
             'usuarios.*' => 'exists:users,id',
             'perfis' => 'required_if:enviarNotificacaoPara_id,17|array',
@@ -56,7 +56,6 @@ class StoreRequest extends FormRequest
 
             'enviar_em.required' => __('messages.notification.validation.send_at.required'),
             'enviar_em.date' => __('messages.notification.validation.send_at.date'),
-            'enviar_em.after' => __('messages.notification.validation.send_at.after'),
 
             'usuarios.required_if' => __('messages.notification.validation.users.required_if'),
             'usuarios.array' => __('messages.notification.validation.users.array'),

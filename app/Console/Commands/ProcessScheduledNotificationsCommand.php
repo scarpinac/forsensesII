@@ -31,14 +31,7 @@ class ProcessScheduledNotificationsCommand extends Command
         $this->info('Iniciando processamento de notificações agendadas...');
 
         try {
-            // Disparar o job para processar as notificações
-            ProcessScheduledNotifications::dispatch();
-
-            $this->info('✅ Job de processamento disparado com sucesso!');
-            $this->info('📝 Verifique os logs para acompanhar o processamento');
-
-            Log::info('Command notifications:process-scheduled executado manualmente');
-
+            ProcessScheduledNotifications::dispatch()->onQueue('notificacao');
             return CommandAlias::SUCCESS;
 
         } catch (\Exception $e) {

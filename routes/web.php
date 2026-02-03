@@ -158,13 +158,9 @@ Route::middleware(['auth', 'signed'])->group(function () {
             Route::get('/{notificacao}/history', [NotificacaoController::class, 'history'])->name('history');
             Route::get('/{notificacao}/history/{historico}/details', [NotificacaoController::class, 'historyDetails'])->name('history.details');
 
-        });
-
-        // API Routes de Notificações (sem assinatura URL)
-        Route::prefix('notificacao')->name('notificacao.')->middleware('auth')->group(function () {
             Route::post('/marcar-como-lida', [NotificacaoController::class, 'marcarComoLida'])->name('marcar-como-lida');
-            Route::post('/marcar-todas-como-lidas', [NotificacaoController::class, 'marcarTodasComoLidas'])->name('marcar-todas-como-lidas');
-            Route::get('/notificacoes-usuario', [NotificacaoController::class, 'getNotificacoesUsuario'])->name('notificacoes-usuario');
+            Route::get('/{notificacao}/detalhes', [NotificacaoController::class, 'getNotificationDetails'])->name('detalhes');
+
         });
 
     });

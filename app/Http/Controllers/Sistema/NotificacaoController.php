@@ -204,10 +204,69 @@ class NotificacaoController extends Controller
         $user = Auth::user();
         $notificacoes = $this->notificacaoService->getUnreadNotifications($user);
 
+        // Adicionar status de leitura para cada notificação
+        $notificacoesComStatus = $notificacoes->map(function ($notificacao) use ($user) {
+            // Verificar se já foi lida
+            $leitura = \App\Models\NotificacaoUsuario::where('notificacao_id', $notificacao['id'])
+                ->where('usuario_id', $user->id)
+                ->where('lida', true)
+                ->first();
+
+            $notificacao['already_read'] = $leitura ? true : false;
+            $notificacao['lida_em'] = $leitura ? $leitura->lida_em : null;
+
+            return $notificacao;
+        });
+
         return response()->json([
-            'notifications' => $notificacoes,
+            'notifications' => $notificacoesComStatus,
             'unread_count' => $this->notificacaoService->getUnreadCount($user),
         ]);
+    }
+
+    /**
+     * API: Obter detalhes completos de uma notificação
+     */
+    public function getNotificationDetails(Notificacao $notificacao): JsonResponse
+    {
+        $user = Auth::user();
+
+        // Carregar notificação com relacionamentos necessários
+        $notificacao->load(['tipoNotificacao', 'leituras' => function($query) use ($user) {
+            $query->where('user_id', $user->id);
+        }]);
+
+        try {
+            // Verificar se já foi lida
+            $leitura = $notificacao->leituras->first();
+            $alreadyRead = $leitura ? $leitura->lida : false;
+
+            return response()->json([
+                'success' => true,
+                'notification' => [
+                    'id' => $notificacao->id,
+                    'titulo' => $notificacao->titulo,
+                    'mensagem' => $notificacao->mensagem,
+                    'tipo' => $notificacao->tipoNotificacao->descricao ?? 'Geral',
+                    'icone' => $notificacao->icone ?? 'fas fa-bell',
+                    'created_at' => $notificacao->created_at->format('d/m/Y H:i:s'),
+                    'enviar_em' => $notificacao->enviar_em->format('d/m/Y H:i:s'),
+                    'already_read' => $alreadyRead,
+                    'lida_em' => $leitura?->lida_em ? $leitura->lida_em->format('d/m/Y H:i:s') : null,
+                ]
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Erro ao buscar detalhes da notificação', [
+                'error' => $e->getMessage(),
+                'notification_id' => $notificacao->id,
+                'user_id' => $user->id,
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -215,33 +274,29 @@ class NotificacaoController extends Controller
      */
     public function marcarComoLida(Request $request): JsonResponse
     {
-        Log::info('marcarComoLida chamado', [
-            'notification_id' => $request->notification_id,
-            'user_authenticated' => Auth::check(),
-            'user_id' => Auth::id(),
-        ]);
-
         $request->validate([
             'notification_id' => 'required|exists:notificacao,id',
         ]);
 
         $user = Auth::user();
-        $notificacao = Notificacao::findOrFail($request->notification_id);
-
-        Log::info('Verificando permissão', [
-            'user_id' => $user->id,
-            'notification_id' => $notificacao->id,
-            'notification_tipo' => $notificacao->tipoNotificacao_id,
-        ]);
 
         try {
             $notificacao = Notificacao::findOrFail($request->notification_id);
-            $leitura = $this->notificacaoService->markAsRead($notificacao, $user);
 
-            Log::info('Notificação marcada como lida', [
-                'leitura_id' => $leitura->id,
-                'lida' => $leitura->lida,
-            ]);
+            // Verificar se a notificação já foi marcada como lida por este usuário
+            $leituraExistente = \App\Models\NotificacaoUsuario::where('notificacao_id', $notificacao->id)
+                ->where('user_id', $user->id)
+                ->where('lida', true)
+                ->first();
+
+            if ($leituraExistente) {
+                return response()->json([
+                    'success' => true,
+                    'lida_em' => $leituraExistente->lida_em,
+                ]);
+            }
+
+            $leitura = $this->notificacaoService->markAsRead($notificacao, $user);
 
             return response()->json([
                 'success' => true,
@@ -324,19 +379,19 @@ class NotificacaoController extends Controller
                         // Mantém o valor original se não conseguir parsear
                     }
                 }
-                
+
                 // Tratar campo tipoNotificacao_id
                 if ($key === 'tipoNotificacao_id' && $value) {
                     $tipo = \App\Models\PadraoTipo::find($value);
                     $dadosAnteriores[$key] = $tipo ? $tipo->descricao : $value;
                 }
-                
+
                 // Tratar campo enviarNotificacaoPara_id
                 if ($key === 'enviarNotificacaoPara_id' && $value) {
                     $tipo = \App\Models\PadraoTipo::find($value);
                     $dadosAnteriores[$key] = $tipo ? $tipo->descricao : $value;
                 }
-                
+
                 // Tratar campo enviado_para (JSON)
                 if ($key === 'enviado_para' && $value) {
                     if (is_string($value)) {
@@ -344,7 +399,7 @@ class NotificacaoController extends Controller
                         $dadosAnteriores[$key] = $decoded ? json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : $value;
                     }
                 }
-                
+
                 // Tratar campo enviado (boolean)
                 if ($key === 'enviado') {
                     $dadosAnteriores[$key] = $value ? __('labels.notification.yes') : __('labels.notification.no');
@@ -362,19 +417,19 @@ class NotificacaoController extends Controller
                         // Mantém o valor original se não conseguir parsear
                     }
                 }
-                
+
                 // Tratar campo tipoNotificacao_id
                 if ($key === 'tipoNotificacao_id' && $value) {
                     $tipo = \App\Models\PadraoTipo::find($value);
                     $dadosNovos[$key] = $tipo ? $tipo->descricao : $value;
                 }
-                
+
                 // Tratar campo enviarNotificacaoPara_id
                 if ($key === 'enviarNotificacaoPara_id' && $value) {
                     $tipo = \App\Models\PadraoTipo::find($value);
                     $dadosNovos[$key] = $tipo ? $tipo->descricao : $value;
                 }
-                
+
                 // Tratar campo enviado_para (JSON)
                 if ($key === 'enviado_para' && $value) {
                     if (is_string($value)) {
@@ -382,7 +437,7 @@ class NotificacaoController extends Controller
                         $dadosNovos[$key] = $decoded ? json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : $value;
                     }
                 }
-                
+
                 // Tratar campo enviado (boolean)
                 if ($key === 'enviado') {
                     $dadosNovos[$key] = $value ? __('labels.notification.yes') : __('labels.notification.no');
@@ -402,7 +457,7 @@ class NotificacaoController extends Controller
             'enviado' => __('labels.notification.sended'),
             'enviarNotificacaoPara_id' => __('labels.notification.destiny'),
             'enviado_para' => __('labels.notification.sendTo'),
-            
+
             // Campos de timestamp
             'created_at' => __('labels.notification.history.fields.created_at'),
             'updated_at' => __('labels.notification.history.fields.updated_at'),

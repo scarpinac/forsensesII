@@ -22,11 +22,11 @@ class ProcessScheduledNotifications implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::info('Iniciando processamento de notificações agendadas...');
+        Log::info('Iniciando processasssssmento de notificações agendadas...');
 
         // Buscar notificações que devem ser enviadas agora
         $notificacoes = Notificacao::where('enviar_em', '<=', now())
-            ->where('enviado', false)
+            ->where('enviado', 0)
             ->with(['tipoNotificacao', 'enviarNotificacaoPara'])
             ->get();
 

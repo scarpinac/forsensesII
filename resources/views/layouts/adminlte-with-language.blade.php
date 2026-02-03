@@ -1,4 +1,22 @@
+@php
+    // Função auxiliar para limitar texto preservando HTML
+    function limitHtml($html, $limit = 30) {
+        // Remove tags HTML para contar caracteres
+        $text = strip_tags($html);
+        if (strlen($text) <= $limit) {
+            return $html;
+        }
+        // Limita o texto e adiciona ...
+        $limitedText = substr($text, 0, $limit) . '...';
+        return $limitedText;
+    }
+@endphp
+
 @extends('adminlte::page')
+
+@push('head')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endpush
 
 @push('css')
 <style>
@@ -39,94 +57,6 @@
 @push('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Adiciona o seletor de idioma na navbar
-
-            function markNotificationAsRead(notificationId, url = null) {
-                console.log('Tentando marcar notificação como lida:', notificationId);
-
-                // Obter CSRF token do meta tag ou do input hidden
-                const csrfToken = document.querySelector('meta[name="csrf-token"]')
-                    ? document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    : document.querySelector('input[name="_token"]')
-                    ? document.querySelector('input[name="_token"]').value
-                    : '{{ csrf_token() }}';
-
-                console.log('CSRF Token:', csrfToken ? 'Presente' : 'Ausente');
-                console.log('URL da requisição:', '{{ route("sistema.notificacao.marcar-como-lida") }}');
-
-                fetch('{{ route("sistema.notificacao.marcar-como-lida") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        notification_id: notificationId
-                    })
-                })
-                    .then(response => {
-                        console.log('Status da resposta:', response.status);
-                        console.log('Headers da resposta:', response.headers);
-
-                        if (!response.ok) {
-                            // Tentar ler o corpo da resposta para debug
-                            return response.text().then(text => {
-                                console.log('Corpo da resposta (erro):', text);
-                                throw new Error(`HTTP error! status: ${response.status}`);
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Resposta JSON:', data);
-                        if (data.success) {
-                            // Remover o badge se não houver mais notificações
-                            const badge = document.querySelector('.navbar-badge');
-                            if (badge) {
-                                const currentCount = parseInt(badge.textContent);
-                                if (currentCount <= 1) {
-                                    badge.remove();
-                                } else {
-                                    badge.textContent = currentCount - 1;
-                                }
-                            }
-
-                            // Remover a notificação do dropdown
-                            const notificationItem = document.querySelector(`[data-notification-id="${notificationId}"]`);
-                            if (notificationItem) {
-                                notificationItem.style.opacity = '0.5';
-                                notificationItem.style.pointerEvents = 'none';
-                            }
-
-                            // Redirecionar se houver URL
-                            if (url && url !== '#') {
-                                window.location.href = url;
-                            }
-                        } else {
-                            console.error('Erro na resposta:', data.message || 'Erro desconhecido');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro ao marcar notificação como lida:', error);
-                        // Tentar recarregar a página como fallback
-                        if (url && url !== '#') {
-                            window.location.href = url;
-                        }
-                    });
-            }
-
-            // Adicionar evento de clique nas notificações
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.notification-item')) {
-                    e.preventDefault();
-                    const notificationItem = e.target.closest('.notification-item');
-                    const notificationId = notificationItem.dataset.notificationId;
-                    const url = notificationItem.dataset.url;
-                    markNotificationAsRead(notificationId, url);
-                }
-            });
-
             let userLi = document.querySelector('.user-menu');
             const navbar = userLi ? userLi.closest('ul') : null;
             if (navbar) {
@@ -177,19 +107,22 @@
                              @endif
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" aria-labelledby="notificationDropdown" style="min-width: 300px; max-height: 400px; overflow-y: auto;">
-                            <span class="dropdown-item dropdown-header">{{ $unreadNotificationsCount }} Notificações</span>
+                            <span class="dropdown-item dropdown-header">{{ $unreadNotificationsCount }} {{ $unreadNotificationsCount > 1 ? 'Notificações' : 'Notificação'}}</span>
                             <div class="dropdown-divider"></div>
 
                             @if($recentNotifications->count() > 0)
                                 @foreach($recentNotifications as $notification)
-                                    <a href="#" class="dropdown-item notification-item" data-notification-id="{{ $notification['id'] }}" data-url="{{ $notification['url'] ?? '#' }}">
+                                    <a href="#" class="dropdown-item notification-item"
+                                       data-notification-id="{{ $notification['id'] }}"
+                                       data-notification-url="{{ URL::signedRoute('sistema.notificacao.detalhes', ['notificacao' => $notification['id']]) }}"
+                                       >
                                         <div class="media">
                                             <div class="media-body">
                                                 <h6 class="dropdown-item-title">
                                                     <i class="{{ $notification['icone'] }} {{ $notification['tipo'] == 'Informação' ? 'text-success' : ($notification['tipo'] == 'Aviso' ? 'text-warning' : ($notification['tipo'] == 'Erro' ? 'text-danger' : 'text-info')) }} mr-1"></i>
                                                     {{ $notification['titulo'] }}
                                                 </h6>
-                                                <p class="text-sm text-muted">{{ $notification['mensagem'] }}</p>
+                                                <p class="text-sm text-muted">{!! limitHtml($notification['mensagem'], 30) !!}</p>
                                                 <p class="text-sm text-muted mb-0"><i class="far fa-clock mr-1"></i>{{ $notification['created_at'] }}</p>
                                             </div>
                                         </div>
@@ -212,4 +145,163 @@
             }
         });
     </script>
+@push('js')
+<script>
+// Manipular clique nas notificações
+$(document).on('click', '.notification-item', function(e) {
+    e.preventDefault();
+
+    const $this = $(this);
+    const notificationId = $this.data('notification-id');
+    const url = $this.data('notification-url');
+
+    // Buscar detalhes completos da notificação
+    $.ajax({
+        url: url,
+        method: 'GET',
+        success: function(response) {
+            if (response.success) {
+                const notification = response.notification;
+
+                // Preencher modal com dados da API
+                $('#modalTitulo').text(notification.titulo);
+                $('#modalMensagem').html(notification.mensagem); // HTML renderizado
+                $('#modalCreatedAt').text(notification.created_at);
+                $('#modalNotificationId').val(notification.id);
+
+                // Configurar ícone e cor baseada no tipo
+                const $modalIcone = $('#modalIcone');
+                $modalIcone.removeClass().addClass(notification.icone + ' mr-2');
+
+                // Aqui você pode ajustar as cores baseado no tipo se necessário
+                $modalIcone.addClass('text-info'); // Cor padrão
+
+                // Verificar se já foi lida e esconder botão se necessário
+                if (notification.already_read) {
+                    $('#markAsReadBtn').hide();
+                    $('.modal-footer .btn-secondary').text('Fechar');
+                } else {
+                    $('#markAsReadBtn').show();
+                    $('.modal-footer .btn-secondary').text('Fechar');
+                }
+
+                // Abrir modal
+                $('#notificationModal').modal('show');
+            } else {
+                console.error('Erro ao buscar detalhes:', response.error);
+                if (typeof toastr !== 'undefined') {
+                    toastr.error('Erro ao carregar detalhes da notificação.');
+                }
+            }
+        },
+        error: function(xhr) {
+            console.error('Erro na requisição:', xhr);
+            if (typeof toastr !== 'undefined') {
+                toastr.error('Erro ao carregar detalhes da notificação.');
+            }
+        }
+    });
+});
+
+// Manipular envio do formulário de marcar como lida
+$(document).on('submit', '#markAsReadForm', function(e) {
+    e.preventDefault();
+
+    const $form = $(this);
+    const notificationId = $('#modalNotificationId').val();
+
+    // Enviar requisição AJAX para marcar como lida
+    $.ajax({
+        url: $form.attr('action'),
+        method: $form.attr('method'),
+        data: $form.serialize(),
+        success: function(response) {
+            if (response.success) {
+                // Fechar modal
+                $('#notificationModal').modal('hide');
+
+                // Remover notificação da lista
+                $(`.notification-item[data-notification-id="${notificationId}"]`).closest('.dropdown-item').remove();
+
+                // Atualizar contador
+                const $badge = $('.navbar-badge');
+                const currentCount = parseInt($badge.text()) || 0;
+                const newCount = Math.max(0, currentCount - 1);
+
+                if (newCount > 0) {
+                    $badge.text(newCount);
+                } else {
+                    $badge.remove();
+                    $('.dropdown-header').text('Nenhuma notificação nova');
+                }
+
+                // Mostrar mensagem de sucesso
+                if (typeof toastr !== 'undefined') {
+                    toastr.success('Notificação marcada como lida!');
+                }
+            } else {
+                // Se já foi lida, esconder botão e mostrar mensagem
+                if (response.already_read) {
+                    $('#markAsReadBtn').hide();
+                    $('.modal-footer .btn-secondary').text('Fechar');
+                    
+                    if (typeof toastr !== 'undefined') {
+                        toastr.warning('Esta notificação já foi marcada como lida anteriormente.');
+                    }
+                } else {
+                    // Outro erro
+                    if (typeof toastr !== 'undefined') {
+                        toastr.error(response.error || 'Erro ao marcar notificação como lida.');
+                    }
+                }
+            }
+        },
+        error: function(xhr) {
+            console.error('Erro ao marcar notificação como lida:', xhr);
+            if (typeof toastr !== 'undefined') {
+                toastr.error('Erro ao marcar notificação como lida.');
+            }
+        }
+    });
+});
+</script>
 @endpush
+
+<!-- Modal de Notificação Completa -->
+<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="markAsReadForm" method="POST" action="{{ URL::signedRoute('sistema.notificacao.marcar-como-lida') }}">
+                @csrf
+                <input type="hidden" name="notification_id" id="modalNotificationId">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">
+                        <i id="modalIcone" class="mr-2"></i>
+                        <span id="modalTitulo"></span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <small class="text-muted">
+                            <i class="far fa-clock mr-1"></i>
+                            <span id="modalCreatedAt"></span>
+                        </small>
+                    </div>
+                    <div class="alert">
+                        <p id="modalMensagem" class="mb-0"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="markAsReadBtn" class="btn btn-primary">
+                        <i class="fas fa-check mr-1"></i> Marcar como lida
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -61,8 +61,9 @@ class NotificacaoService
                     'cor' => $notificacao->cor_tipo,
                     'icone' => $notificacao->icone ?? 'fas fa-bell',
                     'url' => $notificacao->url,
-                    'created_at' => $notificacao->created_at->diffForHumans(),
+                    'created_at' => $notificacao->enviar_em->diffForHumans(),
                     'lida' => $leitura ? $leitura->lida : false,
+                    'already_read' => $leitura ? $leitura->lida : false,
                 ];
             });
     }

@@ -160,12 +160,6 @@ class NotificationService
      */
     public function agendarNotificacao(array $dados): Notificacao
     {
-        // Validar data de envio futura
-        if (strtotime($dados['enviar_em']) <= time()) {
-            throw new \Exception('A data de envio deve ser futura.');
-        }
-
-        // Criar notificação agendada
         $notificacao = Notificacao::create([
             'titulo' => $dados['titulo'],
             'mensagem' => $dados['mensagem'],
