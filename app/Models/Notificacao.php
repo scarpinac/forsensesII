@@ -71,7 +71,7 @@ class Notificacao extends Model
      */
     public function historicos(): HasMany
     {
-        return $this->hasMany(NotificacaoHistorico::class, 'notificacao_id');
+        return $this->hasMany(NotificacaoHistorico::class, 'notificacao_id')->orderBy('created_at', 'desc');
     }
 
     /**

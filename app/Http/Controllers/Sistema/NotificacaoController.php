@@ -158,10 +158,25 @@ class NotificacaoController extends Controller
         }
     }
 
+
+    public function destroy(Notificacao $notificacao)
+    {
+        if (!Auth::user()->canAccess('sistema.notificacao.destroy')) {
+            abort(403);
+        }
+        $tipos = PadraoTipo::where('padrao_id', '=', Padrao::TipoNotificacao)->get();
+        $tiposDestino = PadraoTipo::where('padrao_id', '=', Padrao::EnviarNotificacaoPara)->get();
+        $usuarios = User::get();
+        $perfis = Perfil::get();
+        $bloquearCampos = true;
+
+        return view('sistema.notificacao.destroy', compact('notificacao', 'bloquearCampos', 'tipos', 'tiposDestino', 'usuarios', 'perfis'));
+    }
+
     /**
      * Excluir notificação
      */
-    public function destroy(Notificacao $notificacao): RedirectResponse
+    public function delete(Notificacao $notificacao): RedirectResponse
     {
         try {
             $notificacao->delete();
@@ -286,21 +301,22 @@ class NotificacaoController extends Controller
     /**
      * Show the details of a specific history record.
      */
-    public function historyDetails(Notificacao $notificacao, $historicoId)
+    public function historyDetails(Notificacao $notificacao, $historico)
     {
-        $historico = NotificacaoHistorico::findOrFail($historicoId);
 
-        if ($historico->notificacao_id !== $notificacao->id) {
-            abort(403, 'Ação não autorizada.');
+        if (!Auth::user()->canAccess('sistema.notificacao.history')) {
+            abort(403);
         }
 
-        $historico->load(['user', 'tipoAlteracao']);
+        $historico = $notificacao->historicos()->with(['user', 'tipoAlteracao'])->findOrFail($historico);
 
         $dadosAnteriores = $historico->dados_anteriores;
         $dadosNovos = $historico->dados_novos;
 
+        // Tratar campos especiais
         if ($dadosAnteriores) {
             foreach ($dadosAnteriores as $key => $value) {
+                // Formatar timestamps
                 if (in_array($key, ['created_at', 'updated_at', 'deleted_at']) && $value) {
                     try {
                         $dadosAnteriores[$key] = \Carbon\Carbon::parse($value)->format('d/m/Y H:i:s');
@@ -308,11 +324,37 @@ class NotificacaoController extends Controller
                         // Mantém o valor original se não conseguir parsear
                     }
                 }
+                
+                // Tratar campo tipoNotificacao_id
+                if ($key === 'tipoNotificacao_id' && $value) {
+                    $tipo = \App\Models\PadraoTipo::find($value);
+                    $dadosAnteriores[$key] = $tipo ? $tipo->descricao : $value;
+                }
+                
+                // Tratar campo enviarNotificacaoPara_id
+                if ($key === 'enviarNotificacaoPara_id' && $value) {
+                    $tipo = \App\Models\PadraoTipo::find($value);
+                    $dadosAnteriores[$key] = $tipo ? $tipo->descricao : $value;
+                }
+                
+                // Tratar campo enviado_para (JSON)
+                if ($key === 'enviado_para' && $value) {
+                    if (is_string($value)) {
+                        $decoded = json_decode($value, true);
+                        $dadosAnteriores[$key] = $decoded ? json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : $value;
+                    }
+                }
+                
+                // Tratar campo enviado (boolean)
+                if ($key === 'enviado') {
+                    $dadosAnteriores[$key] = $value ? __('labels.notification.yes') : __('labels.notification.no');
+                }
             }
         }
 
         if ($dadosNovos) {
             foreach ($dadosNovos as $key => $value) {
+                // Formatar timestamps
                 if (in_array($key, ['created_at', 'updated_at', 'deleted_at']) && $value) {
                     try {
                         $dadosNovos[$key] = \Carbon\Carbon::parse($value)->format('d/m/Y H:i:s');
@@ -320,13 +362,48 @@ class NotificacaoController extends Controller
                         // Mantém o valor original se não conseguir parsear
                     }
                 }
+                
+                // Tratar campo tipoNotificacao_id
+                if ($key === 'tipoNotificacao_id' && $value) {
+                    $tipo = \App\Models\PadraoTipo::find($value);
+                    $dadosNovos[$key] = $tipo ? $tipo->descricao : $value;
+                }
+                
+                // Tratar campo enviarNotificacaoPara_id
+                if ($key === 'enviarNotificacaoPara_id' && $value) {
+                    $tipo = \App\Models\PadraoTipo::find($value);
+                    $dadosNovos[$key] = $tipo ? $tipo->descricao : $value;
+                }
+                
+                // Tratar campo enviado_para (JSON)
+                if ($key === 'enviado_para' && $value) {
+                    if (is_string($value)) {
+                        $decoded = json_decode($value, true);
+                        $dadosNovos[$key] = $decoded ? json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : $value;
+                    }
+                }
+                
+                // Tratar campo enviado (boolean)
+                if ($key === 'enviado') {
+                    $dadosNovos[$key] = $value ? __('labels.notification.yes') : __('labels.notification.no');
+                }
             }
         }
 
         // Mapeamento de campos para exibição amigável baseado no idioma atual
         $camposTabela = [
+            // Campos principais da tabela
             'id' => __('labels.notification.history.fields.id'),
-            'descricao' => __('labels.notification.history.fields.descricao'),
+            'titulo' => __('labels.notification.title'),
+            'mensagem' => __('labels.notification.message'),
+            'tipoNotificacao_id' => __('labels.notification.notification_type'),
+            'icone' => __('labels.notification.icon'),
+            'enviar_em' => __('labels.notification.sendAt'),
+            'enviado' => __('labels.notification.sended'),
+            'enviarNotificacaoPara_id' => __('labels.notification.destiny'),
+            'enviado_para' => __('labels.notification.sendTo'),
+            
+            // Campos de timestamp
             'created_at' => __('labels.notification.history.fields.created_at'),
             'updated_at' => __('labels.notification.history.fields.updated_at'),
             'deleted_at' => __('labels.notification.history.fields.deleted_at'),

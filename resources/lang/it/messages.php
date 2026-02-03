@@ -261,5 +261,55 @@ return [
             ],
         ],
     ],
+    
+    // Notification Form Request Validation Messages
+    'notification' => [
+        'validation' => [
+            'title' => [
+                'required' => 'Il campo titolo è obbligatorio.',
+                'string' => 'Il campo titolo deve essere una stringa.',
+                'max' => 'Il campo titolo non può avere più di 50 caratteri.',
+            ],
+            'message' => [
+                'required' => 'Il campo messaggio è obbligatorio.',
+                'string' => 'Il campo messaggio deve essere una stringa.',
+            ],
+            'notification_type' => [
+                'required' => 'Il campo tipo notifica è obbligatorio.',
+                'exists' => 'Il tipo di notifica selezionato non è valido.',
+            ],
+            'sent_notification_to' => [
+                'required' => 'Il campo destinatario è obbligatorio.',
+                'exists' => 'Il destinatario selezionato non è valido.',
+            ],
+            'icon' => [
+                'string' => 'Il campo icona deve essere una stringa.',
+                'max' => 'Il campo icona non può avere più di 30 caratteri.',
+            ],
+            'send_at' => [
+                'required' => 'Il campo data/ora invio è obbligatorio.',
+                'date' => 'Il campo data/ora invio deve essere una data valida.',
+                'after' => 'La data/ora invio deve essere successiva alla data/ora attuale.',
+            ],
+            'expired_at' => [
+                'date' => 'Il campo data scadenza deve essere una data valida.',
+                'after' => 'La data scadenza deve essere successiva alla data/ora attuale.',
+            ],
+            'send_to' => [
+                'required' => 'Il campo invia a è obbligatorio.',
+                'string' => 'Il campo invia a deve essere una stringa.',
+            ],
+            'users' => [
+                'required_if' => 'Il campo utenti è obbligatorio quando il destinatario è "Utenti Specifici".',
+                'array' => 'Il campo utenti deve essere un array.',
+                'exists' => 'Uno o più utenti selezionati non sono validi.',
+            ],
+            'profiles' => [
+                'required_if' => 'Il campo profili è obbligatorio quando il destinatario è "Profili Specifici".',
+                'array' => 'Il campo profili deve essere un array.',
+                'exists' => 'Uno o più profili selezionati non sono validi.',
+            ],
+        ],
+    ],
 ];
 

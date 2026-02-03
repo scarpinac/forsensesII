@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 // Schedule para processar notificações agendadas a cada minuto
-Schedule::command('notifications:process-scheduled')->everyMinute()->withoutOverlapping();
+Schedule::command('notifications:process-scheduled')->everyThirtyMinutes()->withoutOverlapping();

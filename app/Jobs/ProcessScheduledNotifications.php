@@ -51,31 +51,31 @@ class ProcessScheduledNotifications implements ShouldQueue
     private function processNotification(Notificacao $notificacao): void
     {
         $enviarPara = $notificacao->enviarNotificacaoPara;
-        $destinatarios = [];
+        $destinatarios = User::get();
 
-        switch ($enviarPara->descricao) {
-            case 'Todos os Usuários':
-                $destinatarios = User::where('ativo', true)->get();
-                break;
-
-            case 'Usuários Específicos':
-                $usuariosIds = json_decode($notificacao->enviado_para, true) ?? [];
-                $destinatarios = User::whereIn('id', $usuariosIds)->where('ativo', true)->get();
-                break;
-
-            case 'Perfis Específicos':
-                $perfisIds = json_decode($notificacao->enviado_para, true) ?? [];
-                $usuariosIds = User::whereIn('perfil_id', $perfisIds)
-                    ->where('ativo', true)
-                    ->pluck('id')
-                    ->toArray();
-                $destinatarios = User::whereIn('id', $usuariosIds)->get();
-                break;
-
-            default:
-                Log::warning("Tipo de envio não reconhecido: {$enviarPara->descricao}");
-                return;
-        }
+//        switch ($enviarPara->descricao) {
+//            case 'Todos os Usuários':
+//                $destinatarios = User::where('ativo', true)->get();
+//                break;
+//
+//            case 'Usuários Específicos':
+//                $usuariosIds = json_decode($notificacao->enviado_para, true) ?? [];
+//                $destinatarios = User::whereIn('id', $usuariosIds)->where('ativo', true)->get();
+//                break;
+//
+//            case 'Perfis Específicos':
+//                $perfisIds = json_decode($notificacao->enviado_para, true) ?? [];
+//                $usuariosIds = User::whereIn('perfil_id', $perfisIds)
+//                    ->where('ativo', true)
+//                    ->pluck('id')
+//                    ->toArray();
+//                $destinatarios = User::whereIn('id', $usuariosIds)->get();
+//                break;
+//
+//            default:
+//                Log::warning("Tipo de envio não reconhecido: {$enviarPara->descricao}");
+//                return;
+//        }
 
         // Criar registros de notificação para cada usuário
         foreach ($destinatarios as $usuario) {

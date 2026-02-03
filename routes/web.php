@@ -152,7 +152,8 @@ Route::middleware(['auth', 'signed'])->group(function () {
             Route::get('/{notificacao}', [NotificacaoController::class, 'show'])->name('show');
             Route::get('/{notificacao}/edit', [NotificacaoController::class, 'edit'])->name('edit');
             Route::put('/{notificacao}', [NotificacaoController::class, 'update'])->name('update');
-            Route::delete('/{notificacao}', [NotificacaoController::class, 'destroy'])->name('destroy');
+            Route::get('/{notificacao}/destroy', [NotificacaoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{notificacao}', [NotificacaoController::class, 'delete'])->name('delete');
 
             Route::get('/{notificacao}/history', [NotificacaoController::class, 'history'])->name('history');
             Route::get('/{notificacao}/history/{historico}/details', [NotificacaoController::class, 'historyDetails'])->name('history.details');
