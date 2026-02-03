@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/sistema/usuario.js',
                 'resources/js/sistema/padrao.js',
                 'resources/js/sistema/padraoTipo.js',
+                'resources/js/dashboard.js',
                 'resources/scss/custom.scss'
             ],
             refresh: true,

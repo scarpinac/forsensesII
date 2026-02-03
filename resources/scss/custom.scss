@@ -435,3 +435,75 @@ input:disabled, textarea:disabled, select:disabled {
     white-space: nowrap;
 }
 
+// CSS Global para todas as telas - Card com altura da sidebar e scroll
+.content-wrapper {
+    height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.content-wrapper > .container-fluid {
+    height: 100% !important;
+    padding: 0 !important;
+}
+
+// Card principal com altura máxima igual à sidebar
+.content-wrapper > .container-fluid > .card:first-child {
+    height: calc(100vh - 3.5rem) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.content-wrapper > .container-fluid > .card:first-child .card-body {
+    height: 100% !important;
+    overflow-y: auto !important;
+    padding: 1rem !important;
+}
+
+// Scroll customizado
+.content-wrapper::-webkit-scrollbar,
+.content-wrapper > .container-fluid > .card:first-child::-webkit-scrollbar,
+.content-wrapper > .container-fluid > .card:first-child .card-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content-wrapper::-webkit-scrollbar-track,
+.content-wrapper > .container-fluid > .card:first-child::-webkit-scrollbar-track,
+.content-wrapper > .container-fluid > .card:first-child .card-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.content-wrapper::-webkit-scrollbar-thumb,
+.content-wrapper > .container-fluid > .card:first-child::-webkit-scrollbar-thumb,
+.content-wrapper > .container-fluid > .card:first-child .card-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.content-wrapper::-webkit-scrollbar-thumb:hover,
+.content-wrapper > .container-fluid > .card:first-child::-webkit-scrollbar-thumb:hover,
+.content-wrapper > .container-fluid > .card:first-child .card-body::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+// Ajuste para sidebar
+.main-sidebar {
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+@media (min-width: 992px) {
+    .content-wrapper {
+        margin-left: 250px !important;
+    }
+    
+    .sidebar-collapse .content-wrapper {
+        margin-left: 0 !important;
+    }
+}
+

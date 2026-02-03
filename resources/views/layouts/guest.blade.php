@@ -51,7 +51,7 @@
             .login-logo {
                 max-width: 200px;
                 max-height: 80px;
-                margin: 0 auto 1rem auto;
+                margin: 0 auto 0 auto;
                 display: block;
             }
 

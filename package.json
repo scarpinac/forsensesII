@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@tinymce/tinymce-vue": "^6.3.0",
+        "chart.js": "^4.5.1",
         "jquery-textcomplete": "^1.8.5",
         "select2": "^4.1.0-rc.0"
     }
