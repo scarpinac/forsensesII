@@ -39,15 +39,15 @@
                 <table class="table-system table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="col-md-10">{{__('labels.menu.description')}}</th>
-                            <th class="col-md-2">{{__('labels.menu.actions')}}</th>
+                            <th class="whiteSpace-nowrap col-md-10">{{__('labels.menu.description')}}</th>
+                            <th class="whiteSpace-nowrap col-md-2">{{__('labels.menu.actions')}}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($menus as $menu)
                             <tr>
-                                <td class="text-left">{{ $menu->descricao }}</td>
-                                <td class="text-center">
+                                <td class="whiteSpace-nowrap text-left">{{ $menu->descricao }}</td>
+                                <td class="whiteSpace-nowrap text-center">
                                     @if(Auth::user()->canAccess('sistema.menu.edit'))
                                         <a class="btn btn-outline-primary move btn-sm" title="{{__('labels.menu.edit')}}"
                                            href="{{ URL::signedRoute('sistema.menu.edit', ['menu' => $menu]) }}">

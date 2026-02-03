@@ -11,22 +11,22 @@ body {
         .btn {
             font-size: 12px;
             padding: 4px 8px;
-            
+
             &:hover {
                 background-color: #e9ecef;
                 border-color: #adb5bd;
             }
-            
+
             i {
                 font-size: 12px;
             }
         }
-        
+
         .dropdown-menu {
             a.dropdown-item {
                 font-size: 13px;
                 padding: 4px 12px;
-                
+
                 &:hover {
                     background-color: #f8f9fa;
                 }
@@ -430,3 +430,8 @@ input:disabled, textarea:disabled, select:disabled {
         transform: translateX(2px);
     }
 }
+
+.whiteSpace-nowrap {
+    white-space: nowrap;
+}
+

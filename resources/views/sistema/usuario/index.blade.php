@@ -39,19 +39,19 @@
                 <table class="table-system table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="col-md-4">{{__('labels.user.name')}}</th>
-                            <th class="col-md-4">{{__('labels.user.email')}}</th>
-                            <th class="col-md-2">{{__('labels.user.admin')}}</th>
-                            <th class="col-md-2">{{__('labels.user.actions')}}</th>
+                            <th class="whiteSpace-nowrap col-md-4">{{__('labels.user.name')}}</th>
+                            <th class="whiteSpace-nowrap col-md-4">{{__('labels.user.email')}}</th>
+                            <th class="whiteSpace-nowrap col-md-2">{{__('labels.user.admin')}}</th>
+                            <th class="whiteSpace-nowrap col-md-2">{{__('labels.user.actions')}}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($usuarios as $usuario)
                             <tr>
-                                <td class="text-left">{{ $usuario->name }}</td>
-                                <td class="text-left">{{ $usuario->email }}</td>
-                                <td class="text-left">{{ $usuario->admin ? 'Sim' : 'Não' }}</td>
-                                <td class="text-center">
+                                <td class="whiteSpace-nowrap text-left">{{ $usuario->name }}</td>
+                                <td class="whiteSpace-nowrap text-left">{{ $usuario->email }}</td>
+                                <td class="whiteSpace-nowrap text-left">{{ $usuario->admin ? 'Sim' : 'Não' }}</td>
+                                <td class="whiteSpace-nowrap text-center">
                                     @if(Auth::user()->canAccess('sistema.usuario.edit'))
                                         <a class="btn btn-outline-primary move btn-sm" title="{{__('labels.user.edit')}}"
                                            href="{{ URL::signedRoute('sistema.usuario.edit', ['usuario' => $usuario]) }}">

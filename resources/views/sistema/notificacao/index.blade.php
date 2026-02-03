@@ -39,22 +39,22 @@
                 <table class="table-system table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="col-md-6">{{__('labels.notification.title')}}</th>
-{{--                            <th class="col-md-2">{{__('labels.notification.sendTo')}}</th>--}}
-                            <th class="col-md-3">{{__('labels.notification.sendAt')}}</th>
-                            <th class="col-md-1">{{__('labels.notification.sended')}}</th>
-                            <th class="col-md-2">{{__('labels.notification.actions')}}</th>
+                            <th class="whiteSpace-nowrap col-md-6">{{__('labels.notification.title')}}</th>
+{{--                            <th class="whiteSpace-nowrap col-md-2">{{__('labels.notification.sendTo')}}</th>--}}
+                            <th class="whiteSpace-nowrap col-md-3">{{__('labels.notification.sendAt')}}</th>
+                            <th class="whiteSpace-nowrap col-md-1">{{__('labels.notification.sended')}}</th>
+                            <th class="whiteSpace-nowrap col-md-2">{{__('labels.notification.actions')}}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($notificacoes as $notificacao)
                             <tr>
-                                <td class="text-left">{{ $notificacao->titulo }}</td>
-{{--                                <td class="text-left">{{ $notificacao->enviarNotificacaoPara->descricao }}</td>--}}
-                                <td class="text-left">{{ $notificacao->enviar_em->format('d/m/Y H:i') }}</td>
-                                <td class="text-left">{{ $notificacao->enviado ? 'Sim' : 'Não' }}</td>
+                                <td class="whiteSpace-nowrap text-left">{{ $notificacao->titulo }}</td>
+{{--                                <td class="whiteSpace-nowrap text-left">{{ $notificacao->enviarNotificacaoPara->descricao }}</td>--}}
+                                <td class="whiteSpace-nowrap text-left">{{ $notificacao->enviar_em->format('d/m/Y H:i') }}</td>
+                                <td class="whiteSpace-nowrap text-left">{{ $notificacao->enviado ? 'Sim' : 'Não' }}</td>
 
-                                <td class="text-center">
+                                <td class="whiteSpace-nowrap text-center">
                                     @if(Auth::user()->canAccess('sistema.notificacao.edit'))
                                         <a class="btn btn-outline-primary move btn-sm" title="{{__('labels.notification.edit')}}"
                                            href="{{ URL::signedRoute('sistema.notificacao.edit', ['notificacao' => $notificacao]) }}">

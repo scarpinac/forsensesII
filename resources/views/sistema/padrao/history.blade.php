@@ -54,10 +54,10 @@
             <table class="table-system table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="col-md-3">{{ __('labels.padrao.history.table.date') }}</th>
-                        <th class="col-md-3">{{ __('labels.padrao.history.table.user') }}</th>
-                        <th class="col-md-4">{{ __('labels.padrao.history.table.type') }}</th>
-                        <th class="col-md-2 text-center">{{ __('labels.padrao.history.table.actions') }}</th>
+                        <th class="whiteSpace-nowrap col-md-3">{{ __('labels.padrao.history.table.date') }}</th>
+                        <th class="whiteSpace-nowrap col-md-3">{{ __('labels.padrao.history.table.user') }}</th>
+                        <th class="whiteSpace-nowrap col-md-4">{{ __('labels.padrao.history.table.type') }}</th>
+                        <th class="whiteSpace-nowrap col-md-2 text-center">{{ __('labels.padrao.history.table.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,7 +66,7 @@
                             <td>{{ $historico->created_at->format('d/m/Y H:i:s') }}</td>
                             <td>{{ $historico->user->name }}</td>
                             <td>{{ $historico->tipoAlteracao->descricao }}</td>
-                            <td class="text-center">
+                            <td class="whiteSpace-nowrap text-center">
                                 <button type="button" class="detalhes btn btn-outline-info btn-sm"
                                         data-details-url="{{ URL::signedRoute('sistema.padrao.history.details', ['padrao' => $historico->padrao->id, 'historico' => $historico->id]) }}"
                                         title="{{ __('labels.padrao.history.button.details') }}">
@@ -101,7 +101,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="detailsContent">
+                <div id="detailsContent" class="table-responsive">
                 </div>
             </div>
             <div class="modal-footer">

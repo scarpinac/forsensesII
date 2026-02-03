@@ -23,9 +23,9 @@ $(".detalhes").on('click', function() {
             const thead = document.createElement('thead');
             thead.innerHTML = `
                 <tr>
-                    <th>Campo</th>
-                    <th>Valor Anterior</th>
-                    <th>Novo Valor</th>
+                    <th class="whiteSpace-nowrap col-md-4">Campo</th>
+                    <th class="whiteSpace-nowrap col-md-4">Valor Anterior</th>
+                    <th class="whiteSpace-nowrap col-md-4">Novo Valor</th>
                 </tr>
             `;
             table.appendChild(thead);
@@ -59,9 +59,9 @@ $(".detalhes").on('click', function() {
                 };
 
                 row.innerHTML = `
-                    <td><strong>${fieldName}</strong></td>
-                    <td>${formatValue(anterior)}</td>
-                    <td>${formatValue(novo)}</td>
+                    <td class="whiteSpace-nowrap"><strong>${fieldName}</strong></td>
+                    <td class="whiteSpace-nowrap">${formatValue(anterior)}</td>
+                    <td class="whiteSpace-nowrap">${formatValue(novo)}</td>
                 `;
 
                 // Destaca as linhas onde houve alteração

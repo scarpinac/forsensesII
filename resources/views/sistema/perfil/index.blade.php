@@ -39,15 +39,15 @@
                 <table class="table-system table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="col-md-10">{{__('labels.access_level.description')}}</th>
-                            <th class="col-md-2">{{__('labels.access_level.actions')}}</th>
+                            <th class="whiteSpace-nowrap col-md-10">{{__('labels.access_level.description')}}</th>
+                            <th class="whiteSpace-nowrap col-md-2">{{__('labels.access_level.actions')}}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($perfis as $perfil)
                             <tr>
-                                <td class="text-left">{{ $perfil->descricao }}</td>
-                                <td class="text-center">
+                                <td class="whiteSpace-nowrap text-left">{{ $perfil->descricao }}</td>
+                                <td class="whiteSpace-nowrap text-center">
                                     @if(Auth::user()->canAccess('sistema.perfil.associate'))
                                         <a class="btn btn-outline-secondary move btn-sm" title="{{__('labels.access_level.associate')}}"
                                            href="{{ URL::signedRoute('sistema.perfil.associate', ['perfil' => $perfil]) }}">

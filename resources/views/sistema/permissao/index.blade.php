@@ -39,15 +39,15 @@
                 <table class="table-system table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="col-md-10">{{__('labels.permission.description')}}</th>
-                            <th class="col-md-2">{{__('labels.permission.actions')}}</th>
+                            <th class="whiteSpace-nowrap col-md-10">{{__('labels.permission.description')}}</th>
+                            <th class="whiteSpace-nowrap col-md-2">{{__('labels.permission.actions')}}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($permissoes as $permissao)
                             <tr>
-                                <td class="text-left">{{ $permissao->descricao }}</td>
-                                <td class="text-center">
+                                <td class="whiteSpace-nowrap text-left">{{ $permissao->descricao }}</td>
+                                <td class="whiteSpace-nowrap text-center">
                                     @if(Auth::user()->canAccess('sistema.permissao.edit'))
                                         <a class="btn btn-outline-primary move btn-sm" title="{{__('labels.permission.edit')}}"
                                            href="{{ URL::signedRoute('sistema.permissao.edit', ['permissao' => $permissao]) }}">

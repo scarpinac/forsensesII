@@ -55,10 +55,10 @@
             <table class="table-system table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="col-md-3">{{ __('labels.padraoTipo.history.table.date') }}</th>
-                        <th class="col-md-3">{{ __('labels.padraoTipo.history.table.user') }}</th>
-                        <th class="col-md-4">{{ __('labels.padraoTipo.history.table.type') }}</th>
-                        <th class="col-md-2 text-center">{{ __('labels.padraoTipo.history.table.actions') }}</th>
+                        <th class="whiteSpace-nowrap col-md-3">{{ __('labels.padraoTipo.history.table.date') }}</th>
+                        <th class="whiteSpace-nowrap col-md-3">{{ __('labels.padraoTipo.history.table.user') }}</th>
+                        <th class="whiteSpace-nowrap col-md-4">{{ __('labels.padraoTipo.history.table.type') }}</th>
+                        <th class="whiteSpace-nowrap col-md-2 text-center">{{ __('labels.padraoTipo.history.table.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@
                             <td>{{ $historico->created_at->format('d/m/Y H:i:s') }}</td>
                             <td>{{ $historico->user->name }}</td>
                             <td>{{ $historico->tipoAlteracao->descricao }}</td>
-                            <td class="text-center">
+                            <td class="whiteSpace-nowrap text-center">
                                 <button type="button" class="detalhes btn btn-outline-info btn-sm"
                                         data-details-url="{{ URL::signedRoute('sistema.padrao.padraoTipo.history.details', ['padrao' => $padrao, 'padraoTipo' => $historico->padraoTipo->id, 'historico' => $historico->id]) }}"
                                         title="{{ __('labels.padraoTipo.history.button.details') }}">
@@ -93,7 +93,7 @@
 
 <!-- Modal de Detalhes -->
 <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="detailsModalLabel">{{ __('labels.padraoTipo.modal.details.title') }}</h5>
@@ -102,7 +102,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="detailsContent">
+                <div class="table-responsive">
+                    <div id="detailsContent" class="table-responsive">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

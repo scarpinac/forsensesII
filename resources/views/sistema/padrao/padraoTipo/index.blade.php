@@ -40,17 +40,17 @@
                 <table class="table-system table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="col-md-7">{{__('labels.padraoTipo.fields.descricao')}}</th>
-                            <th class="col-md-3">{{__('labels.padraoTipo.fields.padrao')}}</th>
-                            <th class="col-md-2">{{__('labels.padraoTipo.fields.actions')}}</th>
+                            <th class="whiteSpace-nowrap col-md-7">{{__('labels.padraoTipo.fields.descricao')}}</th>
+                            <th class="whiteSpace-nowrap col-md-3">{{__('labels.padraoTipo.fields.padrao')}}</th>
+                            <th class="whiteSpace-nowrap col-md-2">{{__('labels.padraoTipo.fields.actions')}}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($padraoTipos as $padraoTipo)
                             <tr>
-                                <td class="text-left">{{ $padraoTipo->descricao }}</td>
-                                <td class="text-left">{{ $padrao->descricao }}</td>
-                                <td class="text-center">
+                                <td class="whiteSpace-nowrap text-left">{{ $padraoTipo->descricao }}</td>
+                                <td class="whiteSpace-nowrap text-left">{{ $padrao->descricao }}</td>
+                                <td class="whiteSpace-nowrap text-center">
                                     @if(Auth::user()->canAccess('sistema.padrao.padraoTipo.show'))
                                         <a class="btn btn-outline-orange move btn-sm" title="{{__('labels.padraoTipo.visualize')}}"
                                            href="{{ URL::signedRoute('sistema.padrao.padraoTipo.show', ['padrao' => $padrao, 'padraoTipo' => $padraoTipo]) }}">
