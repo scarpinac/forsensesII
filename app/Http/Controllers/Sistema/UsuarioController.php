@@ -107,7 +107,11 @@ class UsuarioController extends Controller
         }
 
         if($updated) {
-            return redirect()->signedRoute('sistema.usuario.index')->with('success', __('labels.user.success.updated'));
+            if(Auth::user()->canAccess('sistema.usuario.index')) {
+                return redirect()->signedRoute('sistema.usuario.index')->with('success', __('labels.user.success.updated'));
+            } else {
+                return redirect()->signedRoute('dashboard')->with('success', __('labels.user.success.updated'));
+            }
         }
         return redirect()->signedRoute('sistema.usuario.index')->with('error', __('labels.user.error.not_updated'));
     }

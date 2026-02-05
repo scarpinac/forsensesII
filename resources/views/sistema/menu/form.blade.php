@@ -3,17 +3,17 @@
 function toggleCollapse(itemId, event) {
     event.preventDefault();
     event.stopPropagation();
-    
+
     const childrenContainer = document.getElementById(itemId + '_children');
     const icon = document.getElementById(itemId + '_icon');
-    
+
     console.log('Toggle collapse called for:', itemId);
     console.log('Children container:', childrenContainer);
     console.log('Icon:', icon);
-    
+
     if (childrenContainer) {
         const isHidden = childrenContainer.style.display === 'none';
-        
+
         if (isHidden) {
             childrenContainer.style.display = 'block';
             if (icon) {
@@ -64,25 +64,33 @@ function toggleCollapse(itemId, event) {
     </div>
 </div>
 <div class="row">
-    <div class="form-group col-md-12">
-        <label for="menuPai_id">{{ __('labels.menu.form.parent_menu') }}</label>
-        <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
-            <div class="form-check mb-2">
-                <label class="form-check-label" for="menu_pai_none">
-                    <input class="form-check-input mr-2" type="radio" name="menuPai_id" value="" id="menu_pai_none" {{ old('menuPai_id', $menu->menuPai_id ?? null) == '' ? 'checked' : '' }}>
-                    <strong>{{ __('labels.menu.form.none') }}</strong>
-                </label>
-            </div>
-            @if(isset($htmlMenus))
-                {!! $htmlMenus !!}
-            @endif
+    @if(isset($bloquearCampos) && $bloquearCampos)
+        <div class="form-group col-md-12">
+            <label for="menuPai_id">{{ __('labels.menu.form.parent_menu') }}</label>
+            <input type="text" class="form-control" value="{{ $menuPai ? $menuPai->descricao : __('labels.menu.form.none') }}" disabled>
         </div>
-        @error('menuPai_id')
+    @else
+        <div class="form-group col-md-12">
+            <label for="menuPai_id">{{ __('labels.menu.form.parent_menu') }}</label>
+            <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                <div class="form-check mb-2">
+                    <label class="form-check-label" for="menu_pai_none">
+                        <input class="form-check-input mr-2" type="radio" name="menuPai_id" value="" id="menu_pai_none" {{ old('menuPai_id', $menu->menuPai_id ?? null) == '' ? 'checked' : '' }}>
+                        <strong>{{ __('labels.menu.form.none') }}</strong>
+                    </label>
+                </div>
+                @if(isset($htmlMenus))
+                    {!! $htmlMenus !!}
+                @endif
+            </div>
+            @error('menuPai_id')
             <div class="invalid-feedback font-weight-bold" role="alert">
                 {{ $message }}
             </div>
-        @enderror
-    </div>
+            @enderror
+        </div>
+    @endif
+
 </div>
 <div class="row">
     <div class="form-group col-md-6">

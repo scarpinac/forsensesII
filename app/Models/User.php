@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -148,5 +149,11 @@ class User extends Authenticatable implements HasMedia
     public function perfis(): BelongsToMany
     {
         return $this->belongsToMany(Perfil::class, 'perfil_usuario', 'user_id', 'perfil_id');
+    }
+
+
+    public function adminlte_profile_url()
+    {
+        return 'sistema.usuario.edit';
     }
 }

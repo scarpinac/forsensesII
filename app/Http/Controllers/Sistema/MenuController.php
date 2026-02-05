@@ -71,14 +71,12 @@ class MenuController extends Controller
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
         $situacoes = $situacaoPadrao ? $situacaoPadrao->tipos()->orderBy('descricao')->get() : collect();
 
-        // Carregar todos os menus não deletados para a árvore
-        $todosMenus = Menu::whereNull('deleted_at')->where('id', '!=', $menu->id)->orderBy('descricao')->get();
-        $arvoreMenus = $this->organizarMenusEmArvore($todosMenus);
-        $htmlMenus = $this->renderizarArvoreMenus($arvoreMenus, 0, $menu->menuPai_id);
+        // Carregar menu pai para exibição quando campos estão bloqueados
+        $menuPai = $menu->menuPai_id ? Menu::find($menu->menuPai_id) : null;
 
         $bloquearCampos = true;
 
-        return view('sistema.menu.show', compact('menu', 'menus', 'permissoes', 'situacoes', 'bloquearCampos', 'htmlMenus'));
+        return view('sistema.menu.show', compact('menu', 'menus', 'permissoes', 'situacoes', 'bloquearCampos', 'menuPai'));
     }
 
     /**
@@ -124,14 +122,11 @@ class MenuController extends Controller
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
         $situacoes = $situacaoPadrao ? $situacaoPadrao->tipos()->orderBy('descricao')->get() : collect();
 
-        // Carregar todos os menus não deletados para a árvore
-        $todosMenus = Menu::whereNull('deleted_at')->where('id', '!=', $menu->id)->orderBy('descricao')->get();
-        $arvoreMenus = $this->organizarMenusEmArvore($todosMenus);
-        $htmlMenus = $this->renderizarArvoreMenus($arvoreMenus, 0, $menu->menuPai_id);
+        $menuPai = $menu->menuPai_id ? Menu::find($menu->menuPai_id) : null;
 
         $bloquearCampos = true;
 
-        return view('sistema.menu.destroy', compact('menu', 'menus', 'permissoes', 'situacoes', 'bloquearCampos', 'htmlMenus'));
+        return view('sistema.menu.destroy', compact('menu', 'menus', 'permissoes', 'situacoes', 'bloquearCampos', 'menuPai'));
     }
 
     /**
@@ -157,9 +152,12 @@ class MenuController extends Controller
         $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
         $situacoes = $situacaoPadrao ? $situacaoPadrao->tipos()->orderBy('descricao')->get() : collect();
 
+        // Carregar menu pai para exibição quando campos estão bloqueados
+        $menuPai = $menu->menuPai_id ? Menu::find($menu->menuPai_id) : null;
+
         $bloquearCampos = true;
 
-        return view('sistema.menu.history', compact('menu', 'menus', 'permissoes', 'situacoes', 'bloquearCampos'));
+        return view('sistema.menu.history', compact('menu', 'menus', 'permissoes', 'situacoes', 'bloquearCampos', 'menuPai'));
     }
 
     /**

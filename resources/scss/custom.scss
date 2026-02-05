@@ -501,9 +501,20 @@ input:disabled, textarea:disabled, select:disabled {
     .content-wrapper {
         margin-left: 250px !important;
     }
-    
+
     .sidebar-collapse .content-wrapper {
         margin-left: 0 !important;
     }
 }
 
+.bg-light-gray {
+    background-color: #eaeaea !important;
+}
+
+.dropdown-menu {
+    color: rgba(0, 0, 0, .5);
+}
+
+.navbar-nav>.user-menu>.dropdown-menu>li.user-header {
+    height: 150px;
+ }
