@@ -14,8 +14,8 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ URL::signedRoute('dashboard') }}">{{ __('labels.breadcrumb.home') }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ URL::signedRoute('sistema.perfil.index') }}">{{ __('labels.access_level.title') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ URL::signedRoute('dashboard') }}">{{ __('labels.access_level.breadcrumb.home') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ URL::signedRoute('sistema.perfil.index') }}">{{ __('labels.access_level.breadcrumb.listing') }}</a></li>
                     <li class="breadcrumb-item active">{{ __('labels.access_level.associate.title') }}</li>
                 </ol>
             </div>

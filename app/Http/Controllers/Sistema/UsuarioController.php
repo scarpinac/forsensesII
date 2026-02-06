@@ -43,6 +43,7 @@ class UsuarioController extends Controller
     public function store(StoreRequest $request)
     {
         $validated = $request->validated();
+        $validated['admin'] = 0;
 
         $avatarFile = $request->file('avatar');
         unset($validated['avatar']);

@@ -25,7 +25,6 @@ class StoreRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'admin' => 'required|integer|in:0,1',
             'avatar' => 'nullable|mimes:jpeg,png,jpg,gif,webp|max:2024', // 2MB max
         ];
     }
@@ -45,9 +44,6 @@ class StoreRequest extends FormRequest
             'password.string' => __('messages.usuario.validation.password.string'),
             'password.min' => __('messages.usuario.validation.password.min'),
             'password.confirmed' => __('messages.usuario.validation.password.confirmed'),
-            'admin.required' => __('messages.usuario.validation.admin.required'),
-            'admin.boolean' => __('messages.usuario.validation.admin.boolean'),
-            'admin.in' => __('messages.usuario.validation.admin.in'),
             'avatar.mimes' => __('messages.usuario.validation.avatar.mimes'),
             'avatar.max' => __('messages.usuario.validation.avatar.max'),
         ];

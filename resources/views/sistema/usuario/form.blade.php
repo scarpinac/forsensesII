@@ -42,22 +42,6 @@
         @enderror
     </div>
 </div>
-
-<div class="row">
-    <div class="form-group col-md-6">
-        <label for="admin">{{ __('labels.user.admin') }}</label>
-        <select {{isset($bloquearCampos) && $bloquearCampos ? 'disabled' : ''}} name="admin" id="admin" class="form-control @error('admin') is-invalid @enderror">
-            <option value="0" {{ old('admin', $usuario->admin ?? null) == 0 ? 'selected' : '' }}>{{ __('labels.user.admin.no') }}</option>
-            <option value="1" {{ old('admin', $usuario->admin ?? null) == 1 ? 'selected' : '' }}>{{ __('labels.user.admin.yes') }}</option>
-        </select>
-        @error('admin')
-            <div class="invalid-feedback font-weight-bold" role="alert">
-                {{ $message }}
-            </div>
-        @enderror
-    </div>
-</div>
-
 <div class="row">
     <div class="form-group col-md-12">
         <label for="avatar">{{ __('labels.user.avatar') }}</label>
