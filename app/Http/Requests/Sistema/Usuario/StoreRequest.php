@@ -26,6 +26,7 @@ class StoreRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'avatar' => 'nullable|mimes:jpeg,png,jpg,gif,webp|max:2024', // 2MB max
+            'situacao_id' => 'required|exists:padraotipo,id',
         ];
     }
 
@@ -46,6 +47,8 @@ class StoreRequest extends FormRequest
             'password.confirmed' => __('messages.usuario.validation.password.confirmed'),
             'avatar.mimes' => __('messages.usuario.validation.avatar.mimes'),
             'avatar.max' => __('messages.usuario.validation.avatar.max'),
+            'situacao_id.required' => __('messages.usuario.validation.situacao_id.required'),
+            'situacao_id.exists' => __('messages.usuario.validation.situacao_id.exists'),
         ];
     }
 }

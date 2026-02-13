@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GeracaoController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Sistema\ApiController;
 use App\Http\Controllers\Sistema\MenuController;
+use App\Http\Controllers\Sistema\ParametroController;
 use App\Http\Controllers\Sistema\PermissaoController;
 use App\Http\Controllers\Sistema\UsuarioController;
 use App\Http\Controllers\Sistema\PerfilController;
@@ -11,6 +14,7 @@ use App\Http\Controllers\Sistema\PerfilPermissaoController;
 use App\Http\Controllers\Sistema\PadraoController;
 use App\Http\Controllers\Sistema\PadraoTipoController;
 use App\Http\Controllers\Sistema\NotificacaoController;
+use App\Http\Controllers\Sistema\GeradorCadastrosController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -74,6 +78,38 @@ Route::middleware(['auth', 'signed'])->group(function () {
             Route::get('/{usuario}/history/{historico}/details', [UsuarioController::class, 'historyDetails'])->name('history.details');
 
             Route::get('/{usuario}', [UsuarioController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DO USUÁRIO
+        Route::prefix('api')->name('api.')->group(function () {
+            Route::get('/', [ApiController::class, 'index'])->name('index');
+            Route::get('/create', [ApiController::class, 'create'])->name('create');
+            Route::post('/', [ApiController::class, 'store'])->name('store');
+
+            Route::get('/{api}/edit', [ApiController::class, 'edit'])->name('edit');
+            Route::put('/{api}', [ApiController::class, 'update'])->name('update');
+            Route::get('/{api}/destroy', [ApiController::class, 'destroy'])->name('destroy');
+            Route::delete('/{api}', [ApiController::class, 'delete'])->name('delete');
+            Route::get('/{api}/history', [ApiController::class, 'history'])->name('history');
+            Route::get('/{api}/history/{historico}/details', [ApiController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{api}', [ApiController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DO USUÁRIO
+        Route::prefix('parametro')->name('parametro.')->group(function () {
+            Route::get('/', [ParametroController::class, 'index'])->name('index');
+            Route::get('/create', [ParametroController::class, 'create'])->name('create');
+            Route::post('/', [ParametroController::class, 'store'])->name('store');
+
+            Route::get('/{parametro}/edit', [ParametroController::class, 'edit'])->name('edit');
+            Route::put('/{parametro}', [ParametroController::class, 'update'])->name('update');
+            Route::get('/{parametro}/destroy', [ParametroController::class, 'destroy'])->name('destroy');
+            Route::delete('/{parametro}', [ParametroController::class, 'delete'])->name('delete');
+            Route::get('/{parametro}/history', [ParametroController::class, 'history'])->name('history');
+            Route::get('/{parametro}/history/{historico}/details', [ParametroController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{parametro}', [ParametroController::class, 'show'])->name('show');
         });
 
         # ROTAS DO PERFIL
@@ -160,6 +196,28 @@ Route::middleware(['auth', 'signed'])->group(function () {
             Route::post('/marcar-como-lida', [NotificacaoController::class, 'marcarComoLida'])->name('marcar-como-lida');
             Route::get('/{notificacao}/detalhes', [NotificacaoController::class, 'getNotificationDetails'])->name('detalhes');
 
+        });
+
+        # ROTAS DO GERADOR DE CADASTROS
+        Route::prefix('gerador')->name('gerador.')->group(function () {
+            Route::get('/', [GeradorCadastrosController::class, 'index'])->name('index');
+            Route::post('/generate', [GeradorCadastrosController::class, 'generate'])->name('generate');
+            Route::get('/modulos', [GeradorCadastrosController::class, 'getModulosDisponiveis'])->name('modulos');
+            Route::get('/tabelas', [GeradorCadastrosController::class, 'getTabelasDisponiveis'])->name('tabelas');
+        });
+
+        # ROTAS DE GERACOES
+        Route::prefix('geracoes')->name('geracoes.')->group(function () {
+            Route::get('/', [GeracaoController::class, 'index'])->name('index');
+            Route::get('/create', [GeracaoController::class, 'create'])->name('create');
+            Route::post('/', [GeracaoController::class, 'store'])->name('store');
+            Route::get('/{geracao}', [GeracaoController::class, 'show'])->name('show');
+            Route::get('/{geracao}/edit', [GeracaoController::class, 'edit'])->name('edit');
+            Route::put('/{geracao}', [GeracaoController::class, 'update'])->name('update');
+            Route::get('/{geracao}/destroy', [GeracaoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{geracao}', [GeracaoController::class, 'delete'])->name('delete');
+            Route::get('/{geracao}/history', [GeracaoController::class, 'history'])->name('history');
+            Route::get('/{geracao}/history/{historico}/details', [GeracaoController::class, 'historyDetails'])->name('history.details');
         });
 
     });

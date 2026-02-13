@@ -46,6 +46,47 @@ return [
             ],
         ],
     ],
+
+    // API Form Request Validation Messages
+    'api' => [
+        'validation' => [
+            'api_id' => [
+                'required' => 'The API type field is required.',
+                'exists' => 'The selected API type is invalid.',
+            ],
+            'credencial' => [
+                'required' => 'The credential field is required.',
+                'string' => 'The credential field must be a string.',
+            ],
+            'situacao_id' => [
+                'required' => 'The situation field is required.',
+                'exists' => 'The selected situation is invalid.',
+            ],
+        ],
+    ],
+
+    // Parameter Form Request Validation Messages
+    'parametro' => [
+        'validation' => [
+            'nome' => [
+                'required' => 'The name field is required.',
+                'string' => 'The name field must be a string.',
+                'max' => 'The name field may not be greater than 80 characters.',
+            ],
+            'descricao' => [
+                'required' => 'The description field is required.',
+                'string' => 'The description field must be a string.',
+            ],
+            'tipo_id' => [
+                'required' => 'The type field is required.',
+                'exists' => 'The selected type is invalid.',
+            ],
+            'valor' => [
+                'required' => 'The value field is required.',
+                'string' => 'The value field must be a string.',
+            ],
+        ],
+    ],
     'usuario' => [
         'validation' => [
             'name' => [
@@ -74,6 +115,10 @@ return [
             'avatar' => [
                 'mimes' => 'The avatar must be an image in formats: JPEG, PNG, JPG, GIF or WebP.',
                 'max' => 'The avatar may not be greater than 2MB.',
+            ],
+            'situacao_id' => [
+                'required' => 'The situation field is required.',
+                'exists' => 'The selected situation is invalid.',
             ],
         ],
     ],

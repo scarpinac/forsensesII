@@ -1,0 +1,584 @@
+<?php
+
+namespace App\Services;
+
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
+
+class GeradorService
+{
+    private $data;
+    private $classe;
+    private $moduloPai;
+    private $tabela;
+    private $namespace;
+
+    public function gerarCadastro(array $data): array
+    {
+        $this->data = $data;
+        $this->classe = $data['classe'];
+        $this->moduloPai = $data['modulo_pai'];
+        $this->tabela = Str::snake($this->classe); // Usar exatamente o nome da classe
+        $this->namespace = 'App\\Http\\Controllers\\' . $this->moduloPai;
+
+        $resultado = [
+            'files' => [],
+            'permissoes' => [],
+            'menu' => null
+        ];
+
+        // Gerar arquivos
+        $resultado['files'] = array_merge(
+            $this->gerarMigration(),
+            $this->gerarModel(),
+            $this->gerarController(),
+            $this->gerarRequests(),
+            $this->gerarViews(),
+            $this->gerarObserver()
+        );
+
+        // Executar migration automaticamente
+        \Illuminate\Support\Facades\Artisan::call('migrate', [
+            '--force' => true
+        ]);
+
+        // Gerar permissões
+        if ($data['criar_permissoes']) {
+            $resultado['permissoes'] = $this->gerarPermissoes();
+        }
+
+        // Gerar menu
+        if ($data['criar_menu']) {
+            $resultado['menu'] = $this->gerarMenu();
+        }
+
+        // Registrar rotas
+        $this->registrarRotas();
+
+        return $resultado;
+    }
+
+    private function gerarMigration(): array
+    {
+        $timestamp = date('Y_m_d_His');
+        $filename = "{$timestamp}_create_{$this->tabela}_table.php";
+        $path = database_path("migrations/{$filename}");
+
+        $campos = '';
+        foreach ($this->data['campos'] as $campo) {
+            $campos .= $this->gerarCampoMigration($campo);
+        }
+
+        $content = $this->getTemplateMigration($this->tabela, $campos, $this->data);
+
+        File::put($path, $content);
+        return ["Migration: {$filename}"];
+    }
+
+    private function gerarCampoMigration(array $campo): string
+    {
+        $nome = $campo['nome'];
+        $tipo = $campo['tipo'];
+        $obrigatorio = $campo['obrigatorio'] ?? false;
+        $max = $campo['max'] ?? null;
+        $unique = $campo['unique'] ?? false;
+        $relacionamento = $campo['relacionamento'] ?? null; // Garante que exista
+
+        $line = "            \$table->";
+
+        // Mapear tipos
+        switch ($tipo) {
+            case 'string':
+                $line .= $max ? "string('{$nome}', {$max})" : "string('{$nome}')";
+                break;
+            case 'integer':
+                $line .= "integer('{$nome}')";
+                break;
+            case 'double':
+                $line .= "decimal('{$nome}', 10, 2)";
+                break;
+            case 'date':
+                $line .= "date('{$nome}')";
+                break;
+            case 'boolean':
+                $line .= "boolean('{$nome}')";
+                break;
+            case 'text':
+                $line .= "text('{$nome}')";
+                break;
+            case 'file':
+                $line .= "string('{$nome}')";
+                break;
+            case 'select':
+                $line .= "foreignId('{$nome}')->nullable()";
+                if ($relacionamento && !empty($relacionamento)) {
+                    $tabelaRelacionamento = Str::snake(Str::plural($relacionamento));
+                    $line .= "->constrained('{$tabelaRelacionamento}')";
+                }
+                break;
+        }
+
+        if ($obrigatorio && $tipo !== 'select') {
+            $line = str_replace(')', ')->notNullable()', $line);
+        }
+
+        if ($unique) {
+            $line .= "->unique()";
+        }
+
+        $line .= ";\n            ";
+
+        return $line;
+    }
+
+    private function gerarModel(): array
+    {
+        $path = app_path("Models/{$this->classe}.php");
+
+        $fillable = [];
+        $casts = [];
+        $relationships = [];
+
+        foreach ($this->data['campos'] as $campo) {
+            $fillable[] = "'{$campo['nome']}'";
+
+            if ($campo['tipo'] === 'boolean') {
+                $casts[] = "'{$campo['nome']}' => 'boolean'";
+            } elseif ($campo['tipo'] === 'date') {
+                $casts[] = "'{$campo['nome']}' => 'date'";
+            } elseif ($campo['tipo'] === 'double') {
+                $casts[] = "'{$campo['nome']}' => 'decimal:2'";
+            }
+
+            if ($campo['relacionamento']) {
+                $relationships[] = $this->gerarRelationship($campo);
+            }
+        }
+
+        $content = $this->getTemplateModel(
+            $this->classe,
+            $this->tabela,
+            $fillable,
+            $casts,
+            $relationships,
+            $this->data
+        );
+
+        File::put($path, $content);
+        return ["Model: app/Models/{$this->classe}.php"];
+    }
+
+    private function gerarController(): array
+    {
+        $path = app_path("Http/Controllers/" . strtolower($this->moduloPai) . "/{$this->classe}Controller.php");
+
+        // Criar diretório se não existir
+        $dir = dirname($path);
+        if (!File::exists($dir)) {
+            File::makeDirectory($dir, 0755, true);
+        }
+
+        $content = $this->getTemplateController(
+            $this->classe,
+            $this->moduloPai,
+            $this->tabela,
+            $this->data
+        );
+
+        File::put($path, $content);
+        return ["Controller: app/Http/Controllers/{$this->moduloPai}/{$this->classe}Controller.php"];
+    }
+
+    private function gerarRequests(): array
+    {
+        $files = [];
+        $dir = app_path("Http/Requests/" . strtolower($this->moduloPai) . "/{$this->classe}");
+
+        if (!File::exists($dir)) {
+            File::makeDirectory($dir, 0755, true);
+        }
+
+        // StoreRequest
+        $storePath = "{$dir}/StoreRequest.php";
+        $storeContent = $this->getTemplateStoreRequest($this->classe, $this->moduloPai, $this->data);
+        File::put($storePath, $storeContent);
+        $files[] = "StoreRequest: app/Http/Requests/{$this->moduloPai}/{$this->classe}/StoreRequest.php";
+
+        // UpdateRequest
+        $updatePath = "{$dir}/UpdateRequest.php";
+        $updateContent = $this->getTemplateUpdateRequest($this->classe, $this->moduloPai, $this->data);
+        File::put($updatePath, $updateContent);
+        $files[] = "UpdateRequest: app/Http/Requests/{$this->moduloPai}/{$this->classe}/UpdateRequest.php";
+
+        return $files;
+    }
+
+    private function gerarViews(): array
+    {
+        $files = [];
+        $dir = resource_path("views/" . strtolower($this->moduloPai) . "/" . Str::kebab($this->classe));
+
+        if (!File::exists($dir)) {
+            File::makeDirectory($dir, 0755, true);
+        }
+
+        $views = ['index', 'create', 'edit', 'show', 'destroy', 'history', 'form'];
+
+        foreach ($views as $view) {
+            $path = "{$dir}/{$view}.blade.php";
+            $content = $this->getTemplateView($view, $this->classe, $this->moduloPai, $this->data);
+            File::put($path, $content);
+            $files[] = "View: resources/views/{$this->moduloPai}/" . Str::kebab($this->classe) . "/{$view}.blade.php";
+        }
+
+        return $files;
+    }
+
+    private function gerarObserver(): array
+    {
+        $path = app_path("Observers/{$this->classe}Observer.php");
+        $historicoModel = $this->classe . 'Historico';
+
+        $content = $this->getTemplateObserver($this->classe, $historicoModel, $this->moduloPai);
+
+        File::put($path, $content);
+        return ["Observer: app/Observers/{$this->classe}Observer.php"];
+    }
+
+    private function gerarPermissoes(): array
+    {
+        $permissoes = [];
+        $actions = ['index', 'create', 'edit', 'show', 'destroy', 'history'];
+
+        foreach ($actions as $action) {
+            $permissao = strtolower($this->moduloPai) . '.' . strtolower($this->classe) . '.' . $action;
+
+            DB::table('permissao')->insert([
+                'descricao' => $permissao,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $permissoes[] = $permissao;
+        }
+
+        return $permissoes;
+    }
+
+    private function gerarMenu(): array
+    {
+        $permissaoIndex = strtolower($this->moduloPai) . '.' . strtolower($this->classe) . '.index';
+        $permissao = DB::table('permissao')->where('descricao', $permissaoIndex)->first();
+
+        if (!$permissao) {
+            return [];
+        }
+
+        $menuData = [
+            'descricao' => $this->classe, // Usar exatamente o nome da classe
+            'icone' => 'fas fa-database',
+            'rota' => $permissaoIndex,
+            'menuPai_id' => null,
+            'permissao_id' => $permissao->id,
+            'situacao_id' => 1, // Ativo
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+
+        DB::table('menu')->insert($menuData);
+
+        return $menuData;
+    }
+
+    private function registrarRotas(): void
+    {
+        $routeFile = base_path('routes/web.php');
+        $routeContent = File::get($routeFile);
+
+        $newRoute = $this->getTemplateRoute($this->classe, $this->moduloPai);
+
+        // Adicionar rotas antes da última linha
+        $routeContent = str_replace("});", $newRoute . "\n});", $routeContent);
+
+        File::put($routeFile, $routeContent);
+    }
+
+    private function gerarRelationship($campo)
+    {
+        $relacionamento = $campo['relacionamento'] ?? null;
+
+        if (!$relacionamento || empty($relacionamento)) return '';
+
+        $nomeRelacionamento = $campo['nome'];
+        $classeRelacionamento = $relacionamento;
+
+        $relationship = "    public function " . Str::camel(Str::plural($nomeRelacionamento)) . "(): BelongsTo\n";
+        $relationship .= "    {\n";
+        $relationship .= "        return \$this->belongsTo({$classeRelacionamento}::class, '{$nomeRelacionamento}');\n";
+        $relationship .= "    }\n\n";
+
+        return $relationship;
+    }
+
+    private function getTemplateMigration($tabela, $campos, $data)
+    {
+        $softDeletes = $data['soft_delete'] ? "\$table->softDeletes();\n" : "";
+        $timestamps = $data['timestamps'] !== false ? "\$table->timestamps();\n" : "";
+
+        return "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration\n{\n    /**\n     * Run the migrations.\n     */\n    public function up(): void\n    {\n        Schema::create('{$tabela}', function (Blueprint \$table) {\n            \$table->id();\n{$campos}{$softDeletes}{$timestamps}\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     */\n    public function down(): void\n    {\n        Schema::dropIfExists('{$tabela}');\n    }\n};";
+    }
+
+    private function getTemplateModel($classe, $tabela, $fillable, $casts, $relationships, $data)
+    {
+        $softDeletes = $data['soft_delete'] ? 'use Illuminate\\Database\\Eloquent\\SoftDeletes;' : '';
+        $softDeletesTrait = $data['soft_delete'] ? 'SoftDeletes' : '';
+
+        $fillableStr = implode(', ', $fillable);
+        $castsStr = !empty($casts) ? "\n    protected \$casts = [\n        " . implode(",\n        ", $casts) . "\n    ];" : '';
+        $relationshipsStr = !empty($relationships) ? "\n" . rtrim($relationships) : '';
+
+        return "<?php\n\nnamespace App\\Models;\n\nuse Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\nuse Illuminate\\Database\\Eloquent\\Model;\nuse Illuminate\\Database\\Eloquent\\Relations\\BelongsTo;\n{$softDeletes}\n\nclass {$classe} extends Model\n{\n    use HasFactory, {$softDeletesTrait};\n\n    protected \$table = '{$tabela}';\n\n    protected \$fillable = [\n        {$fillableStr}\n    ];{$castsStr}{$relationshipsStr}\n}";
+    }
+
+    private function getTemplateController($classe, $moduloPai, $tabela, $data)
+    {
+        $namespace = $this->namespace;
+        $moduloLower = strtolower($moduloPai);
+        Str::plural($classe)Lower = strtolower(Str::plural($classe));
+
+        return "<?php\n\nnamespace {$namespace};\n\nuse App\\Http\\Controllers\\Controller;\nuse App\\Models\\{Str::plural($classe)};\nuse App\\Http\\Requests\\{$moduloPai}\\{Str::plural($classe)}\\StoreRequest;\nuse App\\Http\\Requests\\{$moduloPai}\\{Str::plural($classe)}\\UpdateRequest;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\Auth;\n\nclass {Str::plural($classe)}Controller extends Controller\n{\n    /**\n     * Display a listing of the resource.\n     */\n    public function index()\n    {\n        abort_if (!Auth::user()->canAccess('{$moduloLower}.{Str::plural($classe)Lower}.index'), 403, 'Acesso não autorizado');\n\n        \${Str::plural($classe)Lower}s = {Str::plural($classe)}::paginate();\n        return view('{$moduloLower}." . Str::kebab(Str::plural($classe)) . ".index', compact('{Str::plural($classe)Lower}s'));\n    }\n\n    /**\n     * Show the form for creating a new resource.\n     */\n    public function create()\n    {\n        abort_if (!Auth::user()->canAccess('{$moduloLower}.{Str::plural($classe)Lower}.create'), 403, 'Acesso não autorizado');\n\n        return view('{$moduloLower}." . Str::kebab(Str::plural($classe)) . ".create');\n    }\n\n    /**\n     * Store a newly created resource in storage.\n     */\n    public function store(StoreRequest \$request)\n    {\n        \${Str::plural($classe)Lower} = {Str::plural($classe)}::create(\$request->validated());\n\n        if(\${Str::plural($classe)Lower}) {\n            return redirect()->signedRoute('{$moduloLower}.{Str::plural($classe)Lower}.index')->with('success', __('labels.{Str::plural($classe)Lower}.success.created'));\n        }\n        return redirect()->signedRoute('{$moduloLower}.{Str::plural($classe)Lower}.index')->with('error', __('labels.{Str::plural($classe)Lower}.error.not_saved'));\n    }\n\n    /**\n     * Display the specified resource.\n     */\n    public function show({Str::plural($classe)} \${Str::plural($classe)Lower})\n    {\n        abort_if (!Auth::user()->canAccess('{$moduloLower}.{Str::plural($classe)Lower}.show'), 403, 'Acesso não autorizado');\n\n        \$bloquearCampos = true;\n        return view('{$moduloLower}." . Str::kebab(Str::plural($classe)) . ".show', compact('{Str::plural($classe)Lower}', 'bloquearCampos'));\n    }\n\n    /**\n     * Show the form for editing the specified resource.\n     */\n    public function edit({Str::plural($classe)} \${Str::plural($classe)Lower})\n    {\n        abort_if (!Auth::user()->canAccess('{$moduloLower}.{Str::plural($classe)Lower}.edit'), 403, 'Acesso não autorizado');\n\n        return view('{$moduloLower}." . Str::kebab(Str::plural($classe)) . ".edit', compact('{Str::plural($classe)Lower}'));\n    }\n\n    /**\n     * Update the specified resource in storage.\n     */\n    public function update(UpdateRequest \$request, {Str::plural($classe)} \${Str::plural($classe)Lower})\n    {\n        if(\${Str::plural($classe)Lower}->update(\$request->validated())) {\n            return redirect()->signedRoute('{$moduloLower}.{Str::plural($classe)Lower}.index')->with('success', __('labels.{Str::plural($classe)Lower}.success.updated'));\n        }\n        return redirect()->signedRoute('{$moduloLower}.{Str::plural($classe)Lower}.index')->with('error', __('labels.{Str::plural($classe)Lower}.error.not_updated'));\n    }\n\n    /**\n     * Remove the specified resource from storage.\n     */\n    public function destroy({Str::plural($classe)} \${Str::plural($classe)Lower})\n    {\n        abort_if (!Auth::user()->canAccess('{$moduloLower}.{Str::plural($classe)Lower}.destroy'), 403, 'Acesso não autorizado');\n\n        \$bloquearCampos = true;\n        return view('{$moduloLower}." . Str::kebab(Str::plural($classe)) . ".destroy', compact('{Str::plural($classe)Lower}', 'bloquearCampos'));\n    }\n\n    /**\n     * Delete the specified resource from storage.\n     */\n    public function delete({Str::plural($classe)} \${Str::plural($classe)Lower})\n    {\n        if(\${Str::plural($classe)Lower}->delete()) {\n            return redirect()->signedRoute('{$moduloLower}.{Str::plural($classe)Lower}.index')->with('success', __('labels.{Str::plural($classe)Lower}.success.deleted'));\n        }\n        return redirect()->signedRoute('{$moduloLower}.{Str::plural($classe)Lower}.index')->with('error', __('labels.{Str::plural($classe)Lower}.error.not_deleted'));\n    }\n\n    /**\n     * Display the history of the specified resource.\n     */\n    public function history({Str::plural($classe)} \${Str::plural($classe)Lower})\n    {\n        abort_if (!Auth::user()->canAccess('{$moduloLower}.{Str::plural($classe)Lower}.history'), 403, 'Acesso não autorizado');\n\n        \$bloquearCampos = true;\n        return view('{$moduloLower}." . Str::kebab(Str::plural($classe)) . ".history', compact('{Str::plural($classe)Lower}', 'bloquearCampos'));\n    }\n}";
+    }
+
+    private function getTemplateStoreRequest(Str::plural($classe), $moduloPai, $data)
+    {
+        $rules = $this->gerarRegrasValidacao($data, false);
+        $messages = $this->gerarMensagensValidacao(Str::plural($classe), $data);
+
+        return "<?php\n\nnamespace App\\Http\\Requests\\{$moduloPai}\\{Str::plural($classe)};\n\nuse Illuminate\\Foundation\\Http\\FormRequest;\n\nclass StoreRequest extends FormRequest\n{\n    /**\n     * Determine if the user is authorized to make this request.\n     */\n    public function authorize(): bool\n    {\n        return true;\n    }\n\n    /**\n     * Get the validation rules that apply to the request.\n     *\n     * @return array<string, \\Illuminate\\Contracts\\Validation\\ValidationRule|array<mixed>|string>\n     */\n    public function rules(): array\n    {\n        return [\n{$rules}\n        ];\n    }\n\n    public function messages(): array\n    {\n        return [\n{$messages}\n        ];\n    }\n}";
+    }
+
+    private function getTemplateUpdateRequest(Str::plural($classe), $moduloPai, $data)
+    {
+        $rules = $this->gerarRegrasValidacao($data, true);
+        $messages = $this->gerarMensagensValidacao(Str::plural($classe), $data);
+
+        return "<?php\n\nnamespace App\\Http\\Requests\\{$moduloPai}\\{Str::plural($classe)};\n\nuse Illuminate\\Foundation\\Http\\FormRequest;\n\nclass UpdateRequest extends FormRequest\n{\n    /**\n     * Determine if the user is authorized to make this request.\n     */\n    public function authorize(): bool\n    {\n        return true;\n    }\n\n    /**\n     * Get the validation rules that apply to the request.\n     *\n     * @return array<string, \\Illuminate\\Contracts\\Validation\\ValidationRule|array<mixed>|string>\n     */\n    public function rules(): array\n    {\n        return [\n{$rules}\n        ];\n    }\n\n    public function messages(): array\n    {\n        return [\n{$messages}\n        ];\n    }\n}";
+    }
+
+    private function gerarRegrasValidacao($data, $isUpdate = false)
+    {
+        $rules = [];
+
+        foreach ($data['campos'] as $campo) {
+            $nome = $campo['nome'];
+            $tipo = $campo['tipo'];
+            $obrigatorio = $campo['obrigatorio'] ?? false;
+            $max = $campo['max'] ?? null;
+            $unique = $campo['unique'] ?? false;
+            $relacionamento = $campo['relacionamento'] ?? null;
+
+            $regras = [];
+
+            if ($obrigatorio && !$isUpdate) {
+                $regras[] = 'required';
+            } else {
+                $regras[] = 'nullable';
+            }
+
+            // Mapear tipos para regras
+            switch ($tipo) {
+                case 'string':
+                    $regras[] = 'string';
+                    if ($max) $regras[] = "max:{$max}";
+                    break;
+                case 'integer':
+                    $regras[] = 'integer';
+                    break;
+                case 'double':
+                    $regras[] = 'numeric';
+                    $regras[] = 'regex:/^\d+(\.\d{1,2})?$/';
+                    break;
+                case 'date':
+                    $regras[] = 'date';
+                    break;
+                case 'boolean':
+                    $regras[] = 'boolean';
+                    break;
+                case 'text':
+                    $regras[] = 'string';
+                    break;
+                case 'file':
+                    $regras[] = 'file';
+                    $regras[] = 'max:10240'; // 10MB
+                    break;
+                case 'select':
+                    if ($relacionamento && !empty($relacionamento)) {
+                        $tabelaRelacionamento = Str::snake(Str::plural($relacionamento));
+                        $regras[] = "exists:{$tabelaRelacionamento},id";
+                    }
+                    break;
+            }
+
+            if ($unique) {
+                $tabela = Str::snake($this->classe); // Usar exatamente o nome da classe
+                if ($isUpdate) {
+                    $regras[] = "unique:{$tabela},{$nome}," . '$this->' . Str::lower($this->classe) . '->id';
+                } else {
+                    $regras[] = "unique:{$tabela},{$nome}";
+                }
+            }
+
+            $rules[] = "            '{$nome}' => '" . implode('|', $regras) . "'";
+        }
+
+        return implode(",\n", $rules);
+    }
+
+    private function gerarMensagensValidacao(Str::plural($classe), $data)
+    {
+        $messages = [];
+        Str::plural($classe)Lower = strtolower(Str::plural($classe));
+
+        foreach ($data['campos'] as $campo) {
+            $nome = $campo['nome'];
+            $tipo = $campo['tipo'];
+
+            $messages[] = "            '{$nome}.required' => __('messages.{Str::plural($classe)Lower}.validation.{$nome}.required'),";
+            $messages[] = "            '{$nome}.string' => __('messages.{Str::plural($classe)Lower}.validation.{$nome}.string'),";
+            $messages[] = "            '{$nome}.integer' => __('messages.{Str::plural($classe)Lower}.validation.{$nome}.integer'),";
+            $messages[] = "            '{$nome}.numeric' => __('messages.{Str::plural($classe)Lower}.validation.{$nome}.numeric'),";
+            $messages[] = "            '{$nome}.regex' => __('messages.{Str::plural($classe)Lower}.validation.{$nome}.regex'),";
+            $messages[] = "            '{$nome}.date' => __('messages.{Str::plural($classe)Lower}.validation.{$nome}.date'),";
+            $messages[] = "            '{$nome}.boolean' => __('messages.{Str::plural($classe)Lower}.validation.{$nome}.boolean'),";
+            $messages[] = "            '{$nome}.max' => __('messages.{Str::plural($classe)Lower}.validation.{$nome}.max'),";
+            $messages[] = "            '{$nome}.unique' => __('messages.{Str::plural($classe)Lower}.validation.{$nome}.unique'),";
+            $messages[] = "            '{$nome}.exists' => __('messages.{Str::plural($classe)Lower}.validation.{$nome}.exists'),";
+        }
+
+        return implode("\n", array_unique($messages));
+    }
+
+    private function getTemplateView($view, Str::plural($classe), $moduloPai, $data)
+    {
+        Str::plural($classe)Lower = strtolower(Str::plural($classe));
+        $moduloLower = strtolower($moduloPai);
+        Str::plural($classe)Kebab = Str::kebab(Str::plural($classe));
+
+        switch ($view) {
+            case 'index':
+                return $this->getTemplateIndexView(Str::plural($classe), Str::plural($classe)Lower, $moduloLower, Str::plural($classe)Kebab);
+            case 'create':
+                return $this->getTemplateCreateView(Str::plural($classe), Str::plural($classe)Lower, $moduloLower, Str::plural($classe)Kebab);
+            case 'edit':
+                return $this->getTemplateEditView(Str::plural($classe), Str::plural($classe)Lower, $moduloLower, Str::plural($classe)Kebab);
+            case 'form':
+                return $this->getTemplateFormView(Str::plural($classe), Str::plural($classe)Lower, $moduloLower, $data);
+            default:
+                return $this->getTemplateGenericView($view, Str::plural($classe), Str::plural($classe)Lower, $moduloLower, Str::plural($classe)Kebab);
+        }
+    }
+
+    private function getTemplateIndexView(Str::plural($classe), Str::plural($classe)Lower, $moduloLower, Str::plural($classe)Kebab)
+    {
+        return "@extends('adminlte::page')\n\n@section('title', '" . Str::plural(Str::plural($classe)) . "')\n\n@section('content_header')\n    <h1 class=\"m-0\">" . Str::plural(Str::plural($classe)) . "</h1>\n@endsection\n\n@section('content')\n<div class=\"container-fluid\">\n    <div class=\"row\">\n        <div class=\"col-12\">\n            <div class=\"card\">\n                <div class=\"card-header\">\n                    <h3 class=\"card-title\">Lista de " . Str::plural(Str::plural($classe)) . "</h3>\n                    <div class=\"card-tools\">\n                        @canAccess('{$moduloLower}.{Str::plural($classe)Lower}.create')\n                            <a href=\"{{ route('{$moduloLower}.{Str::plural($classe)Lower}.create') }}\" class=\"btn btn-primary btn-sm\">\n                                <i class=\"fas fa-plus\"></i> Novo\n                            </a>\n                        @endcanAccess\n                    </div>\n                </div>\n                <div class=\"card-body\">\n                    <table class=\"table table-bordered table-striped\">\n                        <thead>\n                            <tr>\n                                <th>ID</th>\n                                <th>Nome</th>\n                                <th>Ações</th>\n                            </tr>\n                        </thead>\n                        <tbody>\n                            @foreach(\${Str::plural($classe)Lower}s as \${Str::plural($classe)Lower})\n                                <tr>\n                                    <td>{{ \${Str::plural($classe)Lower}->id }}</td>\n                                    <td>{{ \${Str::plural($classe)Lower}->nome ?? '-' }}</td>\n                                    <td>\n                                        @canAccess('{$moduloLower}.{Str::plural($classe)Lower}.show')\n                                            <a href=\"{{ route('{$moduloLower}.{Str::plural($classe)Lower}.show', \${Str::plural($classe)Lower}) }}\" class=\"btn btn-info btn-sm\">\n                                                <i class=\"fas fa-eye\"></i>\n                                            </a>\n                                        @endcanAccess\n                                        @canAccess('{$moduloLower}.{Str::plural($classe)Lower}.edit')\n                                            <a href=\"{{ route('{$moduloLower}.{Str::plural($classe)Lower}.edit', \${Str::plural($classe)Lower}) }}\" class=\"btn btn-warning btn-sm\">\n                                                <i class=\"fas fa-edit\"></i>\n                                            </a>\n                                        @endcanAccess\n                                        @canAccess('{$moduloLower}.{Str::plural($classe)Lower}.destroy')\n                                            <a href=\"{{ route('{$moduloLower}.{Str::plural($classe)Lower}.destroy', \${Str::plural($classe)Lower}) }}\" class=\"btn btn-danger btn-sm\">\n                                                <i class=\"fas fa-trash\"></i>\n                                            </a>\n                                        @endcanAccess\n                                    </td>\n                                </tr>\n                            @endforeach\n                        </tbody>\n                    </table>\n                    {{ \${Str::plural($classe)Lower}s->links() }}\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n@endsection";
+    }
+
+    private function getTemplateCreateView(Str::plural($classe), Str::plural($classe)Lower, $moduloLower, Str::plural($classe)Kebab)
+    {
+        return "@extends('adminlte::page')\n\n@section('title', 'Novo {Str::plural($classe)}')\n\n@section('content_header')\n    <h1 class=\"m-0\">Novo {Str::plural($classe)}</h1>\n@endsection\n\n@section('content')\n<div class=\"container-fluid\">\n    <div class=\"row\">\n        <div class=\"col-12\">\n            <div class=\"card\">\n                <div class=\"card-header\">\n                    <h3 class=\"card-title\">Cadastrar {Str::plural($classe)}</h3>\n                </div>\n                <div class=\"card-body\">\n                    @include('{$moduloLower}.{Str::plural($classe)Kebab}.form')\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n@endsection";
+    }
+
+    private function getTemplateEditView(Str::plural($classe), Str::plural($classe)Lower, $moduloLower, Str::plural($classe)Kebab)
+    {
+        return "@extends('adminlte::page')\n\n@section('title', 'Editar {Str::plural($classe)}')\n\n@section('content_header')\n    <h1 class=\"m-0\">Editar {Str::plural($classe)}</h1>\n@endsection\n\n@section('content')\n<div class=\"container-fluid\">\n    <div class=\"row\">\n        <div class=\"col-12\">\n            <div class=\"card\">\n                <div class=\"card-header\">\n                    <h3 class=\"card-title\">Editar {Str::plural($classe)}</h3>\n                </div>\n                <div class=\"card-body\">\n                    @include('{$moduloLower}.{Str::plural($classe)Kebab}.form')\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n@endsection";
+    }
+
+    private function getTemplateFormView(Str::plural($classe), Str::plural($classe)Lower, $moduloLower, $data)
+    {
+        $camposHtml = $this->gerarCamposForm($data);
+
+        return "@csrf\n<form method=\"POST\" action=\"{{ route('{$moduloLower}.{Str::plural($classe)Lower}.store') }}\">\n    <div class=\"row\">\n{$camposHtml}\n        <div class=\"col-12\">\n            <button type=\"submit\" class=\"btn btn-success\">\n                <i class=\"fas fa-save\"></i> Salvar\n            </button>\n            <a href=\"{{ route('{$moduloLower}.{Str::plural($classe)Lower}.index') }}\" class=\"btn btn-secondary\">\n                <i class=\"fas fa-arrow-left\"></i> Voltar\n            </a>\n        </div>\n    </div>\n</form>";
+    }
+
+    private function gerarCamposForm($data)
+    {
+        $campos = [];
+
+        foreach ($data['campos'] as $index => $campo) {
+            $nome = $campo['nome'];
+            $tipo = $campo['tipo'];
+            $obrigatorio = $campo['obrigatorio'] ?? false;
+            $max = $campo['max'] ?? null;
+            $relacionamento = $campo['relacionamento'] ?? null;
+
+            $required = $obrigatorio ? 'required' : '';
+            $label = ucfirst($nome);
+
+            $html = "        <div class=\"col-md-6\">\n";
+            $html .= "            <div class=\"form-group\">\n";
+            $html .= "                <label for=\"{$nome}\">{$label}</label>\n";
+
+            switch ($tipo) {
+                case 'string':
+                case 'integer':
+                case 'double':
+                    $html .= "                <input type=\"text\" class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" value=\"{{ old('{$nome}') }}\" {$required}>\n";
+                    break;
+                case 'date':
+                    $html .= "                <input type=\"date\" class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" value=\"{{ old('{$nome}') }}\" {$required}>\n";
+                    break;
+                case 'boolean':
+                    $html .= "                <select class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" {$required}>\n";
+                    $html .= "                    <option value=\"1\">Sim</option>\n";
+                    $html .= "                    <option value=\"0\">Não</option>\n";
+                    $html .= "                </select>\n";
+                    break;
+                case 'text':
+                    $html .= "                <textarea class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" rows=\"3\" {$required}>{{ old('{$nome}') }}</textarea>\n";
+                    break;
+                case 'file':
+                    $html .= "                <input type=\"file\" class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" {$required}>\n";
+                    break;
+                case 'select':
+                    $html .= "                <select class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" {$required}>\n";
+                    $html .= "                    <option value=\"\">Selecione...</option>\n";
+                    if ($relacionamento && !empty($relacionamento)) {
+                        // TODO: Carregar opções do relacionamento
+                        $html .= "                    {{-- TODO: Carregar \${$relacionamento}s do relacionamento --}}\n";
+                    }
+                    $html .= "                </select>\n";
+                    break;
+            }
+
+            $html .= "                @error('{$nome}')\n";
+            $html .= "                    <div class=\"invalid-feedback\">{{ \$message }}</div>\n";
+            $html .= "                @enderror\n";
+            $html .= "            </div>\n";
+            $html .= "        </div>\n";
+
+            $campos[] = $html;
+        }
+
+        return implode("\n", $campos);
+    }
+
+    private function getTemplateGenericView($view, Str::plural($classe), Str::plural($classe)Lower, $moduloLower, Str::plural($classe)Kebab)
+    {
+        return "@extends('adminlte::page')\n\n@section('title', '{$view} {Str::plural($classe)}')\n\n@section('content_header')\n    <h1 class=\"m-0\">{$view} {Str::plural($classe)}</h1>\n@endsection\n\n@section('content')\n<div class=\"container-fluid\">\n    <div class=\"row\">\n        <div class=\"col-12\">\n            <div class=\"card\">\n                <div class=\"card-body\">\n                    <p>View {$view} - Em construção</p>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n@endsection";
+    }
+
+    private function getTemplateObserver(Str::plural($classe), $historicoModel, $moduloPai)
+    {
+        return "<?php\n\nnamespace App\\Observers;\n\nuse App\\Models\\{Str::plural($classe)};\nuse App\\Models\\{$historicoModel};\nuse App\\Models\\PadraoTipo;\nuse Illuminate\\Support\\Facades\\Auth;\n\nclass {Str::plural($classe)}Observer\n{\n    /**\n     * Handle the {Str::plural($classe)} \"created\" event.\n     */\n    public function created({Str::plural($classe)} \${Str::plural($classe)Lower}): void\n    {\n        \$this->saveHistory(\${Str::plural($classe)Lower}, null, \${Str::plural($classe)Lower}->toArray(), 'Inclusão de Registro');\n    }\n\n    /**\n     * Handle the {Str::plural($classe)} \"updated\" event.\n     */\n    public function updated({Str::plural($classe)} \${Str::plural($classe)Lower}): void\n    {\n        \$dadosAnteriores = \${Str::plural($classe)Lower}->getOriginal();\n        \$dadosNovos = \${Str::plural($classe)Lower}->fresh()->toArray();\n\n        \$this->saveHistory(\${Str::plural($classe)Lower}, \$dadosAnteriores, \$dadosNovos, 'Alteração de Registro');\n    }\n\n    /**\n     * Handle the {Str::plural($classe)} \"deleted\" event.\n     */\n    public function deleted({Str::plural($classe)} \${Str::plural($classe)Lower}): void\n    {\n        \$dadosAnteriores = \${Str::plural($classe)Lower}->getOriginal();\n        \$this->saveHistory(\${Str::plural($classe)Lower}, \$dadosAnteriores, null, 'Deleção de Registro');\n    }\n\n    /**\n     * Salva o registro no histórico.\n     */\n    protected function saveHistory({Str::plural($classe)} \${Str::plural($classe)Lower}, ?array \$dadosAnteriores, ?array \$dadosNovos, string \$tipoDescricao): void\n    {\n        \$tipoAlteracao = PadraoTipo::where('descricao', \$tipoDescricao)->first();\n\n        {$historicoModel}::create([\n            'user_id' => Auth::id(),\n            '{Str::plural($classe)Lower}_id' => \${Str::plural($classe)Lower}->id,\n            'dados_anteriores' => \$dadosAnteriores,\n            'dados_novos' => \$dadosNovos,\n            'tipoAlteracao_id' => \$tipoAlteracao ? \$tipoAlteracao->id : null,\n        ]);\n    }\n}";
+    }
+
+    private function getTemplateRoute(Str::plural($classe), $moduloPai)
+    {
+        $moduloLower = strtolower($moduloPai);
+        Str::plural($classe)Lower = strtolower(Str::plural($classe));
+
+        return "\n        # ROTAS DE " . strtoupper(Str::plural($classe)) . "\n        Route::prefix('{Str::plural($classe)Lower}')->name('{Str::plural($classe)Lower}.')->group(function () {\n            Route::get('/', [\\{$namespace}\\{Str::plural($classe)}Controller::class, 'index'])->name('index');\n            Route::get('/create', [\\{$namespace}\\{Str::plural($classe)}Controller::class, 'create'])->name('create');\n            Route::post('/', [\\{$namespace}\\{Str::plural($classe)}Controller::class, 'store'])->name('store');\n\n            Route::get('/{ {Str::plural($classe)Lower} }/edit', [\\{$namespace}\\{Str::plural($classe)}Controller::class, 'edit'])->name('edit');\n            Route::put('/{ {Str::plural($classe)Lower} }', [\\{$namespace}\\{Str::plural($classe)}Controller::class, 'update'])->name('update');\n            Route::get('/{ {Str::plural($classe)Lower} }/destroy', [\\{$namespace}\\{Str::plural($classe)}Controller::class, 'destroy'])->name('destroy');\n            Route::delete('/{ {Str::plural($classe)Lower} }', [\\{$namespace}\\{Str::plural($classe)}Controller::class, 'delete'])->name('delete');\n            Route::get('/{ {Str::plural($classe)Lower} }/history', [\\{$namespace}\\{Str::plural($classe)}Controller::class, 'history'])->name('history');\n            Route::get('/{ {Str::plural($classe)Lower} }/history/{historico}/details', [\\{$namespace}\\{Str::plural($classe)}Controller::class, 'historyDetails'])->name('history.details');\n\n            Route::get('/{ {Str::plural($classe)Lower} }', [\\{$namespace}\\{Str::plural($classe)}Controller::class, 'show'])->name('show');\n        });";
+    }
+}

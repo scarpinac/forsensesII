@@ -93,5 +93,27 @@ class MenuSeeder extends Seeder
             'permissao_id' => $permissaoNotificacao->id,
             'situacao_id' => $situacaoHabilitado->id,
         ]);
+
+        // Submenu: Configuração de Api
+        $permissaoApi = Permissao::where('descricao', 'sistema.api.index')->first();
+        Menu::create([
+            'descricao' => 'Configuração de API',
+            'icone' => 'fas fa-cogs',
+            'rota' => 'sistema.api.index',
+            'menuPai_id' => $menuSistema->id,
+            'permissao_id' => $permissaoApi->id,
+            'situacao_id' => $situacaoHabilitado->id,
+        ]);
+
+        // Submenu: Parâmetros
+        $permissaoParametro = Permissao::where('descricao', 'sistema.parametro.index')->first();
+        Menu::create([
+            'descricao' => 'Parâmetros',
+            'icone' => 'fas fa-cogs',
+            'rota' => 'sistema.parametro.index',
+            'menuPai_id' => $menuSistema->id,
+            'permissao_id' => $permissaoParametro->id,
+            'situacao_id' => $situacaoHabilitado->id,
+        ]);
     }
 }

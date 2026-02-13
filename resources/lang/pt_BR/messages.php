@@ -46,6 +46,47 @@ return [
             ],
         ],
     ],
+
+    // API Form Request Validation Messages
+    'api' => [
+        'validation' => [
+            'api_id' => [
+                'required' => 'O campo tipo de API é obrigatório.',
+                'exists' => 'O tipo de API selecionado é inválido.',
+            ],
+            'credencial' => [
+                'required' => 'O campo credencial é obrigatório.',
+                'string' => 'O campo credencial deve ser um texto.',
+            ],
+            'situacao_id' => [
+                'required' => 'O campo situação é obrigatório.',
+                'exists' => 'A situação selecionada é inválida.',
+            ],
+        ],
+    ],
+
+    // Parâmetro Form Request Validation Messages
+    'parametro' => [
+        'validation' => [
+            'nome' => [
+                'required' => 'O campo nome é obrigatório.',
+                'string' => 'O campo nome deve ser um texto.',
+                'max' => 'O campo nome não pode ter mais de 80 caracteres.',
+            ],
+            'descricao' => [
+                'required' => 'O campo descrição é obrigatório.',
+                'string' => 'O campo descrição deve ser um texto.',
+            ],
+            'tipo_id' => [
+                'required' => 'O campo tipo é obrigatório.',
+                'exists' => 'O tipo selecionado é inválido.',
+            ],
+            'valor' => [
+                'required' => 'O campo valor é obrigatório.',
+                'string' => 'O campo valor deve ser um texto.',
+            ],
+        ],
+    ],
     'usuario' => [
         'validation' => [
             'name' => [
@@ -58,22 +99,21 @@ return [
                 'string' => 'O campo e-mail deve ser um texto.',
                 'email' => 'O campo e-mail deve ser um endereço de e-mail válido.',
                 'max' => 'O campo e-mail não pode ter mais de 255 caracteres.',
-                'unique' => 'Este e-mail já está em uso.',
+                'unique' => 'O e-mail informado já está em uso.',
             ],
             'password' => [
                 'required' => 'O campo senha é obrigatório.',
                 'string' => 'O campo senha deve ser um texto.',
-                'min' => 'A senha deve ter pelo menos 8 caracteres.',
-                'confirmed' => 'A confirmação de senha não confere.',
-            ],
-            'admin' => [
-                'required' => 'O campo administrador é obrigatório.',
-                'integer' => 'O campo administrador deve ser um número.',
-                'in' => 'Selecione uma opção válida para administrador.',
+                'min' => 'O campo senha deve ter no mínimo 8 caracteres.',
+                'confirmed' => 'A confirmação da senha não confere.',
             ],
             'avatar' => [
-                'mimes' => 'O avatar deve ser uma imagem nos formatos: JPEG, PNG, JPG, GIF ou WebP.',
-                'max' => 'O avatar não pode ter mais de 2MB.',
+                'mimes' => 'O campo avatar deve ser uma imagem do tipo: jpeg, png, jpg, gif ou webp.',
+                'max' => 'O campo avatar não pode ter mais de 5MB.',
+            ],
+            'situacao_id' => [
+                'required' => 'O campo situação é obrigatório.',
+                'exists' => 'A situação selecionada é inválida.',
             ],
         ],
     ],

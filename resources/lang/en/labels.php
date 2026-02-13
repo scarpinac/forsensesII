@@ -140,6 +140,212 @@ return [
     "permission.error.not_updated" => "Could not update the permission!",
     "permission.error.not_deleted" => "Could not delete the permission!",
 
+    // API - Labels
+    "api.new" => "New API",
+    "api.save" => "Save",
+    "api.save_changes" => "Save Changes",
+    "api.back" => "Back",
+    "api.api_type" => "API Type",
+    "api.credential" => "Credential",
+    "api.situation" => "Situation",
+    "api.actions" => "Actions",
+    "api.edit" => "Edit",
+    "api.visualize" => "Visualize",
+    "api.destroy" => "Destroy",
+    "api.history" => "History",
+
+    // API - Form Fields
+    "api.form.api_type" => "API Type",
+    "api.form.credential" => "Credential",
+    "api.form.situation" => "Situation",
+    "api.form.select_api_type" => "Select an API type",
+    "api.form.select_situation" => "Select a situation",
+
+    // API - Breadcrumbs
+    "api.breadcrumb.home" => "Home",
+    "api.breadcrumb.listing" => "API Listing",
+    "api.breadcrumb.create" => "API Creation",
+    "api.breadcrumb.edit" => "API Edit",
+    "api.breadcrumb.show" => "API View",
+    "api.breadcrumb.destroy" => "API Deletion",
+    "api.breadcrumb.history" => "API History",
+
+    // API - Titles and Messages
+    "api.title.listing" => "API Listing",
+    "api.title.create" => "API Creation",
+    "api.title.edit" => "API Edit",
+    "api.title.show" => "API View",
+    "api.title.destroy" => "API Deletion",
+    "api.title.history" => "API History",
+    "api.modal.details.title" => "Change Details",
+    "api.modal.close" => "Close",
+    "api.no.records" => "No API found.",
+    "api.no.history" => "No changes found for this API.",
+    "api.history.data.title" => "API Data",
+    "api.history.changes.title" => "Change History",
+    "api.history.table.date" => "Date",
+    "api.history.table.user" => "User",
+    "api.history.table.type" => "Change Type",
+    "api.history.table.actions" => "Actions",
+    "api.history.button.details" => "Details",
+
+    // API - History Table Fields
+    "api.history.fields.id" => "ID",
+    "api.history.fields.api_id" => "API Type",
+    "api.history.fields.credencial" => "Credential",
+    "api.history.fields.situacao_id" => "Situation",
+    "api.history.fields.created_at" => "Created at",
+    "api.history.fields.updated_at" => "Updated at",
+    "api.history.fields.deleted_at" => "Deleted at",
+
+    // API - Success Messages
+    "api.success.created" => "API created successfully!",
+    "api.success.updated" => "API updated successfully!",
+    "api.success.deleted" => "API deleted successfully!",
+
+    // API - Error Messages
+    "api.error.not_saved" => "Could not save the API!",
+    "api.error.not_updated" => "Could not update the API!",
+    "api.error.not_deleted" => "Could not delete the API!",
+
+    // Parameter - Labels
+    "parametro.new" => "New Parameter",
+    "parametro.save" => "Save",
+    "parametro.save_changes" => "Save Changes",
+    "parametro.back" => "Back",
+    "parametro.name" => "Name",
+    "parametro.type" => "Type",
+    "parametro.value" => "Value",
+    "parametro.situation" => "Situation",
+    "parametro.actions" => "Actions",
+    "parametro.edit" => "Edit",
+    "parametro.visualize" => "Visualize",
+    "parametro.destroy" => "Destroy",
+    "parametro.history" => "History",
+
+    // Parameter - Form Fields
+    "parametro.form.name" => "Name",
+    "parametro.form.description" => "Description",
+    "parametro.form.type" => "Type",
+    "parametro.form.value" => "Value",
+    "parametro.form.select_type" => "Select a type",
+
+    // Parameter - Breadcrumbs
+    "parametro.breadcrumb.home" => "Home",
+    "parametro.breadcrumb.listing" => "Parameter Listing",
+    "parametro.breadcrumb.create" => "Parameter Creation",
+    "parametro.breadcrumb.edit" => "Parameter Edit",
+    "parametro.breadcrumb.show" => "Parameter View",
+    "parametro.breadcrumb.destroy" => "Parameter Deletion",
+    "parametro.breadcrumb.history" => "Parameter History",
+
+    // Parameter - Titles and Messages
+    "parametro.title.listing" => "Parameter Listing",
+    "parametro.title.create" => "Parameter Creation",
+    "parametro.title.edit" => "Parameter Edit",
+    "parametro.title.show" => "Parameter View",
+    "parametro.title.destroy" => "Parameter Deletion",
+    "parametro.title.history" => "Parameter History",
+    "parametro.modal.details.title" => "Change Details",
+    "parametro.modal.close" => "Close",
+    "parametro.no.records" => "No parameter found.",
+    "parametro.no.history" => "No changes found for this parameter.",
+    "parametro.history.data.title" => "Parameter Data",
+    "parametro.history.changes.title" => "Change History",
+    "parametro.history.table.date" => "Date",
+    "parametro.history.table.user" => "User",
+    "parametro.history.table.type" => "Change Type",
+    "parametro.history.table.actions" => "Actions",
+    "parametro.history.button.details" => "Details",
+
+    // Parameter - History Table Fields
+    "parametro.history.fields.id" => "ID",
+    "parametro.history.fields.nome" => "Name",
+    "parametro.history.fields.descricao" => "Description",
+    "parametro.history.fields.tipo_id" => "Type",
+    "parametro.history.fields.valor" => "Value",
+    "parametro.history.fields.situacao_id" => "Situation",
+    "parametro.history.fields.created_at" => "Created at",
+    "parametro.history.fields.updated_at" => "Updated at",
+    "parametro.history.fields.deleted_at" => "Deleted at",
+
+    // Parameter - Success Messages
+    "parametro.success.created" => "Parameter created successfully!",
+    "parametro.success.updated" => "Parameter updated successfully!",
+    "parametro.success.deleted" => "Parameter deleted successfully!",
+
+    // Parameter - Error Messages
+    "parametro.error.not_saved" => "Could not save the parameter!",
+    "parametro.error.not_updated" => "Could not update the parameter!",
+    "parametro.error.not_deleted" => "Could not delete the parameter!",
+
+    // User - Labels
+    "user.new" => "New User",
+    "user.save" => "Save",
+    "user.save_changes" => "Save Changes",
+    "user.back" => "Back",
+    "user.name" => "Name",
+    "user.email" => "E-mail",
+    "user.password" => "Password",
+    "user.password_confirmation" => "Password Confirmation",
+    "user.avatar" => "Avatar",
+    "user.situation" => "Situation",
+    "user.actions" => "Actions",
+    "user.edit" => "Edit",
+    "user.visualize" => "Visualize",
+    "user.destroy" => "Destroy",
+    "user.history" => "History",
+
+    // User - Form Fields
+    "user.form.name" => "Name",
+    "user.form.email" => "E-mail",
+    "user.form.password" => "Password",
+    "user.form.password_confirmation" => "Password Confirmation",
+    "user.form.avatar" => "Avatar",
+    "user.form.situation" => "Situation",
+    "user.form.select_situation" => "Select a situation",
+    "user.form.password.required" => "Password required",
+    "user.form.password.optional" => "Leave blank to keep current",
+    "user.form.password_confirmation.placeholder" => "Confirm password",
+
+    // User - Breadcrumbs
+    "user.breadcrumb.home" => "Home",
+    "user.breadcrumb.listing" => "User Listing",
+    "user.breadcrumb.create" => "User Creation",
+    "user.breadcrumb.edit" => "User Edit",
+    "user.breadcrumb.show" => "User View",
+    "user.breadcrumb.destroy" => "User Deletion",
+    "user.breadcrumb.history" => "User History",
+
+    // User - Titles and Messages
+    "user.title.listing" => "User Listing",
+    "user.title.create" => "User Creation",
+    "user.title.edit" => "User Edit",
+    "user.title.show" => "User View",
+    "user.title.destroy" => "User Deletion",
+    "user.title.history" => "User History",
+    "user.modal.details.title" => "Change Details",
+    "user.modal.close" => "Close",
+    "user.no.records" => "No user found.",
+    "user.no.history" => "No changes found for this user.",
+    "user.history.data.title" => "User Data",
+    "user.history.changes.title" => "Change History",
+    "user.history.table.date" => "Date",
+    "user.history.table.user" => "User",
+    "user.history.table.type" => "Change Type",
+    "user.history.table.actions" => "Actions",
+    "user.history.button.details" => "Details",
+
+    // User - Success Messages
+    "user.success.created" => "User created successfully!",
+    "user.success.updated" => "User updated successfully!",
+    "user.success.deleted" => "User deleted successfully!",
+
+    // User - Error Messages
+    "user.error.not_saved" => "Could not save the user!",
+    "user.error.not_updated" => "Could not update the user!",
+    "user.error.not_deleted" => "Could not delete the user!",
+
     // Access Level
     "access_level.new" => "New Access Level",
     "access_level.save" => "Save",

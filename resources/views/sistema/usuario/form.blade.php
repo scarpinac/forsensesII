@@ -43,6 +43,24 @@
     </div>
 </div>
 <div class="row">
+    <div class="form-group col-md-6">
+        <label for="situacao_id">{{ __('labels.user.form.situation') }}</label>
+        <select name="situacao_id" {{isset($bloquearCampos) && $bloquearCampos ? 'disabled' : ''}} id="situacao_id" class="form-control @error('situacao_id') is-invalid @enderror">
+             <option value="">{{ __('labels.user.form.select_situation') }}</option>
+            @foreach($situacoes ?? [] as $situacao)
+                <option value="{{ $situacao->id }}" {{ old('situacao_id', $usuario->situacao_id ?? null) == $situacao->id ? 'selected' : '' }}>
+                    {{ $situacao->descricao }}
+                </option>
+            @endforeach
+        </select>
+        @error('situacao_id')
+            <div class="invalid-feedback font-weight-bold" role="alert">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+</div>
+<div class="row">
     <div class="form-group col-md-12">
         <label for="avatar">{{ __('labels.user.avatar') }}</label>
         @if(!isset($bloquearCampos))

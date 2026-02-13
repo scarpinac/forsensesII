@@ -33,8 +33,10 @@ class UsuarioController extends Controller
         abort_if (!Auth::user()->canAccess('sistema.usuario.create'), 403, 'Acesso não autorizado');
 
         $usuario = new User;
+        $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
+        $situacoes = $situacaoPadrao ? $situacaoPadrao->tipos()->orderBy('descricao')->get() : collect();
 
-        return view('sistema.usuario.create', compact('usuario'));
+        return view('sistema.usuario.create', compact('usuario', 'situacoes'));
     }
 
     /**
@@ -81,7 +83,10 @@ class UsuarioController extends Controller
     {
         abort_if (!Auth::user()->canAccess('sistema.usuario.edit'), 403, 'Acesso não autorizado');
 
-        return view('sistema.usuario.edit', compact('usuario'));
+        $situacaoPadrao = Padrao::where('descricao', 'Situação')->first();
+        $situacoes = $situacaoPadrao ? $situacaoPadrao->tipos()->orderBy('descricao')->get() : collect();
+
+        return view('sistema.usuario.edit', compact('usuario', 'situacoes'));
     }
 
     /**

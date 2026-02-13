@@ -143,4 +143,45 @@ return [
             ],
         ],
     ],
+    
+    // API Form Request Validation Messages
+    'api' => [
+        'validation' => [
+            'api_id' => [
+                'required' => 'El campo tipo de API es obligatorio.',
+                'exists' => 'El tipo de API seleccionado no es válido.',
+            ],
+            'credencial' => [
+                'required' => 'El campo credencial es obligatorio.',
+                'string' => 'El campo credencial debe ser una cadena de texto.',
+            ],
+            'situacao_id' => [
+                'required' => 'El campo situación es obligatorio.',
+                'exists' => 'La situación seleccionada no es válida.',
+            ],
+        ],
+    ],
+
+    // Parameter Form Request Validation Messages
+    'parametro' => [
+        'validation' => [
+            'nome' => [
+                'required' => 'El campo nombre es obligatorio.',
+                'string' => 'El campo nombre debe ser una cadena de texto.',
+                'max' => 'El campo nombre no puede tener más de 80 caracteres.',
+            ],
+            'descricao' => [
+                'required' => 'El campo descripción es obligatorio.',
+                'string' => 'El campo descripción debe ser una cadena de texto.',
+            ],
+            'tipo_id' => [
+                'required' => 'El campo tipo es obligatorio.',
+                'exists' => 'El tipo seleccionado no es válido.',
+            ],
+            'valor' => [
+                'required' => 'El campo valor es obligatorio.',
+                'string' => 'El campo valor debe ser una cadena de texto.',
+            ],
+        ],
+    ],
 ];

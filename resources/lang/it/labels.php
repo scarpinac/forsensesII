@@ -112,6 +112,145 @@ return [
     "permission.no.records" => "Nessun permesso trovato.",
     "permission.no.history" => "Nessuna modifica trovata per questo permesso.",
 
+    // API - Labels
+    "api.new" => "Nuova API",
+    "api.save" => "Salva",
+    "api.save_changes" => "Salva Modifiche",
+    "api.back" => "Indietro",
+    "api.api_type" => "Tipo API",
+    "api.credential" => "Credenziale",
+    "api.situation" => "Situazione",
+    "api.actions" => "Azioni",
+    "api.edit" => "Modifica",
+    "api.visualize" => "Visualizza",
+    "api.destroy" => "Elimina",
+    "api.history" => "Cronologia",
+
+    // API - Form Fields
+    "api.form.api_type" => "Tipo API",
+    "api.form.credential" => "Credenziale",
+    "api.form.situation" => "Situazione",
+    "api.form.select_api_type" => "Seleziona un tipo API",
+    "api.form.select_situation" => "Seleziona una situazione",
+
+    // API - Breadcrumbs
+    "api.breadcrumb.home" => "Home",
+    "api.breadcrumb.listing" => "Elenco API",
+    "api.breadcrumb.create" => "Creazione API",
+    "api.breadcrumb.edit" => "Modifica API",
+    "api.breadcrumb.show" => "Visualizza API",
+    "api.breadcrumb.destroy" => "Eliminazione API",
+    "api.breadcrumb.history" => "Cronologia API",
+
+    // API - Titles and Messages
+    "api.title.listing" => "Elenco API",
+    "api.title.create" => "Creazione API",
+    "api.title.edit" => "Modifica API",
+    "api.title.show" => "Visualizza API",
+    "api.title.destroy" => "Eliminazione API",
+    "api.title.history" => "Cronologia API",
+    "api.modal.details.title" => "Dettagli Modifica",
+    "api.modal.close" => "Chiudi",
+    "api.no.records" => "Nessuna API trovata.",
+    "api.no.history" => "Nessuna modifica trovata per questa API.",
+    "api.history.data.title" => "Dati API",
+    "api.history.changes.title" => "Cronologia Modifiche",
+    "api.history.table.date" => "Data",
+    "api.history.table.user" => "Utente",
+    "api.history.table.type" => "Tipo Modifica",
+    "api.history.table.actions" => "Azioni",
+    "api.history.button.details" => "Dettagli",
+
+    // API - History Table Fields
+    "api.history.fields.id" => "ID",
+    "api.history.fields.api_id" => "Tipo API",
+    "api.history.fields.credencial" => "Credenziale",
+    "api.history.fields.situacao_id" => "Situazione",
+    "api.history.fields.created_at" => "Creato il",
+    "api.history.fields.updated_at" => "Aggiornato il",
+    "api.history.fields.deleted_at" => "Eliminato il",
+
+    // API - Success Messages
+    "api.success.created" => "API creata con successo!",
+    "api.success.updated" => "API aggiornata con successo!",
+    "api.success.deleted" => "API eliminata con successo!",
+
+    // API - Error Messages
+    "api.error.not_saved" => "Impossibile salvare l'API!",
+    "api.error.not_updated" => "Impossibile aggiornare l'API!",
+    "api.error.not_deleted" => "Impossibile eliminare l'API!",
+
+    // Parametro - Labels
+    "parametro.new" => "Nuovo Parametro",
+    "parametro.save" => "Salva",
+    "parametro.save_changes" => "Salva Modifiche",
+    "parametro.back" => "Indietro",
+    "parametro.name" => "Nome",
+    "parametro.type" => "Tipo",
+    "parametro.value" => "Valore",
+    "parametro.situation" => "Situazione",
+    "parametro.actions" => "Azioni",
+    "parametro.edit" => "Modifica",
+    "parametro.visualize" => "Visualizza",
+    "parametro.destroy" => "Elimina",
+    "parametro.history" => "Cronologia",
+
+    // Parametro - Form Fields
+    "parametro.form.name" => "Nome",
+    "parametro.form.description" => "Descrizione",
+    "parametro.form.type" => "Tipo",
+    "parametro.form.value" => "Valore",
+    "parametro.form.select_type" => "Seleziona un tipo",
+
+    // Parametro - Breadcrumbs
+    "parametro.breadcrumb.home" => "Home",
+    "parametro.breadcrumb.listing" => "Elenco Parametri",
+    "parametro.breadcrumb.create" => "Creazione Parametro",
+    "parametro.breadcrumb.edit" => "Modifica Parametro",
+    "parametro.breadcrumb.show" => "Visualizza Parametro",
+    "parametro.breadcrumb.destroy" => "Eliminazione Parametro",
+    "parametro.breadcrumb.history" => "Cronologia Parametro",
+
+    // Parametro - Titles and Messages
+    "parametro.title.listing" => "Elenco Parametri",
+    "parametro.title.create" => "Creazione Parametro",
+    "parametro.title.edit" => "Modifica Parametro",
+    "parametro.title.show" => "Visualizza Parametro",
+    "parametro.title.destroy" => "Eliminazione Parametro",
+    "parametro.title.history" => "Cronologia Parametro",
+    "parametro.modal.details.title" => "Dettagli Modifica",
+    "parametro.modal.close" => "Chiudi",
+    "parametro.no.records" => "Nessun parametro trovato.",
+    "parametro.no.history" => "Nessuna modifica trovata per questo parametro.",
+    "parametro.history.data.title" => "Dati Parametro",
+    "parametro.history.changes.title" => "Cronologia Modifiche",
+    "parametro.history.table.date" => "Data",
+    "parametro.history.table.user" => "Utente",
+    "parametro.history.table.type" => "Tipo Modifica",
+    "parametro.history.table.actions" => "Azioni",
+    "parametro.history.button.details" => "Dettagli",
+
+    // Parametro - History Table Fields
+    "parametro.history.fields.id" => "ID",
+    "parametro.history.fields.nome" => "Nome",
+    "parametro.history.fields.descricao" => "Descrizione",
+    "parametro.history.fields.tipo_id" => "Tipo",
+    "parametro.history.fields.valor" => "Valore",
+    "parametro.history.fields.situacao_id" => "Situazione",
+    "parametro.history.fields.created_at" => "Creato il",
+    "parametro.history.fields.updated_at" => "Aggiornato il",
+    "parametro.history.fields.deleted_at" => "Eliminato il",
+
+    // Parametro - Success Messages
+    "parametro.success.created" => "Parametro creato con successo!",
+    "parametro.success.updated" => "Parametro aggiornato con successo!",
+    "parametro.success.deleted" => "Parametro eliminato con successo!",
+
+    // Parametro - Error Messages
+    "parametro.error.not_saved" => "Impossibile salvare il parametro!",
+    "parametro.error.not_updated" => "Impossibile aggiornare il parametro!",
+    "parametro.error.not_deleted" => "Impossibile eliminare il parametro!",
+
     // Livello di Accesso
     "access_level.new" => "Nuovo Livello di Accesso",
     "access_level.save" => "Salva",
@@ -135,19 +274,71 @@ return [
     "user.save" => "Salva",
     "user.save_changes" => "Salva Modifiche",
     "user.back" => "Indietro",
+    "user.name" => "Nome",
+    "user.email" => "E-mail",
+    "user.password" => "Password",
+    "user.password_confirmation" => "Conferma Password",
+    "user.avatar" => "Avatar",
+    "user.situation" => "Situazione",
     "user.actions" => "Azioni",
     "user.edit" => "Modifica",
     "user.visualize" => "Visualizza",
     "user.destroy" => "Elimina",
     "user.history" => "Cronologia",
-    "user.name" => "Nome",
-    "user.email" => "E-mail",
-    "user.password" => "Password",
+
+    // Utente - Form Fields
+    "user.form.name" => "Nome",
+    "user.form.email" => "E-mail",
+    "user.form.password" => "Password",
+    "user.form.password_confirmation" => "Conferma Password",
+    "user.form.avatar" => "Avatar",
+    "user.form.situation" => "Situazione",
+    "user.form.select_situation" => "Seleziona una situazione",
+    "user.form.password.required" => "Password (obbligatoria)",
+    "user.form.password.optional" => "Lasciare vuoto per mantenere quella attuale",
+    "user.form.password_confirmation.placeholder" => "Conferma password",
+
+    // Utente - Breadcrumbs
+    "user.breadcrumb.home" => "Home",
+    "user.breadcrumb.listing" => "Elenco Utenti",
+    "user.breadcrumb.create" => "Creazione Utente",
+    "user.breadcrumb.edit" => "Modifica Utente",
+    "user.breadcrumb.show" => "Visualizza Utente",
+    "user.breadcrumb.destroy" => "Eliminazione Utente",
+    "user.breadcrumb.history" => "Cronologia Utente",
+
+    // Utente - Titles and Messages
+    "user.title.listing" => "Elenco Utenti",
+    "user.title.create" => "Creazione Utente",
+    "user.title.edit" => "Modifica Utente",
+    "user.title.show" => "Visualizza Utente",
+    "user.title.destroy" => "Eliminazione Utente",
+    "user.title.history" => "Cronologia Utente",
+    "user.modal.details.title" => "Dettagli Modifica",
+    "user.modal.close" => "Chiudi",
+    "user.no.records" => "Nessun utente trovato.",
+    "user.no.history" => "Nessuna modifica trovata per questo utente.",
+    "user.history.data.title" => "Dati Utente",
+    "user.history.changes.title" => "Cronologia Modifiche",
+    "user.history.table.date" => "Data",
+    "user.history.table.user" => "Utente",
+    "user.history.table.type" => "Tipo Modifica",
+    "user.history.table.actions" => "Azioni",
+    "user.history.button.details" => "Dettagli",
+
+    // Utente - Success Messages
+    "user.success.created" => "Utente creato con successo!",
+    "user.success.updated" => "Utente aggiornato con successo!",
+    "user.success.deleted" => "Utente eliminato con successo!",
+
+    // Utente - Error Messages
+    "user.error.not_saved" => "Impossibile salvare l'utente!",
+    "user.error.not_updated" => "Impossibile aggiornare l'utente!",
+    "user.error.not_deleted" => "Impossibile eliminare l'utente!",
     "user.password.required" => "Password (obbligatoria)",
     "user.password.optional" => "Password (lasciare vuoto per mantenere quella attuale)",
     "user.password_confirmation" => "Conferma Password",
     "user.admin" => "Amministratore",
-    "user.avatar" => "Avatar",
     "user.avatar.current" => "Avatar attuale",
 
     // Notifiche

@@ -140,6 +140,212 @@ return [
     "permission.error.not_updated" => "Não foi possível alterar a permissão!",
     "permission.error.not_deleted" => "Não foi possível excluir a permissão!",
 
+    // API - Labels
+    "api.new" => "Nova API",
+    "api.save" => "Salvar",
+    "api.save_changes" => "Salvar Alterações",
+    "api.back" => "Voltar",
+    "api.api_type" => "Tipo de API",
+    "api.credential" => "Credencial",
+    "api.situation" => "Situação",
+    "api.actions" => "Ações",
+    "api.edit" => "Editar",
+    "api.visualize" => "Visualizar",
+    "api.destroy" => "Excluir",
+    "api.history" => "Histórico",
+
+    // API - Campos do Formulário
+    "api.form.api_type" => "Tipo de API",
+    "api.form.credential" => "Credencial",
+    "api.form.situation" => "Situação",
+    "api.form.select_api_type" => "Selecione um tipo de API",
+    "api.form.select_situation" => "Selecione uma situação",
+
+    // API - Breadcrumbs
+    "api.breadcrumb.home" => "Home",
+    "api.breadcrumb.listing" => "Listagem de APIs",
+    "api.breadcrumb.create" => "Cadastro de API",
+    "api.breadcrumb.edit" => "Edição da API",
+    "api.breadcrumb.show" => "Visualização da API",
+    "api.breadcrumb.destroy" => "Deleção da API",
+    "api.breadcrumb.history" => "Histórico da API",
+
+    // API - Títulos e Mensagens
+    "api.title.listing" => "Listagem de APIs",
+    "api.title.create" => "Cadastro de API",
+    "api.title.edit" => "Edição da API",
+    "api.title.show" => "Visualização da API",
+    "api.title.destroy" => "Deleção da API",
+    "api.title.history" => "Histórico da API",
+    "api.modal.details.title" => "Detalhes da Alteração",
+    "api.modal.close" => "Fechar",
+    "api.no.records" => "Nenhuma API encontrada.",
+    "api.no.history" => "Nenhuma alteração encontrada para esta API.",
+    "api.history.data.title" => "Dados da API",
+    "api.history.changes.title" => "Histórico de Alterações",
+    "api.history.table.date" => "Data",
+    "api.history.table.user" => "Usuário",
+    "api.history.table.type" => "Tipo de Alteração",
+    "api.history.table.actions" => "Ações",
+    "api.history.button.details" => "Detalhes",
+
+    // API - Campos da Tabela de Histórico
+    "api.history.fields.id" => "ID",
+    "api.history.fields.api_id" => "Tipo de API",
+    "api.history.fields.credencial" => "Credencial",
+    "api.history.fields.situacao_id" => "Situação",
+    "api.history.fields.created_at" => "Criado em",
+    "api.history.fields.updated_at" => "Atualizado em",
+    "api.history.fields.deleted_at" => "Excluído em",
+
+    // API - Mensagens de Sucesso
+    "api.success.created" => "API cadastrada com sucesso!",
+    "api.success.updated" => "API atualizada com sucesso!",
+    "api.success.deleted" => "API excluída com sucesso!",
+
+    // API - Mensagens de Erro
+    "api.error.not_saved" => "Não foi possível salvar a API!",
+    "api.error.not_updated" => "Não foi possível alterar a API!",
+    "api.error.not_deleted" => "Não foi possível excluir a API!",
+
+    // Parâmetro - Labels
+    "parametro.new" => "Novo Parâmetro",
+    "parametro.save" => "Salvar",
+    "parametro.save_changes" => "Salvar Alterações",
+    "parametro.back" => "Voltar",
+    "parametro.name" => "Nome",
+    "parametro.type" => "Tipo",
+    "parametro.value" => "Valor",
+    "parametro.situation" => "Situação",
+    "parametro.actions" => "Ações",
+    "parametro.edit" => "Editar",
+    "parametro.visualize" => "Visualizar",
+    "parametro.destroy" => "Excluir",
+    "parametro.history" => "Histórico",
+
+    // Parâmetro - Campos do Formulário
+    "parametro.form.name" => "Nome",
+    "parametro.form.description" => "Descrição",
+    "parametro.form.type" => "Tipo",
+    "parametro.form.value" => "Valor",
+    "parametro.form.select_type" => "Selecione um tipo",
+
+    // Parâmetro - Breadcrumbs
+    "parametro.breadcrumb.home" => "Home",
+    "parametro.breadcrumb.listing" => "Listagem de Parâmetros",
+    "parametro.breadcrumb.create" => "Cadastro de Parâmetro",
+    "parametro.breadcrumb.edit" => "Edição do Parâmetro",
+    "parametro.breadcrumb.show" => "Visualização do Parâmetro",
+    "parametro.breadcrumb.destroy" => "Deleção do Parâmetro",
+    "parametro.breadcrumb.history" => "Histórico do Parâmetro",
+
+    // Parâmetro - Títulos e Mensagens
+    "parametro.title.listing" => "Listagem de Parâmetros",
+    "parametro.title.create" => "Cadastro de Parâmetro",
+    "parametro.title.edit" => "Edição do Parâmetro",
+    "parametro.title.show" => "Visualização do Parâmetro",
+    "parametro.title.destroy" => "Deleção do Parâmetro",
+    "parametro.title.history" => "Histórico do Parâmetro",
+    "parametro.modal.details.title" => "Detalhes da Alteração",
+    "parametro.modal.close" => "Fechar",
+    "parametro.no.records" => "Nenhum parâmetro encontrado.",
+    "parametro.no.history" => "Nenhuma alteração encontrada para este parâmetro.",
+    "parametro.history.data.title" => "Dados do Parâmetro",
+    "parametro.history.changes.title" => "Histórico de Alterações",
+    "parametro.history.table.date" => "Data",
+    "parametro.history.table.user" => "Usuário",
+    "parametro.history.table.type" => "Tipo de Alteração",
+    "parametro.history.table.actions" => "Ações",
+    "parametro.history.button.details" => "Detalhes",
+
+    // Parâmetro - Campos da Tabela de Histórico
+    "parametro.history.fields.id" => "ID",
+    "parametro.history.fields.nome" => "Nome",
+    "parametro.history.fields.descricao" => "Descrição",
+    "parametro.history.fields.tipo_id" => "Tipo",
+    "parametro.history.fields.valor" => "Valor",
+    "parametro.history.fields.situacao_id" => "Situação",
+    "parametro.history.fields.created_at" => "Criado em",
+    "parametro.history.fields.updated_at" => "Atualizado em",
+    "parametro.history.fields.deleted_at" => "Excluído em",
+
+    // Parâmetro - Mensagens de Sucesso
+    "parametro.success.created" => "Parâmetro cadastrado com sucesso!",
+    "parametro.success.updated" => "Parâmetro atualizado com sucesso!",
+    "parametro.success.deleted" => "Parâmetro excluído com sucesso!",
+
+    // Parâmetro - Mensagens de Erro
+    "parametro.error.not_saved" => "Não foi possível salvar o parâmetro!",
+    "parametro.error.not_updated" => "Não foi possível alterar o parâmetro!",
+    "parametro.error.not_deleted" => "Não foi possível excluir o parâmetro!",
+
+    // User - Labels
+    "user.new" => "Novo Usuário",
+    "user.save" => "Salvar",
+    "user.save_changes" => "Salvar Alterações",
+    "user.back" => "Voltar",
+    "user.name" => "Nome",
+    "user.email" => "E-mail",
+    "user.password" => "Senha",
+    "user.password_confirmation" => "Confirmação de Senha",
+    "user.avatar" => "Avatar",
+    "user.situation" => "Situação",
+    "user.actions" => "Ações",
+    "user.edit" => "Editar",
+    "user.visualize" => "Visualizar",
+    "user.destroy" => "Excluir",
+    "user.history" => "Histórico",
+
+    // User - Campos do Formulário
+    "user.form.name" => "Nome",
+    "user.form.email" => "E-mail",
+    "user.form.password" => "Senha",
+    "user.form.password_confirmation" => "Confirmação de Senha",
+    "user.form.avatar" => "Avatar",
+    "user.form.situation" => "Situação",
+    "user.form.select_situation" => "Selecione uma situação",
+    "user.form.password.required" => "Senha obrigatória",
+    "user.form.password.optional" => "Deixe em branco para manter a atual",
+    "user.form.password_confirmation.placeholder" => "Confirme a senha",
+
+    // User - Breadcrumbs
+    "user.breadcrumb.home" => "Home",
+    "user.breadcrumb.listing" => "Listagem de Usuários",
+    "user.breadcrumb.create" => "Cadastro de Usuário",
+    "user.breadcrumb.edit" => "Edição do Usuário",
+    "user.breadcrumb.show" => "Visualização do Usuário",
+    "user.breadcrumb.destroy" => "Deleção do Usuário",
+    "user.breadcrumb.history" => "Histórico do Usuário",
+
+    // User - Títulos e Mensagens
+    "user.title.listing" => "Listagem de Usuários",
+    "user.title.create" => "Cadastro de Usuário",
+    "user.title.edit" => "Edição do Usuário",
+    "user.title.show" => "Visualização do Usuário",
+    "user.title.destroy" => "Deleção do Usuário",
+    "user.title.history" => "Histórico do Usuário",
+    "user.modal.details.title" => "Detalhes da Alteração",
+    "user.modal.close" => "Fechar",
+    "user.no.records" => "Nenhum usuário encontrado.",
+    "user.no.history" => "Nenhuma alteração encontrada para este usuário.",
+    "user.history.data.title" => "Dados do Usuário",
+    "user.history.changes.title" => "Histórico de Alterações",
+    "user.history.table.date" => "Data",
+    "user.history.table.user" => "Usuário",
+    "user.history.table.type" => "Tipo de Alteração",
+    "user.history.table.actions" => "Ações",
+    "user.history.button.details" => "Detalhes",
+
+    // User - Mensagens de Sucesso
+    "user.success.created" => "Usuário cadastrado com sucesso!",
+    "user.success.updated" => "Usuário atualizado com sucesso!",
+    "user.success.deleted" => "Usuário excluído com sucesso!",
+
+    // User - Mensagens de Erro
+    "user.error.not_saved" => "Não foi possível salvar o usuário!",
+    "user.error.not_updated" => "Não foi possível alterar o usuário!",
+    "user.error.not_deleted" => "Não foi possível excluir o usuário!",
+
     // Perfil de Acesso (Access Level)
     "access_level.new" => "Novo Perfil de Acesso",
     "access_level.save" => "Salvar",

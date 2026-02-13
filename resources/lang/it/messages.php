@@ -262,6 +262,47 @@ return [
         ],
     ],
     
+    // API Form Request Validation Messages
+    'api' => [
+        'validation' => [
+            'api_id' => [
+                'required' => 'Il campo tipo API è obbligatorio.',
+                'exists' => 'Il tipo API selezionato non è valido.',
+            ],
+            'credencial' => [
+                'required' => 'Il campo credenziale è obbligatorio.',
+                'string' => 'Il campo credenziale deve essere una stringa.',
+            ],
+            'situacao_id' => [
+                'required' => 'Il campo situazione è obbligatorio.',
+                'exists' => 'La situazione selezionata non è valida.',
+            ],
+        ],
+    ],
+
+    // Parameter Form Request Validation Messages
+    'parametro' => [
+        'validation' => [
+            'nome' => [
+                'required' => 'Il campo nome è obbligatorio.',
+                'string' => 'Il campo nome deve essere una stringa.',
+                'max' => 'Il campo nome non può avere più di 80 caratteri.',
+            ],
+            'descricao' => [
+                'required' => 'Il campo descrizione è obbligatorio.',
+                'string' => 'Il campo descrizione deve essere una stringa.',
+            ],
+            'tipo_id' => [
+                'required' => 'Il campo tipo è obbligatorio.',
+                'exists' => 'Il tipo selezionato non è valido.',
+            ],
+            'valor' => [
+                'required' => 'Il campo valore è obbligatorio.',
+                'string' => 'Il campo valore deve essere una stringa.',
+            ],
+        ],
+    ],
+
     // Notification Form Request Validation Messages
     'notification' => [
         'validation' => [

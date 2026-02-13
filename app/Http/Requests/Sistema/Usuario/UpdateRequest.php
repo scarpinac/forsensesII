@@ -28,6 +28,7 @@ class UpdateRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users,email,' . $userId,
             'password' => 'nullable|string|min:8|confirmed',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB max
+            'situacao_id' => 'required|exists:padraotipo,id',
         ];
     }
 
@@ -47,6 +48,8 @@ class UpdateRequest extends FormRequest
             'password.confirmed' => __('messages.usuario.validation.password.confirmed'),
             'avatar.mimes' => __('messages.usuario.validation.avatar.mimes'),
             'avatar.max' => __('messages.usuario.validation.avatar.max'),
+            'situacao_id.required' => __('messages.usuario.validation.situacao_id.required'),
+            'situacao_id.exists' => __('messages.usuario.validation.situacao_id.exists'),
         ];
     }
 }
