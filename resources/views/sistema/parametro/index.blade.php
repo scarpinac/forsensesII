@@ -39,10 +39,9 @@
                 <table class="table-system table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="whiteSpace-nowrap col-md-2">{{__('labels.parametro.name')}}</th>
+                            <th class="whiteSpace-nowrap col-md-3">{{__('labels.parametro.name')}}</th>
                             <th class="whiteSpace-nowrap col-md-3">{{__('labels.parametro.type')}}</th>
                             <th class="whiteSpace-nowrap col-md-4">{{__('labels.parametro.value')}}</th>
-                            <th class="whiteSpace-nowrap col-md-1">{{__('labels.parametro.situation')}}</th>
                             <th class="whiteSpace-nowrap col-md-2">{{__('labels.parametro.actions')}}</th>
                         </tr>
                     </thead>
@@ -52,7 +51,6 @@
                                 <td class="whiteSpace-nowrap text-left">{{ $parametro->nome }}</td>
                                 <td class="whiteSpace-nowrap text-left">{{ $parametro->tipo->descricao ?? '-' }}</td>
                                 <td class="whiteSpace-nowrap text-left">{{ Str::limit($parametro->valor, 100) }}</td>
-                                <td class="whiteSpace-nowrap text-left">{{ $parametro->situacao->descricao ?? '-' }}</td>
                                 <td class="whiteSpace-nowrap text-center">
                                     @if(Auth::user()->canAccess('sistema.parametro.edit'))
                                         <a class="btn btn-outline-primary move btn-sm" title="{{__('labels.parametro.edit')}}"

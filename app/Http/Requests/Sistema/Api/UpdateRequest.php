@@ -22,9 +22,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'api_id' => 'required|exists:padraotipo,id,deleted_at,NULL,padrao_id,7',
+            'api_id' => 'required|exists:padrao_tipo,id,deleted_at,NULL,padrao_id,7',
             'credencial' => 'required|string',
-            'situacao_id' => 'required|exists:padraotipo,id,deleted_at,NULL,padrao_id,1',
+            'situacao_id' => 'required|exists:padrao_tipo,id,deleted_at,NULL,padrao_id,1',
         ];
     }
 

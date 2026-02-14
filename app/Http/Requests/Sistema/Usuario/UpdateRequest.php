@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users,email,' . $userId,
             'password' => 'nullable|string|min:8|confirmed',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // 5MB max
-            'situacao_id' => 'required|exists:padraotipo,id',
+            'situacao_id' => 'required|exists:padrao_tipo,id',
         ];
     }
 

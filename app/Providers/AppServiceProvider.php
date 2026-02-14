@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Api;
 use App\Models\Menu;
+use App\Models\Parametro;
 use App\Models\User;
 use App\Models\PadraoTipo;
 use App\Models\Permissao;
@@ -10,7 +12,9 @@ use App\Models\Perfil;
 use App\Models\PerfilPermissao;
 use App\Models\Padrao;
 use App\Models\Notificacao;
+use App\Observers\ApiObserver;
 use App\Observers\MenuObserver;
+use App\Observers\ParametroObserver;
 use App\Observers\PermissaoObserver;
 use App\Observers\UsuarioObserver;
 use App\Observers\PerfilObserver;
@@ -46,6 +50,8 @@ class AppServiceProvider extends ServiceProvider
         Padrao::observe(PadraoObserver::class);
         PadraoTipo::observe(PadraoTipoObserver::class);
         Notificacao::observe(NotificacaoObserver::class);
+        Api::observe(ApiObserver::class);
+        Parametro::observe(ParametroObserver::class);
 //        PerfilPermissao::observe(PerfilPermissaoObserver::class);
 
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) {

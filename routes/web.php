@@ -21,6 +21,15 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+
+# ROTAS DO GERADOR DE CADASTROS
+Route::prefix('gerador')->name('gerador.')->group(function () {
+    Route::get('/', [GeradorCadastrosController::class, 'index'])->name('index');
+    Route::post('/generate', [GeradorCadastrosController::class, 'generate'])->name('generate');
+    Route::get('/modulos', [GeradorCadastrosController::class, 'getModulosDisponiveis'])->name('modulos');
+    Route::get('/tabelas', [GeradorCadastrosController::class, 'getTabelasDisponiveis'])->name('tabelas');
+});
+
 Route::post('/language', [LanguageController::class, 'switch'])->name('language.switch');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
@@ -198,13 +207,6 @@ Route::middleware(['auth', 'signed'])->group(function () {
 
         });
 
-        # ROTAS DO GERADOR DE CADASTROS
-        Route::prefix('gerador')->name('gerador.')->group(function () {
-            Route::get('/', [GeradorCadastrosController::class, 'index'])->name('index');
-            Route::post('/generate', [GeradorCadastrosController::class, 'generate'])->name('generate');
-            Route::get('/modulos', [GeradorCadastrosController::class, 'getModulosDisponiveis'])->name('modulos');
-            Route::get('/tabelas', [GeradorCadastrosController::class, 'getTabelasDisponiveis'])->name('tabelas');
-        });
 
         # ROTAS DE GERACOES
         Route::prefix('geracoes')->name('geracoes.')->group(function () {

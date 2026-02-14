@@ -3,7 +3,7 @@
     @vite(['resources/scss/custom.scss'])
 @endpush
 @section('js')
-    @vite(['resources/js/sistema/api.js'])
+    @vite(['resources/js/custom.js'])
 @endsection
 @section('title', __('labels.api.title.history') )
 
@@ -68,7 +68,7 @@
                             <td>{{ $historico->tipoAlteracao->descricao }}</td>
                             <td class="whiteSpace-nowrap text-center">
                                 <button type="button" class="detalhes btn btn-outline-info btn-sm"
-                                        data-details-url="{{ URL::signedRoute('sistema.api.history.details', ['api' => $historico->menu->id, 'historico' => $historico->id]) }}"
+                                        data-details-url="{{ URL::signedRoute('sistema.api.history.details', ['api' => $historico->api->id, 'historico' => $historico->id]) }}"
                                         title="{{ __('labels.api.history.button.details') }}">
                                     <i class="fas fa-search-plus"></i> {{ __('labels.api.history.button.details') }}
                                 </button>

@@ -129,11 +129,11 @@ class ParametroController extends Controller
      */
     public function historyDetails(Parametro $parametro, $historicoId)
     {
-        $historico = ParametroHistorico::findOrFail($historicoId);
-
-        if ($historico->parametro_id !== $parametro->id) {
-            abort(403, 'Ação não autorizada.');
+        if (!Auth::user()->canAccess('sistema.parametro.history')) {
+            abort(403);
         }
+
+        $historico = ParametroHistorico::findOrFail($historicoId);
 
         $historico->load(['user', 'tipoAlteracao']);
 

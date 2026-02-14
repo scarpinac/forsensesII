@@ -132,11 +132,11 @@ class ApiController extends Controller
      */
     public function historyDetails(Api $api, $historicoId)
     {
-        $historico = ApiHistorico::findOrFail($historicoId);
-
-        if ($historico->menu_id !== $api->id) {
-            abort(403, 'Ação não autorizada.');
+        if (!Auth::user()->canAccess('sistema.api.history')) {
+            abort(403);
         }
+
+        $historico = ApiHistorico::findOrFail($historicoId);
 
         $historico->load(['user', 'tipoAlteracao']);
 

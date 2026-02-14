@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
         return [
             'nome' => 'required|string|max:80',
             'descricao' => 'required|string',
-            'tipo_id' => 'required|exists:padraotipo,id,deleted_at,NULL,padrao_id,6',
+            'tipo_id' => 'required|exists:padrao_tipo,id,deleted_at,NULL,padrao_id,6',
             'valor' => 'required|string',
         ];
     }

@@ -48,7 +48,7 @@
                     <tbody>
                         @forelse($apis as $api)
                             <tr>
-                                <td class="whiteSpace-nowrap text-left">{{ $api->descricao ?? '-' }}</td>
+                                <td class="whiteSpace-nowrap text-left">{{ $api->api->descricao ?? '-' }}</td>
                                 <td class="whiteSpace-nowrap text-left">{{ Str::limit($api->credencial, 50) }}</td>
                                 <td class="whiteSpace-nowrap text-left">{{ $api->situacao->descricao ?? '-' }}</td>
                                 <td class="whiteSpace-nowrap text-center">

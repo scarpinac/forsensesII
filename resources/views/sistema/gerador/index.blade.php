@@ -172,9 +172,9 @@
 <script>
 // URLs assinadas geradas pelo Blade
 window.geradorUrls = {
-    modulos: '{{ URL::signedRoute("sistema.gerador.modulos") }}',
-    tabelas: '{{ URL::signedRoute("sistema.gerador.tabelas") }}',
-    generate: '{{ URL::signedRoute("sistema.gerador.generate") }}'
+    modulos: '{{ route("gerador.modulos") }}',
+    tabelas: '{{ route("gerador.tabelas") }}',
+    generate: '{{ route("gerador.generate") }}'
 };
 
 let campoIndex = 0;

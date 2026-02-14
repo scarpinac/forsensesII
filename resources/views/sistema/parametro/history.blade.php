@@ -3,7 +3,7 @@
     @vite(['resources/scss/custom.scss'])
 @endpush
 @section('js')
-    @vite(['resources/js/sistema/parametro.js'])
+    @vite(['resources/js/custom.js'])
 @endsection
 @section('title', __('labels.parametro.title.history') )
 
@@ -68,7 +68,7 @@
                             <td>{{ $historico->tipoAlteracao->descricao }}</td>
                             <td class="whiteSpace-nowrap text-center">
                                 <button type="button" class="detalhes btn btn-outline-info btn-sm"
-                                        data-details-url="{{ URL::signedRoute('sistema.parametro.history.details', ['parametro' => $historico->menu->id, 'historico' => $historico->id]) }}"
+                                        data-details-url="{{ URL::signedRoute('sistema.parametro.history.details', ['parametro' => $historico->parametro->id, 'historico' => $historico->id]) }}"
                                         title="{{ __('labels.parametro.history.button.details') }}">
                                     <i class="fas fa-search-plus"></i> {{ __('labels.parametro.history.button.details') }}
                                 </button>
