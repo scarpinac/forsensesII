@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Menu;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class GeradorService
@@ -17,6 +19,8 @@ class GeradorService
 
     public function gerarCadastro(array $data): array
     {
+        Log::info('GeradorService::gerarCadastro iniciado com dados:', $data);
+
         $this->data = $data;
         $this->classe = $data['classe'];
         $this->moduloPai = $data['modulo_pai'];
@@ -29,20 +33,54 @@ class GeradorService
             'menu' => null
         ];
 
+        Log::info('Iniciando geração de arquivos...');
+
         // Gerar arquivos
+        Log::info('Gerando migration...');
+        $migrationFiles = $this->gerarMigration();
+        Log::info('Migration gerada: ' . json_encode($migrationFiles));
+
+        // Gerar migration de histórico
+        Log::info('Gerando migration de histórico...');
+        $historyMigrationFiles = $this->gerarMigrationHistorico();
+        Log::info('Migration de histórico gerada: ' . json_encode($historyMigrationFiles));
+        $migrationFiles = array_merge($migrationFiles, $historyMigrationFiles);
+
+        Log::info('Gerando model...');
+        $modelFiles = $this->gerarModel();
+        Log::info('Model gerado: ' . json_encode($modelFiles));
+
+        Log::info('Gerando controller...');
+        $controllerFiles = $this->gerarController();
+        Log::info('Controller gerado: ' . json_encode($controllerFiles));
+
+        Log::info('Gerando requests...');
+        $requestFiles = $this->gerarRequests();
+        Log::info('Requests gerados: ' . json_encode($requestFiles));
+
+        Log::info('Gerando views...');
+        $viewFiles = $this->gerarViews();
+        Log::info('Views geradas: ' . json_encode($viewFiles));
+
+        Log::info('Gerando observer...');
+        $observerFiles = $this->gerarObserver();
+        Log::info('Observer gerado: ' . json_encode($observerFiles));
+
         $resultado['files'] = array_merge(
-            $this->gerarMigration(),
-            $this->gerarModel(),
-            $this->gerarController(),
-            $this->gerarRequests(),
-            $this->gerarViews(),
-            $this->gerarObserver()
+            $migrationFiles,
+            $modelFiles,
+            $controllerFiles,
+            $requestFiles,
+            $viewFiles,
+            $observerFiles
         );
 
-        // Executar migration automaticamente
-        \Illuminate\Support\Facades\Artisan::call('migrate', [
-            '--force' => true
-        ]);
+        Log::info('Arquivos gerados:', $resultado['files']);
+
+        // Executar migration automaticamente (comentado para teste)
+        // \Illuminate\Support\Facades\Artisan::call('migrate', [
+        //     '--force' => true
+        // ]);
 
         // Gerar permissões
         if ($data['criar_permissoes']) {
@@ -55,7 +93,7 @@ class GeradorService
         }
 
         // Registrar rotas
-        $this->registrarRotas();
+//        $this->registrarRotas();
 
         return $resultado;
     }
@@ -84,34 +122,34 @@ class GeradorService
         $obrigatorio = $campo['obrigatorio'] ?? false;
         $max = $campo['max'] ?? null;
         $unique = $campo['unique'] ?? false;
-        $relacionamento = $campo['relacionamento'] ?? null; // Garante que exista
+        $relacionamento = $campo['relacionamento'] ?? null;
 
         $line = "            \$table->";
 
         // Mapear tipos
         switch ($tipo) {
-            case 'string':
+            case 'String':
                 $line .= $max ? "string('{$nome}', {$max})" : "string('{$nome}')";
                 break;
-            case 'integer':
+            case 'Inteiro':
                 $line .= "integer('{$nome}')";
                 break;
-            case 'double':
+            case 'Decimal/Valor':
                 $line .= "decimal('{$nome}', 10, 2)";
                 break;
-            case 'date':
+            case 'Data':
                 $line .= "date('{$nome}')";
                 break;
-            case 'boolean':
+            case 'Booleano':
                 $line .= "boolean('{$nome}')";
                 break;
-            case 'text':
+            case 'Texto Longo':
                 $line .= "text('{$nome}')";
                 break;
-            case 'file':
+            case 'Arquivo':
                 $line .= "string('{$nome}')";
                 break;
-            case 'select':
+            case 'Select/Relacionamento':
                 $line .= "foreignId('{$nome}')->nullable()";
                 if ($relacionamento && !empty($relacionamento)) {
                     $tabelaRelacionamento = Str::snake(Str::plural($relacionamento));
@@ -120,7 +158,7 @@ class GeradorService
                 break;
         }
 
-        if ($obrigatorio && $tipo !== 'select') {
+        if ($obrigatorio && $tipo !== 'Select/Relacionamento') {
             $line = str_replace(')', ')->notNullable()', $line);
         }
 
@@ -128,9 +166,29 @@ class GeradorService
             $line .= "->unique()";
         }
 
-        $line .= ";\n            ";
+        $line .= ";\n";
 
         return $line;
+    }
+
+    private function gerarMigrationHistorico(): array
+    {
+        $timestamp = date('Y_m_d_His', strtotime('+1 second')); // Adicionar 1 segundo para evitar conflito
+        $tabelaHistorico = Str::snake($this->tabela) . '_historico';
+        $filename = "{$timestamp}_create_{$tabelaHistorico}_table.php";
+        $path = database_path("migrations/{$filename}");
+
+        $content = $this->getTemplateMigrationHistorico($tabelaHistorico, $this->tabela);
+
+        File::put($path, $content);
+        return ["Migration Histórico: {$filename}"];
+    }
+
+    private function getTemplateMigrationHistorico($tabelaHistorico, $tabelaPrincipal): string
+    {
+        $classePrincipal = $this->classe;
+
+        return "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration\n{\n    /**\n     * Run the migrations.\n     */\n    public function up(): void\n    {\n        Schema::create('{$tabelaHistorico}', function (Blueprint \$table) {\n            \$table->id();\n            \$table->foreignId('user_id')->constrained('users');\n            \$table->foreignId('{$this->tabela}_id')->constrained('{$tabelaPrincipal}');\n            \$table->text('dados_anteriores')->nullable();\n            \$table->text('dados_novos')->nullable();\n            \$table->foreignId('tipoAlteracao_id')->constrained('padrao_tipo');\n            \$table->timestamps();\n            \$table->softDeletes();\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     */\n    public function down(): void\n    {\n        Schema::dropIfExists('{$tabelaHistorico}');\n    }\n};";
     }
 
     private function gerarModel(): array
@@ -167,7 +225,16 @@ class GeradorService
         );
 
         File::put($path, $content);
-        return ["Model: app/Models/{$this->classe}.php"];
+
+        // Gerar Model de Histórico
+        $historyModelPath = app_path("Models/{$this->classe}Historico.php");
+        $historyContent = $this->getTemplateModelHistorico($this->classe, $this->tabela);
+        File::put($historyModelPath, $historyContent);
+
+        return [
+            "Model: app/Models/{$this->classe}.php",
+            "Model Histórico: app/Models/{$this->classe}Historico.php"
+        ];
     }
 
     private function gerarController(): array
@@ -217,22 +284,40 @@ class GeradorService
 
     private function gerarViews(): array
     {
+        Log::info('gerarViews iniciado');
         $files = [];
         $dir = resource_path("views/" . strtolower($this->moduloPai) . "/" . Str::kebab($this->classe));
 
+        Log::info('Diretorio das views: ' . $dir);
+
         if (!File::exists($dir)) {
+            Log::info('Criando diretório: ' . $dir);
             File::makeDirectory($dir, 0755, true);
         }
 
         $views = ['index', 'create', 'edit', 'show', 'destroy', 'history', 'form'];
+        Log::info('Views para gerar: ' . json_encode($views));
 
         foreach ($views as $view) {
+            Log::info('Gerando view: ' . $view);
             $path = "{$dir}/{$view}.blade.php";
-            $content = $this->getTemplateView($view, $this->classe, $this->moduloPai, $this->data);
-            File::put($path, $content);
-            $files[] = "View: resources/views/{$this->moduloPai}/" . Str::kebab($this->classe) . "/{$view}.blade.php";
+            Log::info('Caminho da view: ' . $path);
+
+            try {
+                $content = $this->getTemplateView($view, $this->classe, $this->moduloPai, $this->data);
+                Log::info('Template obtido para view: ' . $view);
+
+                File::put($path, $content);
+                Log::info('Arquivo criado: ' . $path);
+
+                $files[] = "View: resources/views/{$this->moduloPai}/" . Str::kebab($this->classe) . "/{$view}.blade.php";
+            } catch (\Exception $e) {
+                Log::error('Erro ao gerar view ' . $view . ': ' . $e->getMessage());
+                throw $e;
+            }
         }
 
+        Log::info('gerarViews finalizado');
         return $files;
     }
 
@@ -276,11 +361,13 @@ class GeradorService
             return [];
         }
 
+        $menuPai = Menu::where('descricao', '=', $this->moduloPai)->first();
+
         $menuData = [
             'descricao' => $this->classe, // Usar exatamente o nome da classe
             'icone' => 'fas fa-database',
             'rota' => $permissaoIndex,
-            'menuPai_id' => null,
+            'menuPai_id' => $menuPai ? $menuPai->id : null,
             'permissao_id' => $permissao->id,
             'situacao_id' => 1, // Ativo
             'created_at' => now(),
@@ -299,8 +386,13 @@ class GeradorService
 
         $newRoute = $this->getTemplateRoute($this->classe, $this->moduloPai);
 
-        // Adicionar rotas antes da última linha
-        $routeContent = str_replace("});", $newRoute . "\n});", $routeContent);
+        // Encontrar o último }); e adicionar as novas rotas antes
+        $lastBracePos = strrpos($routeContent, "});");
+        if ($lastBracePos !== false) {
+            $routeContent = substr($routeContent, 0, $lastBracePos) . $newRoute . "\n    });" . substr($routeContent, $lastBracePos + 2);
+        } else {
+            $routeContent .= $newRoute;
+        }
 
         File::put($routeFile, $routeContent);
     }
@@ -324,10 +416,11 @@ class GeradorService
 
     private function getTemplateMigration($tabela, $campos, $data)
     {
-        $softDeletes = $data['soft_delete'] ? "\$table->softDeletes();\n" : "";
-        $timestamps = $data['timestamps'] !== false ? "\$table->timestamps();\n" : "";
 
-        return "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration\n{\n    /**\n     * Run the migrations.\n     */\n    public function up(): void\n    {\n        Schema::create('{$tabela}', function (Blueprint \$table) {\n            \$table->id();\n{$campos}{$softDeletes}{$timestamps}\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     */\n    public function down(): void\n    {\n        Schema::dropIfExists('{$tabela}');\n    }\n};";
+        $timestamps = "\n            \$table->timestamps();";
+        $softDeletes = $data['soft_delete'] ? "\n            \$table->softDeletes();" : "";
+
+        return "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration\n{\n    /**\n     * Run the migrations.\n     */\n    public function up(): void\n    {\n        Schema::create('{$tabela}', function (Blueprint \$table) {\n            \$table->id();{$campos}{$timestamps}{$softDeletes}\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     */\n    public function down(): void\n    {\n        Schema::dropIfExists('{$tabela}');\n    }\n};";
     }
 
     private function getTemplateModel($classe, $tabela, $fillable, $casts, $relationships, $data)
@@ -444,17 +537,52 @@ class GeradorService
         foreach ($data['campos'] as $campo) {
             $nome = $campo['nome'];
             $tipo = $campo['tipo'];
+            $obrigatorio = $campo['obrigatorio'] ?? false;
+            $max = $campo['max'] ?? null;
+            $unique = $campo['unique'] ?? false;
+            $relacionamento = $campo['relacionamento'] ?? null;
 
-            $messages[] = "            '{$nome}.required' => __('messages.{$classeLower}.validation.{$nome}.required'),";
-            $messages[] = "            '{$nome}.string' => __('messages.{$classeLower}.validation.{$nome}.string'),";
-            $messages[] = "            '{$nome}.integer' => __('messages.{$classeLower}.validation.{$nome}.integer'),";
-            $messages[] = "            '{$nome}.numeric' => __('messages.{$classeLower}.validation.{$nome}.numeric'),";
-            $messages[] = "            '{$nome}.regex' => __('messages.{$classeLower}.validation.{$nome}.regex'),";
-            $messages[] = "            '{$nome}.date' => __('messages.{$classeLower}.validation.{$nome}.date'),";
-            $messages[] = "            '{$nome}.boolean' => __('messages.{$classeLower}.validation.{$nome}.boolean'),";
-            $messages[] = "            '{$nome}.max' => __('messages.{$classeLower}.validation.{$nome}.max'),";
-            $messages[] = "            '{$nome}.unique' => __('messages.{$classeLower}.validation.{$nome}.unique'),";
-            $messages[] = "            '{$nome}.exists' => __('messages.{$classeLower}.validation.{$nome}.exists'),";
+            // Gerar mensagens apenas para as regras que realmente são usadas
+            if ($obrigatorio) {
+                $messages[] = "            '{$nome}.required' => __('messages.{$classeLower}.validation.{$nome}.required'),";
+            }
+
+            // Mapear tipos para mensagens
+            switch ($tipo) {
+                case 'string':
+                    $messages[] = "            '{$nome}.string' => __('messages.{$classeLower}.validation.{$nome}.string'),";
+                    if ($max) $messages[] = "            '{$nome}.max' => __('messages.{$classeLower}.validation.{$nome}.max'),";
+                    break;
+                case 'integer':
+                    $messages[] = "            '{$nome}.integer' => __('messages.{$classeLower}.validation.{$nome}.integer'),";
+                    break;
+                case 'double':
+                    $messages[] = "            '{$nome}.numeric' => __('messages.{$classeLower}.validation.{$nome}.numeric'),";
+                    $messages[] = "            '{$nome}.regex' => __('messages.{$classeLower}.validation.{$nome}.regex'),";
+                    break;
+                case 'date':
+                    $messages[] = "            '{$nome}.date' => __('messages.{$classeLower}.validation.{$nome}.date'),";
+                    break;
+                case 'boolean':
+                    $messages[] = "            '{$nome}.boolean' => __('messages.{$classeLower}.validation.{$nome}.boolean'),";
+                    break;
+                case 'text':
+                    $messages[] = "            '{$nome}.string' => __('messages.{$classeLower}.validation.{$nome}.string'),";
+                    break;
+                case 'file':
+                    $messages[] = "            '{$nome}.file' => __('messages.{$classeLower}.validation.{$nome}.file'),";
+                    $messages[] = "            '{$nome}.max' => __('messages.{$classeLower}.validation.{$nome}.max'),";
+                    break;
+                case 'select':
+                    if ($relacionamento && !empty($relacionamento)) {
+                        $messages[] = "            '{$nome}.exists' => __('messages.{$classeLower}.validation.{$nome}.exists'),";
+                    }
+                    break;
+            }
+
+            if ($unique) {
+                $messages[] = "            '{$nome}.unique' => __('messages.{$classeLower}.validation.{$nome}.unique'),";
+            }
         }
 
         return implode("\n", array_unique($messages));
@@ -466,6 +594,27 @@ class GeradorService
         $moduloLower = strtolower($moduloPai);
         $classeKebab = Str::kebab($classe);
 
+        // Usar templates da pasta template/exemplo como base
+        $templatePath = resource_path("views/template/exemplo/{$view}.blade.php");
+
+        if (File::exists($templatePath)) {
+            // Ler o template de exemplo
+            $template = File::get($templatePath);
+
+            // Substituir as variáveis
+            $replacements = [
+                'template.exemplo' => "{$moduloLower}.{$classeLower}",
+                'exemplo' => $classeLower,
+                'exemplos' => $classeLower . 's',
+                'Exemplo' => $classe,
+                'labels.exemplo' => "labels.{$classeLower}",
+                'exempo' => $classeLower, // Fix para history.blade.php
+            ];
+
+            return str_replace(array_keys($replacements), array_values($replacements), $template);
+        }
+
+        // Fallback para templates genéricos se não existir
         switch ($view) {
             case 'index':
                 return $this->getTemplateIndexView($classe, $classeLower, $moduloLower, $classeKebab);
@@ -498,7 +647,26 @@ class GeradorService
             'destroy' => "{$moduloLower}.{$classeLower}.destroy"
         ];
 
-        return view('templates.index', compact('title', 'variable', 'variablePlural', 'permissions', 'routes'))->render();
+        // Ler o template como string
+        $templatePath = resource_path('views/templates/index.blade.php');
+        $template = File::get($templatePath);
+
+        // Substituir as variáveis
+        $replacements = [
+            '{{ $title }}' => $title,
+            '{{ $variable }}' => $variable,
+            '{{ $variablePlural }}' => $variablePlural,
+            '{{ $permissions.create }}' => $permissions['create'],
+            '{{ $permissions.show }}' => $permissions['show'],
+            '{{ $permissions.edit }}' => $permissions['edit'],
+            '{{ $permissions.destroy }}' => $permissions['destroy'],
+            '{{ $routes.create }}' => $routes['create'],
+            '{{ $routes.show }}' => $routes['show'],
+            '{{ $routes.edit }}' => $routes['edit'],
+            '{{ $routes.destroy }}' => $routes['destroy'],
+        ];
+
+        return str_replace(array_keys($replacements), array_values($replacements), $template);
     }
 
     private function getTemplateCreateView($classe, $classeLower, $moduloLower, $classeKebab)
@@ -506,7 +674,17 @@ class GeradorService
         $title = $classe;
         $formView = "{$moduloLower}.{$classeKebab}.form";
 
-        return view('templates.create', compact('title', 'formView'))->render();
+        // Ler o template como string
+        $templatePath = resource_path('views/templates/create.blade.php');
+        $template = File::get($templatePath);
+
+        // Substituir as variáveis
+        $replacements = [
+            '{{ $title }}' => $title,
+            '{{ $formView }}' => $formView,
+        ];
+
+        return str_replace(array_keys($replacements), array_values($replacements), $template);
     }
 
     private function getTemplateEditView($classe, $classeLower, $moduloLower, $classeKebab)
@@ -514,75 +692,110 @@ class GeradorService
         $title = $classe;
         $formView = "{$moduloLower}.{$classeKebab}.form";
 
-        return view('templates.edit', compact('title', 'formView'))->render();
+        // Ler o template como string
+        $templatePath = resource_path('views/templates/edit.blade.php');
+        $template = File::get($templatePath);
+
+        // Substituir as variáveis
+        $replacements = [
+            '{{ $title }}' => $title,
+            '{{ $formView }}' => $formView,
+        ];
+
+        return str_replace(array_keys($replacements), array_values($replacements), $template);
     }
 
     private function getTemplateFormView($classe, $classeLower, $moduloLower, $data)
     {
-        $camposHtml = $this->gerarCamposForm($data);
-        $route = "{$moduloLower}.{$classeLower}.store";
-        $backRoute = "{$moduloLower}.{$classeLower}.index";
+        // Gerar HTML dos campos
+        $fieldsHtml = $this->gerarCamposForm($data);
 
-        return view('templates.form', compact('camposHtml', 'route', 'backRoute'))->render();
+        // Usar o template dinâmico de exemplo
+        $templatePath = resource_path('views/template/exemplo/form.blade.php');
+        $template = File::get($templatePath);
+
+        // Substituir as variáveis
+        $replacements = [
+            '{{ $fieldsHtml }}' => $fieldsHtml,
+        ];
+
+        return str_replace(array_keys($replacements), array_values($replacements), $template);
     }
 
     private function gerarCamposForm($data)
     {
         $campos = [];
+        $totalCampos = count($data['campos']);
+        $colSize = $totalCampos <= 2 ? 12 : ($totalCampos <= 4 ? 6 : 4);
 
         foreach ($data['campos'] as $index => $campo) {
             $nome = $campo['nome'];
             $tipo = $campo['tipo'];
             $obrigatorio = $campo['obrigatorio'] ?? false;
             $max = $campo['max'] ?? null;
+            $unique = $campo['unique'] ?? false;
             $relacionamento = $campo['relacionamento'] ?? null;
 
             $required = $obrigatorio ? 'required' : '';
             $label = ucfirst($nome);
+            $disabled = isset($bloquearCampos) && $bloquearCampos ? 'disabled' : '';
 
-            $html = "        <div class=\"col-md-6\">\n";
-            $html .= "            <div class=\"form-group\">\n";
-            $html .= "                <label for=\"{$nome}\">{$label}</label>\n";
+            // Abrir nova linha a cada 2 campos (para col-md-6) ou 3 campos (para col-md-4)
+            if ($index % 2 == 0) {
+                $campos[] = '<div class="row">';
+            }
+
+            $html = "        <div class=\"form-group col-md-{$colSize}\">\n";
+            $html .= "            <label for=\"{$nome}\">{$label}</label>\n";
 
             switch ($tipo) {
                 case 'string':
                 case 'integer':
                 case 'double':
-                    $html .= "                <input type=\"text\" class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" value=\"{{ old('{$nome}') }}\" {$required}>\n";
+                    $inputType = ($tipo == 'double') ? 'number' : 'text';
+                    $step = ($tipo == 'double') ? 'step="0.01"' : '';
+                    $html .= "            <input type=\"{$inputType}\" {$step} class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" value=\"{{ old('{$nome}', \${$nome} ?? null) }}\" {$disabled} {$required}>\n";
                     break;
                 case 'date':
-                    $html .= "                <input type=\"date\" class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" value=\"{{ old('{$nome}') }}\" {$required}>\n";
+                    $html .= "            <input type=\"date\" class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" value=\"{{ old('{$nome}', \${$nome} ?? null) }}\" {$disabled} {$required}>\n";
                     break;
                 case 'boolean':
-                    $html .= "                <select class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" {$required}>\n";
-                    $html .= "                    <option value=\"1\">Sim</option>\n";
-                    $html .= "                    <option value=\"0\">Não</option>\n";
-                    $html .= "                </select>\n";
+                    $checked = "{{ old('{$nome}', \${$nome} ?? false) ? 'checked' : '' }}";
+                    $html .= "            <div class=\"form-check\">\n";
+                    $html .= "                <input type=\"checkbox\" class=\"form-check-input\" name=\"{$nome}\" id=\"{$nome}\" {$disabled} {$checked}>\n";
+                    $html .= "                <label class=\"form-check-label\" for=\"{$nome}\">{$label}</label>\n";
+                    $html .= "            </div>\n";
                     break;
                 case 'text':
-                    $html .= "                <textarea class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" rows=\"3\" {$required}>{{ old('{$nome}') }}</textarea>\n";
+                    $html .= "            <textarea class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" rows=\"3\" {$disabled} {$required}>{{ old('{$nome}', \${$nome} ?? null) }}</textarea>\n";
                     break;
                 case 'file':
-                    $html .= "                <input type=\"file\" class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" {$required}>\n";
+                    $html .= "            <input type=\"file\" class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" {$disabled} {$required}>\n";
                     break;
                 case 'select':
-                    $html .= "                <select class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" {$required}>\n";
-                    $html .= "                    <option value=\"\">Selecione...</option>\n";
+                    $html .= "            <select class=\"form-control\" name=\"{$nome}\" id=\"{$nome}\" {$disabled} {$required}>\n";
+                    $html .= "                <option value=\"\">Selecione...</option>\n";
                     if ($relacionamento && !empty($relacionamento)) {
                         // TODO: Carregar opções do relacionamento
                         $html .= "                    {{-- TODO: Carregar \${$relacionamento}s do relacionamento --}}\n";
                     }
-                    $html .= "                </select>\n";
+                    $html .= "            </select>\n";
                     break;
             }
 
-            $html .= "                @error('{$nome}')\n";
-            $html .= "                    <div class=\"invalid-feedback\">{{ \$message }}</div>\n";
-            $html .= "                @enderror\n";
-            $html .= "            </div>\n";
+            $html .= "            @error('{$nome}')\n";
+            $html .= "                <div class=\"invalid-feedback font-weight-bold\" role=\"alert\">\n";
+            $html .= "                    {{ \$message }}\n";
+            $html .= "                </div>\n";
+            $html .= "            @enderror\n";
             $html .= "        </div>\n";
 
             $campos[] = $html;
+
+            // Fechar linha a cada 2 campos ou no último campo
+            if ($index % 2 == 1 || $index == $totalCampos - 1) {
+                $campos[] = '    </div>';
+            }
         }
 
         return implode("\n", $campos);
@@ -592,8 +805,52 @@ class GeradorService
     {
         $title = $classe;
         $action = ucfirst($view);
+        $variable = $classeLower;
+        $variablePlural = $classeLower . 's';
 
-        return view('templates.show', compact('title', 'action'))->render();
+        // Verificar se existe template específico
+        $templatePath = resource_path("views/templates/{$view}.blade.php");
+
+        if (File::exists($templatePath)) {
+            // Ler o template como string
+            $template = File::get($templatePath);
+
+            // Substituir as variáveis
+            $replacements = [
+                '{{ $title }}' => $title,
+                '{{ $action }}' => $action,
+                '{{ $variable }}' => $variable,
+                '{{ $variablePlural }}' => $variablePlural,
+            ];
+
+            return str_replace(array_keys($replacements), array_values($replacements), $template);
+        } else {
+            // Se não existir, criar um template básico
+            return "@extends('adminlte::page')
+
+@section('title', '{$action} {$title}')
+
+@section('content_header')
+    <h1 class='m-0'>{$action} {$title}</h1>
+@endsection
+
+@section('content')
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-12'>
+            <div class='card'>
+                <div class='card-header'>
+                    <h3 class='card-title'>{$action} {$title}</h3>
+                </div>
+                <div class='card-body'>
+                    <p>View {$view} para {$title} - Em construção</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection";
+        }
     }
 
     private function getTemplateObserver($classe, $historicoModel, $moduloPai)
@@ -607,5 +864,13 @@ class GeradorService
         $classeLower = strtolower($classe);
 
         return "\n        # ROTAS DE " . strtoupper($classe) . "\n        Route::prefix('{$classeLower}')->name('{$classeLower}.')->group(function () {\n            Route::get('/', [\\{$moduloPai}\\{$classe}Controller::class, 'index'])->name('index');\n            Route::get('/create', [\\{$moduloPai}\\{$classe}Controller::class, 'create'])->name('create');\n            Route::post('/', [\\{$moduloPai}\\{$classe}Controller::class, 'store'])->name('store');\n\n            Route::get('/{ {$classeLower} }/edit', [\\{$moduloPai}\\{$classe}Controller::class, 'edit'])->name('edit');\n            Route::put('/{ {$classeLower} }', [\\{$moduloPai}\\{$classe}Controller::class, 'update'])->name('update');\n            Route::get('/{ {$classeLower} }/destroy', [\\{$moduloPai}\\{$classe}Controller::class, 'destroy'])->name('destroy');\n            Route::delete('/{ {$classeLower} }', [\\{$moduloPai}\\{$classe}Controller::class, 'delete'])->name('delete');\n            Route::get('/{ {$classeLower} }/history', [\\{$moduloPai}\\{$classe}Controller::class, 'history'])->name('history');\n            Route::get('/{ {$classeLower} }/history/{historico}/details', [\\{$moduloPai}\\{$classe}Controller::class, 'historyDetails'])->name('history.details');\n\n            Route::get('/{ {$classeLower} }', [\\{$moduloPai}\\{$classe}Controller::class, 'show'])->name('show');\n        });";
+    }
+
+    private function getTemplateModelHistorico($classe, $tabela): string
+    {
+        $tabelaHistorico = $tabela . '_historico';
+        $classeLower = strtolower($classe);
+
+        return "<?php\n\nnamespace App\\Models;\n\nuse Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\nuse Illuminate\\Database\\Eloquent\\Model;\nuse Illuminate\\Database\\Eloquent\\SoftDeletes;\n\nclass {$classe}Historico extends Model\n{\n    use HasFactory, SoftDeletes;\n\n    protected \$table = '{$tabelaHistorico}';\n\n    protected \$fillable = [\n        'user_id',\n        '{$classeLower}_id',\n        'dados_anteriores',\n        'dados_novos',\n        'tipoAlteracao_id'\n    ];\n\n    protected \$casts = [\n        'dados_anteriores' => 'array',\n        'dados_novos' => 'array',\n    ];\n\n    public function user()\n    {\n        return \$this->belongsTo(User::class);\n    }\n\n    public function {$classeLower}()\n    {\n        return \$this->belongsTo({$classe}::class);\n    }\n\n    public function tipoAlteracao()\n    {\n        return \$this->belongsTo(PadraoTipo::class, 'tipoAlteracao_id');\n    }\n}";
     }
 }

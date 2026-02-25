@@ -14,6 +14,9 @@ class PermissaoSeeder extends Seeder
     public function run(): void
     {
         $permissoes = [
+            'sistema.index',
+            'cadastros.index',
+
             'sistema.permissao.index',
             'sistema.permissao.create',
             'sistema.permissao.edit',
@@ -34,6 +37,7 @@ class PermissaoSeeder extends Seeder
             'sistema.usuario.destroy',
             'sistema.usuario.show',
             'sistema.usuario.history',
+            'sistema.usuario.login',
 
             'sistema.padrao.index',
             'sistema.padrao.create',

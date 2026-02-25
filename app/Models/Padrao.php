@@ -22,6 +22,9 @@ class Padrao extends Model
     const DecisaoSimNao = 3;
     const TipoNotificacao = 4;
     const EnviarNotificacaoPara = 5;
+    const ValoresParametros = 6;
+    const Api = 7;
+    const TipoCamposGerador = 8;
 
     /**
      * Get the tipos for the padrao.

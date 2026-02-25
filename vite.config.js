@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/custom.js',
                 'resources/js/sistema/menu.js',
+                'resources/js/sistema/gerador.js',
                 'resources/js/sistema/notificacao.js',
                 'resources/js/sistema/permissao.js',
                 'resources/js/sistema/perfil.js',

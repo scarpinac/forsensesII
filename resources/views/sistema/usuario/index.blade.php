@@ -52,6 +52,14 @@
                                 <td class="whiteSpace-nowrap text-left">{{ $usuario->email }}</td>
                                 <td class="whiteSpace-nowrap text-left">{{ $usuario->admin ? 'Sim' : 'Não' }}</td>
                                 <td class="whiteSpace-nowrap text-center">
+                                    @if(Auth::user()->canAccess('sistema.usuario.login') && $usuario->id != Auth::user()->id)
+                                        <a class="btn btn-outline-success move btn-sm" title="Login como {{ $usuario->name }}"
+                                           href="{{ URL::signedRoute('sistema.usuario.loginAs', ['usuario' => $usuario]) }}"
+                                           onclick="return confirm('Tem certeza que deseja fazer login como {{ $usuario->name }}?')">
+                                            <i class="fas fa-sign-in-alt"></i>
+                                        </a>
+                                    @endif
+
                                     @if(Auth::user()->canAccess('sistema.usuario.edit'))
                                         <a class="btn btn-outline-primary move btn-sm" title="{{__('labels.user.edit')}}"
                                            href="{{ URL::signedRoute('sistema.usuario.edit', ['usuario' => $usuario]) }}">

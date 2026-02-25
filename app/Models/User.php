@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
@@ -110,16 +111,6 @@ class User extends Authenticatable implements HasMedia
             return true;
         }
 
-        // Obter permissões diretamente do banco em vez da sessão
-        $userPermissions = $this->perfis()
-            ->with(['perfilPermissoes.permissao'])
-            ->get()
-            ->flatMap(function ($perfil) {
-                return $perfil->perfilPermissoes->pluck('permissao.descricao');
-            })
-            ->unique()
-            ->toArray();
-
         // Para permissões store/update, verificar se tem create/edit correspondente
         $permissionToCheck = $permissao;
         if (in_array($permissao, ['sistema.usuario.store', 'sistema.perfil.store', 'sistema.permissao.store', 'sistema.menu.store'])) {
@@ -128,7 +119,33 @@ class User extends Authenticatable implements HasMedia
             $permissionToCheck = str_replace('.update', '.edit', $permissao);
         }
 
-        return in_array($permissionToCheck, $userPermissions);
+        // Usar cache para evitar consultas repetitivas ao banco
+        $cacheKey = "user_permissions_{$this->id}";
+        
+        return Cache::remember($cacheKey, now()->addHours(1), function () use ($permissionToCheck) {
+            // Obter permissões diretamente do banco em vez da sessão
+            $userPermissions = $this->perfis()
+                ->with(['perfilPermissoes.permissao'])
+                ->get()
+                ->flatMap(function ($perfil) {
+                    return $perfil->perfilPermissoes->pluck('permissao.descricao');
+                })
+                ->unique()
+                ->toArray();
+
+            return in_array($permissionToCheck, $userPermissions);
+        });
+    }
+
+    /**
+     * Limpar cache de permissões do usuário
+     */
+    public function clearPermissionCache(): void
+    {
+        $cacheKey = "user_permissions_{$this->id}";
+        Cache::forget($cacheKey);
+        
+        Log::info("Cache de permissões limpo para usuário {$this->id}");
     }
 
     public function adminlte_image()

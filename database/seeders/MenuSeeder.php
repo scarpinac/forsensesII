@@ -115,5 +115,27 @@ class MenuSeeder extends Seeder
             'permissao_id' => $permissaoParametro->id,
             'situacao_id' => $situacaoHabilitado->id,
         ]);
+
+        // Submenu: Gerador de Cadastros
+        $permissaoGerador = Permissao::where('descricao', 'sistema.gerador.index')->first();
+        Menu::create([
+            'descricao' => 'Gerador de Cadastros',
+            'icone' => 'fas fa-check-double',
+            'rota' => 'sistema.gerador.index',
+            'menuPai_id' => $menuSistema->id,
+            'permissao_id' => $permissaoGerador->id,
+            'situacao_id' => $situacaoHabilitado->id,
+        ]);
+
+        // Menu Pai: Sistema
+        $permissaoCadastro = Permissao::where('descricao', 'cadastros.index')->first();
+        $menuCadastros = Menu::create([
+            'descricao' => 'Cadastros',
+            'icone' => 'fas fa-database',
+            'rota' => '#',
+            'menuPai_id' => null,
+            'permissao_id' => null,
+            'situacao_id' => $situacaoHabilitado->id,
+        ]);
     }
 }

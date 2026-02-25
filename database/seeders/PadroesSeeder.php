@@ -162,5 +162,40 @@ class PadroesSeeder extends Seeder
             'descricao' => 'Webmania',
             'padrao_id' => $configApi->id,
         ]);
+
+        $tiposDeCampos = Padrao::create(['descricao' => 'Tipos de Campos - Gerador']);
+
+        PadraoTipo::create([
+            'descricao' => 'String',
+            'padrao_id' => $tiposDeCampos->id,
+        ]);
+        PadraoTipo::create([
+            'descricao' => 'Inteiro',
+            'padrao_id' => $tiposDeCampos->id,
+        ]);
+        PadraoTipo::create([
+            'descricao' => 'Decimal/Valor',
+            'padrao_id' => $tiposDeCampos->id,
+        ]);
+        PadraoTipo::create([
+            'descricao' => 'Data',
+            'padrao_id' => $tiposDeCampos->id,
+        ]);
+        PadraoTipo::create([
+            'descricao' => 'Booleano',
+            'padrao_id' => $tiposDeCampos->id,
+        ]);
+        PadraoTipo::create([
+            'descricao' => 'Texto Longo',
+            'padrao_id' => $tiposDeCampos->id,
+        ]);
+        PadraoTipo::create([
+            'descricao' => 'Arquivo',
+            'padrao_id' => $tiposDeCampos->id,
+        ]);
+        PadraoTipo::create([
+            'descricao' => 'Select/Relacionamento',
+            'padrao_id' => $tiposDeCampos->id,
+        ]);
     }
 }

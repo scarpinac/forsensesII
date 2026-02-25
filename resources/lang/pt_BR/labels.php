@@ -645,7 +645,7 @@ return [
     "padraoTipo.no.history" => "Nenhum histórico encontrado",
     "padraoTipo.modal.details.title" => "Detalhes do Histórico",
     "padraoTipo.modal.close" => "Fechar",
-    
+
     // Notificação
     "notification.title.index" => "Notificações",
     "notification.title.create" => "Nova Notificação",
@@ -705,6 +705,72 @@ return [
     "notification.no.history" => "Nenhum histórico encontrado.",
     "notification.yes" => "Sim",
     "notification.no" => "Não",
-    
+
+
+
+    // Gerador de Cadastros
+    "gerador.title.index" => "Cadastros",
+    "gerador.title.create" => "Novo Cadastro",
+    "gerador.title.edit" => "Editar Cadastro",
+    "gerador.title.show" => "Visualizar Cadastro",
+    "gerador.title.destroy" => "Excluir Cadastro",
+    "gerador.title.history" => "Histórico da Cadastro",
+    "gerador.breadcrumb.home" => "Início",
+    "gerador.breadcrumb.listing" => "Lista de Cadastros",
+    "gerador.title" => "Título",
+    "gerador.message" => "Mensagem",
+    "gerador.menssage_placeholder" => "Digite a mensagem da Cadastro...",
+    "gerador.notification_type" => "Tipo de Cadastro",
+    "gerador.icon" => "Ícone",
+    "gerador.icon_help" => "Nome do ícone FontAwesome (ex: fas fa-bell)",
+    "gerador.send_at" => "Data/Hora de Envio",
+    "gerador.send_at_help" => "Data e hora em que a Cadastro será enviada",
+    "gerador.destiny" => "Destinatários",
+    "gerador.select_destiny" => "Selecione o tipo de destinatário",
+    "gerador.destino_todos" => "Todos os Usuários",
+    "gerador.destiny_users" => "Usuários Específicos",
+    "gerador.destiny_profiles" => "Perfis Específicos",
+    "gerador.usuarios" => "Usuários",
+    "gerador.usuarios_help" => "Selecione os usuários que receberão a Cadastro",
+    "gerador.perfis" => "Perfis",
+    "gerador.perfis_help" => "Selecione os perfis que receberão a Cadastro",
+    "gerador.sendTo" => "Enviar Para",
+    "gerador.sendAt" => "Data/Hora de Envio",
+    "gerador.sended" => "Enviado",
+    "gerador.expiredAt" => "Data de Expiração",
+    "gerador.actions" => "Ações",
+    "gerador.new" => "Novo Cadastro",
+    "gerador.type" => "Tipo de Cadastro",
+    "gerador.create" => "Novo Cadastro",
+    "gerador.edit" => "Editar",
+    "gerador.show" => "Visualizar",
+    "gerador.destroy" => "Excluir",
+    "gerador.history" => "Histórico",
+    "gerador.back" => "Voltar",
+    "gerador.save" => "Salvar",
+    "gerador.save_changes" => "Salvar Alterações",
+    "gerador.history.data.title" => "Dados da Cadastro",
+    "gerador.history.changes.title" => "Histórico de Alterações",
+    "gerador.history.table.date" => "Data",
+    "gerador.history.table.user" => "Usuário",
+    "gerador.history.table.type" => "Tipo de Alteração",
+    "gerador.history.table.actions" => "Ações",
+    "gerador.history.button.details" => "Detalhes",
+    "gerador.history.fields.id" => "ID",
+    "gerador.history.fields.descricao" => "Descrição",
+    "gerador.history.fields.created_at" => "Data de Criação",
+    "gerador.history.fields.updated_at" => "Data de Atualização",
+    "gerador.history.fields.deleted_at" => "Data de Exclusão",
+    "gerador.modal.details.title" => "Detalhes da Alteração",
+    "gerador.modal.close" => "Fechar",
+    "gerador.no.records" => "Nenhum Cadastro encontrado.",
+    "gerador.no.history" => "Nenhum histórico encontrado.",
+    "gerador.yes" => "Sim",
+    "gerador.no" => "Não",
+
+
+
+
+
     "Log Out" => "Sair",
 ];

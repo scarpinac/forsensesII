@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -11,58 +13,37 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // Dados mockados para os cards
+        // Métricas gerais do sistema
         $stats = [
-            'products' => [
-                'total' => 1248,
-                'active' => 1156,
-                'inactive' => 92,
-                'growth' => 12.5
+            'users' => [
+                'total' => DB::table('users')->count(),
+                'active' => DB::table('users')->where('situacao_id', 1)->count(),
+                'new_this_month' => DB::table('users')->whereMonth('created_at', now()->month)->count(),
             ],
-            'customers' => [
-                'total' => 3456,
-                'active' => 2890,
-                'new_this_month' => 156,
-                'growth' => 8.3
+            'gerador_cadastros' => [
+                'total' => DB::table('gerador_cadastros')->count(),
+                'active' => DB::table('gerador_cadastros')->count(),
             ],
-            'quotes' => [
-                'total' => 892,
-                'pending' => 234,
-                'approved' => 456,
-                'rejected' => 202,
-                'growth' => -5.2
+            'parametros' => [
+                'total' => DB::table('parametro')->count(),
             ],
-            'orders' => [
-                'total' => 756,
-                'pending' => 123,
-                'processing' => 234,
-                'completed' => 345,
-                'cancelled' => 54,
-                'growth' => 15.7
+            'menus' => [
+                'total' => DB::table('menu')->count(),
+                'active' => DB::table('menu')->where('situacao_id', 1)->count(),
             ]
         ];
 
-        // Dados para gráficos
-        $charts = [
-            'monthly_revenue' => [
-                'labels' => ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                'quotes' => [45000, 52000, 48000, 61000, 58000, 67000, 72000, 69000, 75000, 71000, 78000, 82000],
-                'orders' => [38000, 44000, 41000, 52000, 49000, 56000, 61000, 58000, 63000, 59000, 65000, 69000]
-            ],
-            'product_categories' => [
-                'labels' => ['Eletrônicos', 'Vestuário', 'Alimentos', 'Móveis', 'Livros', 'Outros'],
-                'data' => [35, 25, 20, 10, 7, 3]
-            ],
-            'customer_segments' => [
-                'labels' => ['VIP', 'Premium', 'Regular', 'Novos'],
-                'data' => [15, 25, 45, 15]
-            ],
-            'order_status' => [
-                'labels' => ['Pendente', 'Processando', 'Concluído', 'Cancelado'],
-                'data' => [123, 234, 345, 54]
-            ]
-        ];
-
-        return view('dashboard', compact('stats', 'charts'));
+        return view('dashboard', compact('stats'));
     }
+
+    /**
+     * API endpoint para dados do dashboard
+     */
+    public function dadosGraficos(Request $request)
+    {
+        return response()->json([
+            'message' => 'Funcionalidade de gráficos desabilitada'
+        ]);
+    }
+
 }

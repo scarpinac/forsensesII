@@ -48,6 +48,51 @@
     top: 0;
     right: 0;
     transform: translate(25%, -25%);
+}
+
+/* Estilo para alerta de login como usuário */
+.login-as-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+</style>
+@endpush
+
+@section('content_header')
+    @parent
+    <!-- Alerta de Login como Usuário -->
+    @if(session('original_user_id'))
+        <div class="alert alert-warning alert-dismissible fade show login-as-alert" role="alert">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        <strong>Atenção:</strong> Você está logado como <strong>{{ Auth::user()->name }}</strong>.
+                        <small class="text-muted ml-2">(ID: {{ Auth::user()->id }})</small>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <a href="{{ route('sistema.usuario.loginBack') }}" class="btn btn-sm btn-outline-danger">
+                            <i class="fas fa-sign-out-alt mr-1"></i> Voltar à minha conta
+                        </a>
+                        <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+@endsection
+
+@push('css')
+<style>
+/* Estilos adicionais se necessário */
+.navbar-badge {
     font-size: 0.6rem;
     padding: 2px 4px;
 }
