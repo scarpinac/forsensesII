@@ -23,28 +23,19 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Health check endpoints (sem autenticação para monitoramento)
-Route::get('/health', [App\Http\Controllers\HealthController::class, 'index'])->name('health');
-
-// Definir rate limits
-RateLimiter::for('api', function (Request $request) {
-    return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-});
-
-
-# ROTAS DO GERADOR DE CADASTROS
-Route::prefix('gerador')->name('gerador.')->middleware(['throttle:gerador'])->group(function () {
-    Route::get('/', [GeradorCadastrosController::class, 'index'])->name('index');
-    Route::post('/generate', [GeradorCadastrosController::class, 'generate'])->name('generate');
-    Route::get('/modulos', [GeradorCadastrosController::class, 'getModulosDisponiveis'])->name('modulos');
-    Route::get('/tabelas', [GeradorCadastrosController::class, 'getTabelasDisponiveis'])->name('tabelas');
-});
+//# ROTAS DO GERADOR DE CADASTROS
+//Route::prefix('gerador')->name('gerador.')->middleware(['throttle:gerador'])->group(function () {
+//    Route::get('/', [GeradorCadastrosController::class, 'index'])->name('index');
+//    Route::post('/generate', [GeradorCadastrosController::class, 'generate'])->name('generate');
+//    Route::get('/modulos', [GeradorCadastrosController::class, 'getModulosDisponiveis'])->name('modulos');
+//    Route::get('/tabelas', [GeradorCadastrosController::class, 'getTabelasDisponiveis'])->name('tabelas');
+//});
 
 Route::post('/language', [LanguageController::class, 'switch'])->middleware('throttle:10,1')->name('language.switch');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware(['auth', 'signed'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -121,7 +112,7 @@ Route::middleware(['auth', 'signed'])->group(function () {
         Route::get('/login-back', [UsuarioController::class, 'loginBack'])->name('usuario.loginBack');
 
         # ROTAS DO USUÁRIO
-        Route::prefix('api')->name('api.')->middleware(['throttle:api'])->group(function () {
+        Route::prefix('api')->name('api.')->group(function () {
             Route::get('/', [ApiController::class, 'index'])->name('index');
             Route::get('/create', [ApiController::class, 'create'])->name('create');
             Route::post('/', [ApiController::class, 'store'])->name('store');
@@ -248,30 +239,14 @@ Route::middleware(['auth', 'signed'])->group(function () {
             Route::get('/{gerador}/edit', [GeradorCadastrosController::class, 'edit'])->name('edit');
             Route::put('/{gerador}', [GeradorCadastrosController::class, 'update'])->name('update');
             Route::get('/{gerador}/destroy', [GeradorCadastrosController::class, 'destroy'])->name('destroy');
-            Route::delete('/{gerador}', [GeradorCadastrosController::class, 'delete'])->name('delete');
-            Route::get('/{gerador}/history', [GeradorCadastrosController::class, 'history'])->name('history');
-            Route::get('/{gerador}/history/{historico}/details', [GeradorCadastrosController::class, 'historyDetails'])->name('history.details');
+//            Route::delete('/{gerador}', [GeradorCadastrosController::class, 'delete'])->name('delete');
+//            Route::get('/{gerador}/history', [GeradorCadastrosController::class, 'history'])->name('history');
+//            Route::get('/{gerador}/history/{historico}/details', [GeradorCadastrosController::class, 'historyDetails'])->name('history.details');
         });
 
     });
 
 });
 
-// Dashboard Analytics
-Route::get('/dashboard/analytics', function () {
-    return view('dashboard.analytics');
-})->name('dashboard.analytics')->middleware('auth');
-
-// Dashboard Principal
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
-Route::get('/dashboard/dados-graficos', [DashboardController::class, 'dadosGraficos'])->name('dashboard.dados-graficos')->middleware('auth');
-
-// GraphQL Playground
-Route::get('/graphql-playground', function () {
-    return view('graphql.playground');
-})->name('graphql.playground')->middleware('auth');
-
 require __DIR__.'/auth.php';
 
-// Incluir rotas GraphQL
-require __DIR__.'/graphql.php';
