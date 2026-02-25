@@ -54,7 +54,7 @@
                                 <td class="whiteSpace-nowrap text-center">
                                     @if(Auth::user()->canAccess('sistema.usuario.login') && $usuario->id != Auth::user()->id)
                                         <a class="btn btn-outline-success move btn-sm" title="Login como {{ $usuario->name }}"
-                                           href="{{ URL::signedRoute('sistema.usuario.loginAs', ['usuario' => $usuario]) }}"
+                                           href="{{ URL::signedRoute('sistema.usuario.login', ['usuario' => $usuario]) }}"
                                            onclick="return confirm('Tem certeza que deseja fazer login como {{ $usuario->name }}?')">
                                             <i class="fas fa-sign-in-alt"></i>
                                         </a>

@@ -160,36 +160,33 @@ class UsuarioController extends Controller
     /**
      * Login as the specified user.
      */
-    public function loginAs(User $usuario)
+    public function logarComo(User $usuario)
     {
-        abort_if (!Auth::user()->canAccess('sistema.usuario.loginAs'), 403, 'Acesso não autorizado');
-        
+        abort_if (!Auth::user()->canAccess('sistema.usuario.login'), 403, 'Acesso não autorizado');
+
         // Guarda o ID do usuário original na sessão
         session(['original_user_id' => Auth::user()->id]);
-        
+
         // Faz login como o usuário selecionado
         Auth::login($usuario);
-        
-        return redirect()->route('dashboard')->with('success', 'Você está logado como ' . $usuario->name);
+
+        return redirect()->signedRoute('dashboard')->with('success', 'Você está logado como ' . $usuario->name);
     }
 
-    /**
-     * Return to original user account.
-     */
-    public function loginBack()
+    public function voltarUsuario()
     {
         $originalUserId = session('original_user_id');
-        
+
         if ($originalUserId) {
             $originalUser = User::find($originalUserId);
             if ($originalUser) {
                 Auth::login($originalUser);
                 session()->forget('original_user_id');
-                return redirect()->route('dashboard')->with('success', 'Você retornou à sua conta original');
+                return redirect()->signedRoute('dashboard')->with('success', 'Você retornou à sua conta original');
             }
         }
-        
-        return redirect()->route('dashboard')->with('error', 'Não foi possível retornar à conta original');
+
+        return redirect()->signedRoute('dashboard')->with('error', 'Não foi possível retornar à conta original');
     }
 
     /**
