@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\Parametro;
-use App\Models\ParametroHistorico;
-use App\Models\Padrao;
-use App\Models\Permissao;
 use App\Http\Requests\Sistema\Parametro\StoreRequest;
 use App\Http\Requests\Sistema\Parametro\UpdateRequest;
-use Illuminate\Http\Request;
+use App\Models\Sistema\Padrao;
+use App\Models\Sistema\Parametro;
+use App\Models\Sistema\ParametroHistorico;
 use Illuminate\Support\Facades\Auth;
 
 class ParametroController extends Controller

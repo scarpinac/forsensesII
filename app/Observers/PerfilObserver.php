@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\Perfil;
-use App\Models\PerfilHistorico;
-use App\Models\PadraoTipo;
+use App\Models\Sistema\PadraoTipo;
+use App\Models\Sistema\Perfil;
+use App\Models\Sistema\PerfilHistorico;
 use Illuminate\Support\Facades\Auth;
 
 class PerfilObserver

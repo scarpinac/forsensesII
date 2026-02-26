@@ -3,7 +3,7 @@
     @vite(['resources/scss/custom.scss'])
 @endpush
 @section('js')
-    @vite(['resources/js/sistema/permissao.js'])
+    @vite(['resources/js/custom.js'])
 @endsection
 @section('title', __('labels.permission.title.history') )
 

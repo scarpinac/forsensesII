@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\UserHistorico;
-use App\Models\Padrao;
-use App\Models\Permissao;
 use App\Http\Requests\Sistema\Usuario\StoreRequest;
 use App\Http\Requests\Sistema\Usuario\UpdateRequest;
-use Illuminate\Http\Request;
+use App\Models\Sistema\Padrao;
+use App\Models\Sistema\User;
+use App\Models\Sistema\UserHistorico;
 use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
@@ -160,36 +158,33 @@ class UsuarioController extends Controller
     /**
      * Login as the specified user.
      */
-    public function loginAs(User $usuario)
+    public function logarComo(User $usuario)
     {
-        abort_if (!Auth::user()->canAccess('sistema.usuario.loginAs'), 403, 'Acesso não autorizado');
-        
+        abort_if (!Auth::user()->canAccess('sistema.usuario.login'), 403, 'Acesso não autorizado');
+
         // Guarda o ID do usuário original na sessão
         session(['original_user_id' => Auth::user()->id]);
-        
+
         // Faz login como o usuário selecionado
         Auth::login($usuario);
-        
-        return redirect()->route('dashboard')->with('success', 'Você está logado como ' . $usuario->name);
+
+        return redirect()->signedRoute('dashboard')->with('success', 'Você está logado como ' . $usuario->name);
     }
 
-    /**
-     * Return to original user account.
-     */
-    public function loginBack()
+    public function voltarUsuario()
     {
         $originalUserId = session('original_user_id');
-        
+
         if ($originalUserId) {
             $originalUser = User::find($originalUserId);
             if ($originalUser) {
                 Auth::login($originalUser);
                 session()->forget('original_user_id');
-                return redirect()->route('dashboard')->with('success', 'Você retornou à sua conta original');
+                return redirect()->signedRoute('dashboard')->with('success', 'Você retornou à sua conta original');
             }
         }
-        
-        return redirect()->route('dashboard')->with('error', 'Não foi possível retornar à conta original');
+
+        return redirect()->signedRoute('dashboard')->with('error', 'Não foi possível retornar à conta original');
     }
 
     /**

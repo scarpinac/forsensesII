@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\Notificacao;
-use App\Models\NotificacaoHistorico;
-use App\Models\PadraoTipo;
+use App\Models\Sistema\Notificacao;
+use App\Models\Sistema\NotificacaoHistorico;
+use App\Models\Sistema\PadraoTipo;
 use Illuminate\Support\Facades\Auth;
 
 class NotificacaoObserver

@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\Parametro;
-use App\Models\ParametroHistorico;
-use App\Models\PadraoTipo;
+use App\Models\Sistema\PadraoTipo;
+use App\Models\Sistema\Parametro;
+use App\Models\Sistema\ParametroHistorico;
 use Illuminate\Support\Facades\Auth;
 
 class ParametroObserver

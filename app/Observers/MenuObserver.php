@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\Menu;
-use App\Models\MenuHistorico;
-use App\Models\PadraoTipo;
+use App\Models\Sistema\Menu;
+use App\Models\Sistema\MenuHistorico;
+use App\Models\Sistema\PadraoTipo;
 use Illuminate\Support\Facades\Auth;
 
 class MenuObserver

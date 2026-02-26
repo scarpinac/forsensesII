@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Models\User;
+use App\Models\Sistema\User;
 use Illuminate\Support\Facades\Log;
 
 class UserObserver

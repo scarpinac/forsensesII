@@ -65,56 +65,164 @@
 
 @section('content_header')
     @parent
-    <!-- Alerta de Login como Usuário -->
-    @if(session('original_user_id'))
-        <div class="alert alert-warning alert-dismissible fade show login-as-alert" role="alert">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col-md-8">
-                        <i class="fas fa-exclamation-triangle mr-2"></i>
-                        <strong>Atenção:</strong> Você está logado como <strong>{{ Auth::user()->name }}</strong>.
-                        <small class="text-muted ml-2">(ID: {{ Auth::user()->id }})</small>
-                    </div>
-                    <div class="col-md-4 text-right">
-                        <a href="{{ route('sistema.usuario.loginBack') }}" class="btn btn-sm btn-outline-danger">
-                            <i class="fas fa-sign-out-alt mr-1"></i> Voltar à minha conta
-                        </a>
-                        <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-@endsection
+    <!-- Debug da sessão -->
+    @php
+        $sessionData = session()->all();
+        $hasOriginalUserId = session('original_user_id') ?? null;
+    @endphp
 
-@push('css')
-<style>
-/* Estilos adicionais se necessário */
-.navbar-badge {
-    font-size: 0.6rem;
-    padding: 2px 4px;
-}
-</style>
-@endpush
+    <style>
+    /* Estilos para a bandeira no navbar - sempre carregar */
+    .login-as-flag-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+        margin-right: 15px;
+    }
+
+    .login-as-flag {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 9px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .login-as-flag:hover {
+        background: linear-gradient(135deg, #218838, #1ea085);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(40, 167, 69, 0.4);
+    }
+
+    .login-as-voltar-btn {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 9px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .login-as-voltar-btn:hover {
+        background: linear-gradient(135deg, #c82333, #a02622);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .dark-mode .login-as-flag {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .dark-mode .login-as-voltar-btn {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    @if($hasOriginalUserId)
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 2px 6px rgba(40, 167, 69, 0.5);
+                transform: scale(1.02);
+            }
+            100% {
+                box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+                transform: scale(1);
+            }
+        }
+    @endif
+    </style>
+@endsection
 
 @push('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let userLi = document.querySelector('.user-menu');
             const navbar = userLi ? userLi.closest('ul') : null;
+
+            @if($hasOriginalUserId)
+                // Adicionar indicador abaixo da imagem do usuário
+                let userLogado = `
+                    <div class="login-as-indicator" style="
+                        background: linear-gradient(135deg, #28a745, #20c997);
+                        color: white;
+                        padding: 6px 10px;
+                        border-radius: 12px;
+                        font-size: 10px;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                        letter-spacing: 0.3px;
+                        box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+                        animation: pulse 2.5s infinite;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 4px;
+                        margin-left: 8px;
+                        position: fixed;
+                        top: 50px;
+                        right: 20px;
+                        z-index: 9999;
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    " title="Você está acessando como: {{ Auth::user()->name }}">
+                        <i class="fas fa-user-secret"></i>
+                        Personificado
+                    </div>
+                `;
+
+                // Adicionar ao body
+                document.body.insertAdjacentHTML('beforeend', userLogado);
+
+                // Adicionar botão de voltar no navbar
+                let voltar = `
+
+                <div class="language-selector input-group ml-3">
+                    <div class="btn-group">
+                        <form class="form">
+                            <a href="{{ URL::signedRoute('sistema.usuario.voltar') }}" class="btn btn-sm btn-primary" title="Voltar">
+                                <i class="fas fa-undo"></i> Voltar
+                            </a>
+                        </form>
+                    </div>
+                </div>`;
+
+                // navbarRight.appendChild(flagContainer);
+                let li = document.createElement('li');
+                li.className = 'nav-item mt-1';
+                li.innerHTML = voltar;
+                // Adiciona à navbar
+                navbar.insertBefore(li, userLi);
+            @endif
+
             if (navbar) {
                 const languageSelector = `
                 <div class="language-selector ml-3">
                     <div class="btn-group" role="group">
                         <form action="{{ route('language.switch') }}" method="POST" class="d-inline">
                             @csrf
-                                <button type="submit" name="locale" value="pt_BR"
-                                    class="btn btn-sm {{ app()->getLocale() === 'pt_BR' ? 'btn-system' : 'btn-outline-system' }}"
-                                        title="Português (Brasil)">
-                                    🇧🇷 PT
-                                </button>
+                            <button type="submit" name="locale" value="pt_BR"
+                                class="btn btn-sm {{ app()->getLocale() === 'pt_BR' ? 'btn-system' : 'btn-outline-system' }}"
+                                    title="Português (Brasil)">
+                                🇧🇷 PT
+                            </button>
                         </form>
                         <form action="{{ route('language.switch') }}" method="POST" class="d-inline">
                             @csrf
@@ -297,7 +405,7 @@ $(document).on('submit', '#markAsReadForm', function(e) {
                 if (response.already_read) {
                     $('#markAsReadBtn').hide();
                     $('.modal-footer .btn-secondary').text('Fechar');
-                    
+
                     if (typeof toastr !== 'undefined') {
                         toastr.warning('Esta notificação já foi marcada como lida anteriormente.');
                     }

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\Padrao;
-use App\Models\PadraoTipo;
-use App\Models\PadraoTipoHistorico;
+use App\Models\Sistema\Padrao;
+use App\Models\Sistema\PadraoTipo;
+use App\Models\Sistema\PadraoTipoHistorico;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

@@ -5,20 +5,18 @@ namespace App\Http\Controllers\Sistema;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Sistema\Notificacao\StoreRequest;
 use App\Http\Requests\Sistema\Notificacao\UpdateRequest;
-use App\Models\Notificacao;
-use App\Models\NotificacaoUsuario;
-use App\Models\NotificacaoHistorico;
-use App\Models\Padrao;
-use App\Models\PadraoTipo;
-use App\Models\Perfil;
-use App\Models\User;
+use App\Models\Sistema\Notificacao;
+use App\Models\Sistema\Padrao;
+use App\Models\Sistema\PadraoTipo;
+use App\Models\Sistema\Perfil;
+use App\Models\Sistema\User;
 use App\Services\NotificationService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\JsonResponse;
 
 class NotificacaoController extends Controller
 {
@@ -207,7 +205,7 @@ class NotificacaoController extends Controller
         // Adicionar status de leitura para cada notificação
         $notificacoesComStatus = $notificacoes->map(function ($notificacao) use ($user) {
             // Verificar se já foi lida
-            $leitura = \App\Models\NotificacaoUsuario::where('notificacao_id', $notificacao['id'])
+            $leitura = \App\Models\Sistema\NotificacaoUsuario::where('notificacao_id', $notificacao['id'])
                 ->where('usuario_id', $user->id)
                 ->where('lida', true)
                 ->first();
@@ -284,7 +282,7 @@ class NotificacaoController extends Controller
             $notificacao = Notificacao::findOrFail($request->notification_id);
 
             // Verificar se a notificação já foi marcada como lida por este usuário
-            $leituraExistente = \App\Models\NotificacaoUsuario::where('notificacao_id', $notificacao->id)
+            $leituraExistente = \App\Models\Sistema\NotificacaoUsuario::where('notificacao_id', $notificacao->id)
                 ->where('user_id', $user->id)
                 ->where('lida', true)
                 ->first();
@@ -382,13 +380,13 @@ class NotificacaoController extends Controller
 
                 // Tratar campo tipoNotificacao_id
                 if ($key === 'tipoNotificacao_id' && $value) {
-                    $tipo = \App\Models\PadraoTipo::find($value);
+                    $tipo = \App\Models\Sistema\PadraoTipo::find($value);
                     $dadosAnteriores[$key] = $tipo ? $tipo->descricao : $value;
                 }
 
                 // Tratar campo enviarNotificacaoPara_id
                 if ($key === 'enviarNotificacaoPara_id' && $value) {
-                    $tipo = \App\Models\PadraoTipo::find($value);
+                    $tipo = \App\Models\Sistema\PadraoTipo::find($value);
                     $dadosAnteriores[$key] = $tipo ? $tipo->descricao : $value;
                 }
 
@@ -420,13 +418,13 @@ class NotificacaoController extends Controller
 
                 // Tratar campo tipoNotificacao_id
                 if ($key === 'tipoNotificacao_id' && $value) {
-                    $tipo = \App\Models\PadraoTipo::find($value);
+                    $tipo = \App\Models\Sistema\PadraoTipo::find($value);
                     $dadosNovos[$key] = $tipo ? $tipo->descricao : $value;
                 }
 
                 // Tratar campo enviarNotificacaoPara_id
                 if ($key === 'enviarNotificacaoPara_id' && $value) {
-                    $tipo = \App\Models\PadraoTipo::find($value);
+                    $tipo = \App\Models\Sistema\PadraoTipo::find($value);
                     $dadosNovos[$key] = $tipo ? $tipo->descricao : $value;
                 }
 

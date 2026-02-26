@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\GeradorCadastros;
-use App\Models\GeradorCadastrosHistorico;
-use App\Models\PadraoTipo;
+use App\Models\Sistema\GeradorCadastros;
+use App\Models\Sistema\GeradorCadastrosHistorico;
+use App\Models\Sistema\PadraoTipo;
 use Illuminate\Support\Facades\Auth;
 
 class GeradorCadastrosObserver

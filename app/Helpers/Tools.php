@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Helpers;
-use App\Models\PadraoTipo;
 use Illuminate\Support\Str;
 
 class Tools {

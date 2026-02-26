@@ -3,7 +3,7 @@
     @vite(['resources/scss/custom.scss'])
 @endpush
 @section('js')
-    @vite(['resources/js/sistema/padraoTipo.js'])
+    @vite(['resources/js/custom.js'])
 @endsection
 @section('title', __('labels.padraoTipo.breadcrumb.history') )
 

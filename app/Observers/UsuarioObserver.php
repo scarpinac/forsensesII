@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\User;
-use App\Models\UserHistorico;
-use App\Models\PadraoTipo;
+use App\Models\Sistema\PadraoTipo;
+use App\Models\Sistema\User;
+use App\Models\Sistema\UserHistorico;
 use Illuminate\Support\Facades\Auth;
 
 class UsuarioObserver

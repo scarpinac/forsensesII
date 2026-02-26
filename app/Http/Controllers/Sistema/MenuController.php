@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\Menu;
-use App\Models\MenuHistorico;
-use App\Models\Padrao;
-use App\Models\Permissao;
 use App\Http\Requests\Sistema\Menu\StoreRequest;
 use App\Http\Requests\Sistema\Menu\UpdateRequest;
-use Illuminate\Http\Request;
+use App\Models\Sistema\Menu;
+use App\Models\Sistema\MenuHistorico;
+use App\Models\Sistema\Padrao;
+use App\Models\Sistema\Permissao;
 use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller

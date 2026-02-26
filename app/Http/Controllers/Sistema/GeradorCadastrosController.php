@@ -3,21 +3,15 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\Geracao;
-use App\Models\GeradorCadastros;
-use App\Models\GeradorCadastroCampo;
-use App\Models\Padrao;
-use App\Models\PadraoTipo;
-use App\Services\GeradorService;
 use App\Http\Requests\Sistema\GeradorCadastros\StoreRequest;
 use App\Http\Requests\Sistema\GeradorCadastros\UpdateRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Artisan;
+use App\Models\Sistema\GeradorCadastroCampo;
+use App\Models\Sistema\GeradorCadastros;
+use App\Models\Sistema\Padrao;
+use App\Models\Sistema\PadraoTipo;
+use App\Services\GeradorService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class GeradorCadastrosController extends Controller
 {

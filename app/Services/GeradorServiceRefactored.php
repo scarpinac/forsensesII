@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\Sistema\Menu;
+use App\Services\Generators\ControllerGenerator;
 use App\Services\Generators\MigrationGenerator;
 use App\Services\Generators\ModelGenerator;
-use App\Services\Generators\ControllerGenerator;
+use App\Services\Generators\ObserverGenerator;
 use App\Services\Generators\RequestGenerator;
 use App\Services\Generators\ViewGenerator;
-use App\Services\Generators\ObserverGenerator;
-use App\Models\Menu;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 

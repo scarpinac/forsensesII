@@ -2,13 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Geracao;
-use App\Models\Menu;
-use App\Models\Padrao;
-use App\Models\PadraoTipo;
-use App\Models\Permissao;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Sistema\Geracao;
 
 class GeracaoController extends Controller
 {

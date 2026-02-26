@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\Api;
-use App\Models\ApiHistorico;
-use App\Models\Padrao;
 use App\Http\Requests\Sistema\Api\StoreRequest;
 use App\Http\Requests\Sistema\Api\UpdateRequest;
-use Illuminate\Http\Request;
+use App\Models\Sistema\Api;
+use App\Models\Sistema\ApiHistorico;
+use App\Models\Sistema\Padrao;
 use Illuminate\Support\Facades\Auth;
 
 class ApiController extends Controller

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Notification;
-use App\Models\User;
+use App\Models\Sistema\User;
 use Illuminate\Database\Seeder;
 
 class NotificationSeeder extends Seeder
@@ -58,7 +58,7 @@ class NotificationSeeder extends Seeder
         // Notificações específicas para alguns usuários
         if ($users->count() >= 3) {
             $specificUsers = $users->take(3)->pluck('id')->toArray();
-            
+
             Notification::create([
                 'title' => 'Tarefa Pendente',
                 'message' => 'Você possui tarefas pendentes que precisam ser revisadas. Acesse o painel para mais detalhes.',
@@ -122,7 +122,7 @@ class NotificationSeeder extends Seeder
         // Notificação informativa para usuários específicos
         if ($users->count() >= 5) {
             $newUsers = $users->take(5)->pluck('id')->toArray();
-            
+
             Notification::create([
                 'title' => 'Tutorial Disponível',
                 'message' => 'Acessamos que você é novo no sistema. Confira nosso tutorial interativo para aprender a usar todas as funcionalidades.',
