@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\PadraoTipo;
-use App\Models\Perfil;
-use App\Models\Permissao;
-use App\Models\User;
 use App\Http\Requests\Sistema\Perfil\StoreRequest;
 use App\Http\Requests\Sistema\Perfil\UpdateRequest;
+use App\Models\Sistema\PadraoTipo;
+use App\Models\Sistema\Perfil;
+use App\Models\Sistema\Permissao;
+use App\Models\Sistema\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
 
 class PerfilController extends Controller
 {
@@ -504,7 +503,7 @@ class PerfilController extends Controller
                 $perfil->perfilUsuarios()->create([
                     'user_id' => $userId
                 ]);
-                
+
                 // Buscar dados do novo usuário para histórico
                 $user = User::find($userId);
                 if ($user) {

@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Menu;
-use App\Models\PadraoTipo;
-use App\Models\Permissao;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Sistema\Menu;
+use App\Models\Sistema\PadraoTipo;
+use App\Models\Sistema\Permissao;
 use Illuminate\Database\Seeder;
 
 class MenuSeeder extends Seeder

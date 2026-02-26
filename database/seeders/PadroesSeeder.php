@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Padrao;
-use App\Models\PadraoTipo;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Sistema\Padrao;
+use App\Models\Sistema\PadraoTipo;
 use Illuminate\Database\Seeder;
 
 class PadroesSeeder extends Seeder

@@ -2,8 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Menu;
-use App\Models\Permissao;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

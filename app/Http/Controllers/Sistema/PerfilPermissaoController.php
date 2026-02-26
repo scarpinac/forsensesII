@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\Perfil;
-use App\Models\PerfilPermissao;
-use App\Models\Permissao;
+use App\Models\Sistema\Perfil;
+use App\Models\Sistema\PerfilPermissao;
+use App\Models\Sistema\Permissao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
 
 class PerfilPermissaoController extends Controller
 {
@@ -23,7 +22,7 @@ class PerfilPermissaoController extends Controller
 
         $perfilPermissoes = $perfil->perfilPermissoes()->with('permissao')->get();
         $permissoes = Permissao::all();
-        
+
         return view('sistema.perfil.permissao.index', compact('perfil', 'perfilPermissoes', 'permissoes'));
     }
 
@@ -37,7 +36,7 @@ class PerfilPermissaoController extends Controller
         }
 
         $permissoes = Permissao::all();
-        
+
         return view('sistema.perfil.permissao.create', compact('perfil', 'permissoes'));
     }
 
@@ -96,7 +95,7 @@ class PerfilPermissaoController extends Controller
         }
 
         $permissoes = Permissao::all();
-        
+
         return view('sistema.perfil.permissao.edit', compact('perfil', 'perfilPermissao', 'permissoes'));
     }
 
@@ -118,7 +117,7 @@ class PerfilPermissaoController extends Controller
             ->where('permissao_id', $request->permissao_id)
             ->where('id', '!=', $perfilPermissao->id)
             ->exists();
-            
+
         if ($exists) {
             return redirect()->signedRoute('sistema.perfil.permissao.index', $perfil->id)
                 ->with('error', __('labels.perfil.permissao.error.already_exists'));
@@ -161,7 +160,7 @@ class PerfilPermissaoController extends Controller
         }
 
         $perfilPermissao->load(['historicos.user', 'historicos.tipoAlteracao']);
-        
+
         return view('sistema.perfil.permissao.history', compact('perfil', 'perfilPermissao'));
     }
 
@@ -215,11 +214,11 @@ class PerfilPermissaoController extends Controller
 
         // Remover campos que não devem ser exibidos
         $camposParaRemover = ['password', 'remember_token', 'media'];
-        
+
         if ($dadosAnteriores) {
             $dadosAnteriores = array_diff_key($dadosAnteriores, array_flip($camposParaRemover));
         }
-        
+
         if ($dadosNovos) {
             $dadosNovos = array_diff_key($dadosNovos, array_flip($camposParaRemover));
         }

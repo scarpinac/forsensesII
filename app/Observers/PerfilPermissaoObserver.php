@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\PerfilPermissao;
-use App\Models\PerfilPermissaoHistorico;
-use App\Models\PadraoTipo;
+use App\Models\Sistema\PadraoTipo;
+use App\Models\Sistema\PerfilPermissao;
+use App\Models\Sistema\PerfilPermissaoHistorico;
 use Illuminate\Support\Facades\Auth;
 
 class PerfilPermissaoObserver

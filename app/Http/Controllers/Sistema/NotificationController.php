@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Sistema;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use App\Models\NotificationRead;
-use App\Models\User;
+use App\Models\Sistema\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -156,7 +156,7 @@ class NotificationController extends Controller
     public function getUserNotifications()
     {
         $user = Auth::user();
-        
+
         $notifications = Notification::active()
             ->notExpired()
             ->where(function ($query) use ($user) {
@@ -283,11 +283,11 @@ class NotificationController extends Controller
             case 'all':
                 $targetUsers = User::pluck('id')->toArray();
                 break;
-            
+
             case 'specific':
                 $targetUsers = $notification->target_users ?? [];
                 break;
-            
+
             case 'role':
                 $targetUsers = User::whereHas('perfis', function ($query) use ($notification) {
                     $query->whereIn('descricao', $notification->target_roles ?? []);

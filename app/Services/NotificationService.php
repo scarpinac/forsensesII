@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\Notificacao;
-use App\Models\NotificacaoUsuario;
 use App\Models\Notification;
 use App\Models\NotificationRead;
-use App\Models\User;
+use App\Models\Sistema\Notificacao;
+use App\Models\Sistema\NotificacaoUsuario;
+use App\Models\Sistema\User;
 use Illuminate\Support\Collection;
 
 class NotificationService

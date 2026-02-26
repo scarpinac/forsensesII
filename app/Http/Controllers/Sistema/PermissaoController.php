@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\Permissao;
-use App\Models\PermissaoHistorico;
-use App\Models\Padrao;
 use App\Http\Requests\Sistema\Permissao\StoreRequest;
 use App\Http\Requests\Sistema\Permissao\UpdateRequest;
-use Illuminate\Http\Request;
+use App\Models\Sistema\Permissao;
+use App\Models\Sistema\PermissaoHistorico;
 use Illuminate\Support\Facades\Auth;
 
 class PermissaoController extends Controller

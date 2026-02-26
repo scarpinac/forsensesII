@@ -2,10 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Models\Notificacao;
-use App\Models\NotificacaoUsuario;
-use App\Models\User;
-use App\Models\Perfil;
+use App\Models\Sistema\Notificacao;
+use App\Models\Sistema\NotificacaoUsuario;
+use App\Models\Sistema\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

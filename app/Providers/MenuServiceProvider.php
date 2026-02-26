@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Menu;
-use App\Models\PadraoTipo;
+use App\Models\Sistema\Menu;
+use App\Models\Sistema\PadraoTipo;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 

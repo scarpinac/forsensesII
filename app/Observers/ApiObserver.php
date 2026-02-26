@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\Api;
-use App\Models\ApiHistorico;
-use App\Models\PadraoTipo;
+use App\Models\Sistema\Api;
+use App\Models\Sistema\ApiHistorico;
+use App\Models\Sistema\PadraoTipo;
 use Illuminate\Support\Facades\Auth;
 
 class ApiObserver

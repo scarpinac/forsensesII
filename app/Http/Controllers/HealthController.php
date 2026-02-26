@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Logging\StructuredLogger;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class HealthController extends Controller
@@ -13,7 +13,7 @@ class HealthController extends Controller
     public function index(Request $request)
     {
         $startTime = microtime(true);
-        
+
         $health = [
             'status' => 'healthy',
             'timestamp' => now()->toISOString(),
@@ -49,7 +49,7 @@ class HealthController extends Controller
         StructuredLogger::logPerformance('health_check', $duration);
 
         $statusCode = $health['status'] === 'healthy' ? 200 : 503;
-        
+
         return response()->json($health, $statusCode);
     }
 
@@ -193,7 +193,7 @@ class HealthController extends Controller
     private function getUsersCount(): int
     {
         return Cache::remember('health_users_count', 300, function () {
-            return \App\Models\User::count();
+            return \App\Models\Sistema\User::count();
         });
     }
 
@@ -226,7 +226,7 @@ class HealthController extends Controller
     private function getActiveUsersToday(): int
     {
         return Cache::remember('health_active_users_today', 300, function () {
-            return \App\Models\User::whereDate('last_login_at', today())->count();
+            return \App\Models\Sistema\User::whereDate('last_login_at', today())->count();
         });
     }
 
@@ -239,7 +239,7 @@ class HealthController extends Controller
     private function getCrudsGeneratedToday(): int
     {
         return Cache::remember('health_cruds_today', 300, function () {
-            return \App\Models\GeradorCadastros::whereDate('created_at', today())->count();
+            return \App\Models\Sistema\GeradorCadastros::whereDate('created_at', today())->count();
         });
     }
 

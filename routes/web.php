@@ -240,9 +240,6 @@ Route::middleware(['auth', 'signed'])->group(function () {
 
     });
 
-    Route::prefix('cadastro')->name('cadastro.')->group(function () {
-
-    });
 });
 
 require __DIR__.'/auth.php';

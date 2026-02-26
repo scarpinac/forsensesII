@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Services\MenuService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\URL;
+use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -42,21 +41,21 @@ class AuthenticatedSessionController extends Controller
     protected function populateUserPermissions(Request $request): void
     {
         $user = Auth::user();
-        
+
         // Debug: Verificar se o método está sendo chamado
         \Log::info('populateUserPermissions called for user: ' . $user->id);
-        
+
         if ($user->admin) {
             // Admin tem todas as permissões
-            $allPermissions = \App\Models\Permissao::pluck('descricao')->toArray();
+            $allPermissions = \App\Models\Sistema\Permissao::pluck('descricao')->toArray();
             \Log::info('User is admin, all permissions count: ' . count($allPermissions));
         } else {
             // Usuário comum: obter permissões através dos perfis
             \Log::info('User is not admin, checking profiles...');
-            
+
             $perfis = $user->perfis()->get();
             \Log::info('User has ' . $perfis->count() . ' profiles');
-            
+
             $allPermissions = $user->perfis()
                 ->with(['perfilPermissoes.permissao'])
                 ->get()
@@ -65,14 +64,14 @@ class AuthenticatedSessionController extends Controller
                 })
                 ->unique()
                 ->toArray();
-                
+
             \Log::info('User permissions count: ' . count($allPermissions));
             \Log::info('User permissions: ' . json_encode($allPermissions));
         }
 
         // Armazena permissões na sessão
         $request->session()->put('permissoes', $allPermissions);
-        
+
         \Log::info('Permissions stored in session: ' . json_encode($request->session()->get('permissoes')));
     }
 

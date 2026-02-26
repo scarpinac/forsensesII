@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Sistema;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\UserHistorico;
-use App\Models\Padrao;
-use App\Models\Permissao;
 use App\Http\Requests\Sistema\Usuario\StoreRequest;
 use App\Http\Requests\Sistema\Usuario\UpdateRequest;
-use Illuminate\Http\Request;
+use App\Models\Sistema\Padrao;
+use App\Models\Sistema\User;
+use App\Models\Sistema\UserHistorico;
 use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller

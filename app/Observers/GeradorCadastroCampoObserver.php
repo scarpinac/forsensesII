@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\GeradorCadastroCampo;
-use App\Models\GeradorCadastroCampoHistorico;
-use App\Models\PadraoTipo;
+use App\Models\Sistema\GeradorCadastroCampo;
+use App\Models\Sistema\GeradorCadastroCampoHistorico;
+use App\Models\Sistema\PadraoTipo;
 use Illuminate\Support\Facades\Auth;
 
 class GeradorCadastroCampoObserver

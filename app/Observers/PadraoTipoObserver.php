@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\PadraoTipo;
-use App\Models\PadraoTipoHistorico;
+use App\Models\Sistema\PadraoTipo;
+use App\Models\Sistema\PadraoTipoHistorico;
 use Illuminate\Support\Facades\Auth;
 
 class PadraoTipoObserver
@@ -46,7 +46,7 @@ class PadraoTipoObserver
      */
     protected function saveHistory(PadraoTipo $padraoTipo, ?array $dadosAnteriores, ?array $dadosNovos, string $tipoDescricao): void
     {
-        $tipoAlteracao = \App\Models\PadraoTipo::where('descricao', $tipoDescricao)->first();
+        $tipoAlteracao = \App\Models\Sistema\PadraoTipo::where('descricao', $tipoDescricao)->first();
 
         PadraoTipoHistorico::create([
             'user_id' => Auth::id(),
