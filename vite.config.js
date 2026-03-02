@@ -16,6 +16,10 @@ export default defineConfig({
                 'resources/js/sistema/usuario.js',
                 'resources/js/sistema/padrao.js',
                 'resources/js/sistema/padraoTipo.js',
+                'resources/js/cadastro/comissao.js',
+                'resources/js/cadastro/cliente.js',
+                'resources/js/cadastro/transportadora.js',
+                'resources/js/cadastro/revenda.js',
                 'resources/js/dashboard.js',
                 'resources/scss/custom.scss'
             ],

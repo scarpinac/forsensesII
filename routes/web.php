@@ -1,5 +1,18 @@
 <?php
 
+use App\Http\Controllers\Cadastro\AcabamentoController;
+use App\Http\Controllers\Cadastro\ClienteController;
+use App\Http\Controllers\Cadastro\ComissaoController;
+use App\Http\Controllers\Cadastro\CondicaoPagamentoController;
+use App\Http\Controllers\Cadastro\CorController;
+use App\Http\Controllers\Cadastro\FamiliaController;
+use App\Http\Controllers\Cadastro\OrigemProdutoController;
+use App\Http\Controllers\Cadastro\ProdutoController;
+use App\Http\Controllers\Cadastro\RegraDescontoController;
+use App\Http\Controllers\Cadastro\RevendaController;
+use App\Http\Controllers\Cadastro\TabelaPrecoController;
+use App\Http\Controllers\Cadastro\TelaController;
+use App\Http\Controllers\Cadastro\TransportadoraController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
@@ -160,7 +173,6 @@ Route::middleware(['auth', 'signed'])->group(function () {
 
                 Route::get('/{perfilPermissao}/edit', [PerfilPermissaoController::class, 'edit'])->name('edit');
                 Route::put('/{perfilPermissao}', [PerfilPermissaoController::class, 'update'])->name('update');
-                Route::get('/{perfilPermissao}/destroy', [PerfilPermissaoController::class, 'destroy'])->name('destroy');
                 Route::delete('/{perfilPermissao}', [PerfilPermissaoController::class, 'delete'])->name('delete');
                 Route::get('/{perfilPermissao}/history', [PerfilPermissaoController::class, 'history'])->name('history');
                 Route::get('/{perfilPermissao}/history/{historico}/details', [PerfilPermissaoController::class, 'historyDetails'])->name('history.details');
@@ -240,6 +252,215 @@ Route::middleware(['auth', 'signed'])->group(function () {
 
     });
 
+    Route::prefix('cadastro')->name('cadastro.')->group(function () {
+        # ROTAS DE COMISSÃO
+        Route::prefix('comissao')->name('comissao.')->group(function () {
+            Route::get('/', [ComissaoController::class, 'index'])->name('index');
+            Route::get('/create', [ComissaoController::class, 'create'])->name('create');
+            Route::post('/', [ComissaoController::class, 'store'])->name('store');
+
+            Route::get('/{comissao}/edit', [ComissaoController::class, 'edit'])->name('edit');
+            Route::put('/{comissao}', [ComissaoController::class, 'update'])->name('update');
+            Route::get('/{comissao}/destroy', [ComissaoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{comissao}', [ComissaoController::class, 'delete'])->name('delete');
+            Route::get('/{comissao}/history', [ComissaoController::class, 'history'])->name('history');
+            Route::get('/{comissao}/history/{historico}/details', [ComissaoController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{comissao}', [ComissaoController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE CLIENTE
+        Route::prefix('cliente')->name('cliente.')->group(function () {
+            Route::get('/', [ClienteController::class, 'index'])->name('index');
+            Route::get('/create', [ClienteController::class, 'create'])->name('create');
+            Route::post('/', [ClienteController::class, 'store'])->name('store');
+
+            Route::get('/{cliente}/edit', [ClienteController::class, 'edit'])->name('edit');
+            Route::put('/{cliente}', [ClienteController::class, 'update'])->name('update');
+            Route::get('/{cliente}/destroy', [ClienteController::class, 'destroy'])->name('destroy');
+            Route::delete('/{cliente}', [ClienteController::class, 'delete'])->name('delete');
+            Route::get('/{cliente}/history', [ClienteController::class, 'history'])->name('history');
+            Route::get('/{cliente}/history/{historico}/details', [ClienteController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{cliente}', [ClienteController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE TRANSPORTADORA
+        Route::prefix('transportadora')->name('transportadora.')->group(function () {
+            Route::get('/', [TransportadoraController::class, 'index'])->name('index');
+            Route::get('/create', [TransportadoraController::class, 'create'])->name('create');
+            Route::post('/', [TransportadoraController::class, 'store'])->name('store');
+
+            Route::get('/{transportadora}/edit', [TransportadoraController::class, 'edit'])->name('edit');
+            Route::put('/{transportadora}', [TransportadoraController::class, 'update'])->name('update');
+            Route::get('/{transportadora}/destroy', [TransportadoraController::class, 'destroy'])->name('destroy');
+            Route::delete('/{transportadora}', [TransportadoraController::class, 'delete'])->name('delete');
+            Route::get('/{transportadora}/history', [TransportadoraController::class, 'history'])->name('history');
+            Route::get('/{transportadora}/history/{historico}/details', [TransportadoraController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{transportadora}', [TransportadoraController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE REVENDA
+        Route::prefix('revenda')->name('revenda.')->group(function () {
+            Route::get('/', [RevendaController::class, 'index'])->name('index');
+            Route::get('/create', [RevendaController::class, 'create'])->name('create');
+            Route::post('/', [RevendaController::class, 'store'])->name('store');
+
+            Route::get('/{revenda}/edit', [RevendaController::class, 'edit'])->name('edit');
+            Route::put('/{revenda}', [RevendaController::class, 'update'])->name('update');
+            Route::get('/{revenda}/destroy', [RevendaController::class, 'destroy'])->name('destroy');
+            Route::delete('/{revenda}', [RevendaController::class, 'delete'])->name('delete');
+            Route::get('/{revenda}/history', [RevendaController::class, 'history'])->name('history');
+            Route::get('/{revenda}/history/{historico}/details', [RevendaController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{revenda}', [RevendaController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE COR
+        Route::prefix('cor')->name('cor.')->group(function () {
+            Route::get('/', [CorController::class, 'index'])->name('index');
+            Route::get('/create', [CorController::class, 'create'])->name('create');
+            Route::post('/', [CorController::class, 'store'])->name('store');
+
+            Route::get('/{cor}/edit', [CorController::class, 'edit'])->name('edit');
+            Route::put('/{cor}', [CorController::class, 'update'])->name('update');
+            Route::get('/{cor}/destroy', [CorController::class, 'destroy'])->name('destroy');
+            Route::delete('/{cor}', [CorController::class, 'delete'])->name('delete');
+            Route::get('/{cor}/history', [CorController::class, 'history'])->name('history');
+            Route::get('/{cor}/history/{historico}/details', [CorController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{cor}', [CorController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE CONDIÇÃO DE PAGAMENTO
+        Route::prefix('condicao_pagamento')->name('condicao_pagamento.')->group(function () {
+            Route::get('/', [CondicaoPagamentoController::class, 'index'])->name('index');
+            Route::get('/create', [CondicaoPagamentoController::class, 'create'])->name('create');
+            Route::post('/', [CondicaoPagamentoController::class, 'store'])->name('store');
+
+            Route::get('/{condicao_pagamento}/edit', [CondicaoPagamentoController::class, 'edit'])->name('edit');
+            Route::put('/{condicao_pagamento}', [CondicaoPagamentoController::class, 'update'])->name('update');
+            Route::get('/{condicao_pagamento}/destroy', [CondicaoPagamentoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{condicao_pagamento}', [CondicaoPagamentoController::class, 'delete'])->name('delete');
+            Route::get('/{condicao_pagamento}/history', [CondicaoPagamentoController::class, 'history'])->name('history');
+            Route::get('/{condicao_pagamento}/history/{historico}/details', [CondicaoPagamentoController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{condicao_pagamento}', [CondicaoPagamentoController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE ACABAMENTO
+        Route::prefix('acabamento')->name('acabamento.')->group(function () {
+            Route::get('/', [AcabamentoController::class, 'index'])->name('index');
+            Route::get('/create', [AcabamentoController::class, 'create'])->name('create');
+            Route::post('/', [AcabamentoController::class, 'store'])->name('store');
+
+            Route::get('/{acabamento}/edit', [AcabamentoController::class, 'edit'])->name('edit');
+            Route::put('/{acabamento}', [AcabamentoController::class, 'update'])->name('update');
+            Route::get('/{acabamento}/destroy', [AcabamentoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{acabamento}', [AcabamentoController::class, 'delete'])->name('delete');
+            Route::get('/{acabamento}/history', [AcabamentoController::class, 'history'])->name('history');
+            Route::get('/{acabamento}/history/{historico}/details', [AcabamentoController::class, 'historyDetails'])->name('history.details');
+            Route::get('/{acabamento}', [AcabamentoController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE ORIGEM DO PRODUTO
+        Route::prefix('origem_produto')->name('origem_produto.')->group(function () {
+            Route::get('/', [OrigemProdutoController::class, 'index'])->name('index');
+            Route::get('/create', [OrigemProdutoController::class, 'create'])->name('create');
+            Route::post('/', [OrigemProdutoController::class, 'store'])->name('store');
+
+            Route::get('/{origem_produto}/edit', [OrigemProdutoController::class, 'edit'])->name('edit');
+            Route::put('/{origem_produto}', [OrigemProdutoController::class, 'update'])->name('update');
+            Route::get('/{origem_produto}/destroy', [OrigemProdutoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{origem_produto}', [OrigemProdutoController::class, 'delete'])->name('delete');
+            Route::get('/{origem_produto}/history', [OrigemProdutoController::class, 'history'])->name('history');
+            Route::get('/{origem_produto}/history/{historico}/details', [OrigemProdutoController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{origem_produto}', [OrigemProdutoController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE FAMILIA
+        Route::prefix('familia')->name('familia.')->group(function () {
+            Route::get('/', [FamiliaController::class, 'index'])->name('index');
+            Route::get('/create', [FamiliaController::class, 'create'])->name('create');
+            Route::post('/', [FamiliaController::class, 'store'])->name('store');
+
+            Route::get('/{familia}/edit', [FamiliaController::class, 'edit'])->name('edit');
+            Route::put('/{familia}', [FamiliaController::class, 'update'])->name('update');
+            Route::get('/{familia}/destroy', [FamiliaController::class, 'destroy'])->name('destroy');
+            Route::delete('/{familia}', [FamiliaController::class, 'delete'])->name('delete');
+            Route::get('/{familia}/history', [FamiliaController::class, 'history'])->name('history');
+            Route::get('/{familia}/history/{historico}/details', [FamiliaController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{familia}', [FamiliaController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE TELA
+        Route::prefix('tela')->name('tela.')->group(function () {
+            Route::get('/', [TelaController::class, 'index'])->name('index');
+            Route::get('/create', [TelaController::class, 'create'])->name('create');
+            Route::post('/', [TelaController::class, 'store'])->name('store');
+
+            Route::get('/{tela}/edit', [TelaController::class, 'edit'])->name('edit');
+            Route::put('/{tela}', [TelaController::class, 'update'])->name('update');
+            Route::get('/{tela}/destroy', [TelaController::class, 'destroy'])->name('destroy');
+            Route::delete('/{tela}', [TelaController::class, 'delete'])->name('delete');
+            Route::get('/{tela}/history', [TelaController::class, 'history'])->name('history');
+            Route::get('/{tela}/history/{historico}/details', [TelaController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{tela}', [TelaController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE PRODUTO
+        Route::prefix('produto')->name('produto.')->group(function () {
+            Route::get('/', [ProdutoController::class, 'index'])->name('index');
+            Route::get('/create', [ProdutoController::class, 'create'])->name('create');
+            Route::post('/', [ProdutoController::class, 'store'])->name('store');
+
+            Route::get('/{produto}/edit', [ProdutoController::class, 'edit'])->name('edit');
+            Route::put('/{produto}', [ProdutoController::class, 'update'])->name('update');
+            Route::get('/{produto}/destroy', [ProdutoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{produto}', [ProdutoController::class, 'delete'])->name('delete');
+            Route::get('/{produto}/history', [ProdutoController::class, 'history'])->name('history');
+            Route::get('/{produto}/history/{historico}/details', [ProdutoController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{produto}', [ProdutoController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE REGRAS DE DESCONTO
+        Route::prefix('regra_desconto')->name('regra_desconto.')->group(function () {
+            Route::get('/', [RegraDescontoController::class, 'index'])->name('index');
+            Route::get('/create', [RegraDescontoController::class, 'create'])->name('create');
+            Route::post('/', [RegraDescontoController::class, 'store'])->name('store');
+
+            Route::get('/{regra_desconto}/edit', [RegraDescontoController::class, 'edit'])->name('edit');
+            Route::put('/{regra_desconto}', [RegraDescontoController::class, 'update'])->name('update');
+            Route::get('/{regra_desconto}/destroy', [RegraDescontoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{regra_desconto}', [RegraDescontoController::class, 'delete'])->name('delete');
+            Route::get('/{regra_desconto}/history', [RegraDescontoController::class, 'history'])->name('history');
+            Route::get('/{regra_desconto}/history/{historico}/details', [RegraDescontoController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{regra_desconto}', [RegraDescontoController::class, 'show'])->name('show');
+        });
+
+        # ROTAS DE TABELA DE PREÇO
+        Route::prefix('tabela_preco')->name('tabela_preco.')->group(function () {
+            Route::get('/', [TabelaPrecoController::class, 'index'])->name('index');
+            Route::get('/create', [TabelaPrecoController::class, 'create'])->name('create');
+            Route::post('/', [TabelaPrecoController::class, 'store'])->name('store');
+
+            Route::get('/{tabela_preco}/edit', [TabelaPrecoController::class, 'edit'])->name('edit');
+            Route::put('/{tabela_preco}', [TabelaPrecoController::class, 'update'])->name('update');
+            Route::get('/{tabela_preco}/destroy', [TabelaPrecoController::class, 'destroy'])->name('destroy');
+            Route::delete('/{tabela_preco}', [TabelaPrecoController::class, 'delete'])->name('delete');
+            Route::get('/{tabela_preco}/history', [TabelaPrecoController::class, 'history'])->name('history');
+            Route::get('/{tabela_preco}/history/{historico}/details', [TabelaPrecoController::class, 'historyDetails'])->name('history.details');
+
+            Route::get('/{tabela_preco}', [TabelaPrecoController::class, 'show'])->name('show');
+        });
+
+    });
 });
 
 require __DIR__.'/auth.php';

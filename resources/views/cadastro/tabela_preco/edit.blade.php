@@ -1,0 +1,38 @@
+@extends('layouts.adminlte-with-language')
+@push('css')
+    @vite(['resources/scss/custom.scss'])
+@endpush
+@section('js')
+    @vite(['resources/js/cadastro/tabela_preco.js'])
+@endsection
+@section('title', __('labels.price_table.title.edit') )
+@section('content_header')
+    <div class="container-fluid">
+        <div class="row align-items-center mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">{{ __('labels.price_table.title.edit') }} - {{ $tabelaPreco->descricao }}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right mb-0">
+                    <li class="breadcrumb-item"><a href="{{ URL::signedRoute('dashboard') }}">{{ __('labels.price_table.breadcrumb.home') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ URL::signedRoute('cadastro.tabela_preco.index') }}">{{ __('labels.price_table.breadcrumb.listing') }}</a></li>
+                    <li class="breadcrumb-item active">{{ __('labels.price_table.title.edit') }}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('content')
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ URL::signedRoute('cadastro.tabela_preco.update', $tabelaPreco->id) }}" method="POST">
+                @method('PUT')
+                @include('cadastro.tabela_preco.form')
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> {{ __('labels.price_table.save_changes') }}</button>
+                    <a href="{{ URL::signedRoute('cadastro.tabela_preco.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> {{ __('labels.price_table.back') }}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection

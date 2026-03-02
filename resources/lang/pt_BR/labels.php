@@ -654,7 +654,7 @@ return [
     "notification.title.destroy" => "Excluir Notificação",
     "notification.title.history" => "Histórico da Notificação",
     "notification.breadcrumb.home" => "Início",
-    "notification.breadcrumb.listing" => "Lista de Notificações",
+    "notification.breadcrumb.listing" => "Listagem de Notificações",
     "notification.title" => "Título",
     "notification.message" => "Mensagem",
     "notification.menssage_placeholder" => "Digite a mensagem da notificação...",
@@ -716,7 +716,7 @@ return [
     "gerador.title.destroy" => "Excluir Cadastro",
     "gerador.title.history" => "Histórico da Cadastro",
     "gerador.breadcrumb.home" => "Início",
-    "gerador.breadcrumb.listing" => "Lista de Cadastros",
+    "gerador.breadcrumb.listing" => "Listagem de Cadastros",
     "gerador.title" => "Título",
     "gerador.message" => "Mensagem",
     "gerador.menssage_placeholder" => "Digite a mensagem da Cadastro...",
@@ -768,9 +768,1292 @@ return [
     "gerador.yes" => "Sim",
     "gerador.no" => "Não",
 
+    'commission' => [
+        'new' => 'Nova Comissão',
+        'type' => 'Tipo da Comissão',
+        'title' => [
+            'index' => 'Comissões',
+            'create' => 'Nova Comissão',
+            'edit' => 'Editar Comissão',
+            'show' => 'Visualizar Comissão',
+            'destroy' => 'Excluir Comissão',
+            'history' => 'Histórico da Comissão',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Comissões',
+        ],
+        // Campos do formulário
+        'value' => 'Valor',
+        'form' => [
+            'situation' => 'Tipo de Comissão',
+        ],
+        // Botões e ações
+        'create' => 'Nova Comissão',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Comissão criada com sucesso!',
+            'updated' => 'Comissão atualizada com sucesso!',
+            'deleted' => 'Comissão excluída com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar comissão.',
+            'not_updated' => 'Erro ao atualizar comissão.',
+            'not_deleted' => 'Erro ao excluir comissão.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhuma comissão encontrada.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados da Comissão',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'descricao' => 'Descrição',
+                'icone' => 'Ícone',
+                'rota' => 'Rota',
+                'comissaoPai_id' => 'Comissão Pai',
+                'permissao_id' => 'Permissão',
+                'situacao_id' => 'Situação',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
 
+    // Cor
+    'color' => [
+        'new' => 'Nova Cor',
+        'description' => 'Descrição',
+        'hexadecimal' => 'Cor Hexadecimal',
+        'title' => [
+            'index' => 'Cores',
+            'create' => 'Nova Cor',
+            'edit' => 'Editar Cor',
+            'show' => 'Visualizar Cor',
+            'destroy' => 'Excluir Cor',
+            'history' => 'Histórico da Cor',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Cores',
+        ],
+        // Botões e ações
+        'create' => 'Nova Cor',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'visualize' => 'Visualizar',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Cor criada com sucesso!',
+            'updated' => 'Cor atualizada com sucesso!',
+            'deleted' => 'Cor excluída com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar cor.',
+            'not_updated' => 'Erro ao atualizar cor.',
+            'not_deleted' => 'Erro ao excluir cor.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhuma cor encontrada.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados da Cor',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'descricao' => 'Descrição',
+                'corHexadecimal' => 'Cor Hexadecimal',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
 
+    // Condição de Pagamento
+    'payment_condition' => [
+        'new' => 'Nova Condição de Pagamento',
+        'description' => 'Descrição',
+        'revenda' => 'Revenda',
+        'days_between_installments' => 'Dias entre Parcelas',
+        'installments_quantity' => 'Quantidade de Parcelas',
+        'situation' => 'Situação',
+        'title' => [
+            'index' => 'Condições de Pagamento',
+            'create' => 'Nova Condição de Pagamento',
+            'edit' => 'Editar Condição de Pagamento',
+            'show' => 'Visualizar Condição de Pagamento',
+            'destroy' => 'Excluir Condição de Pagamento',
+            'history' => 'Histórico da Condição de Pagamento',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Condições de Pagamento',
+        ],
+        'form' => [
+            'select_revenda' => 'Selecione uma Revenda',
+        ],
+        // Botões e ações
+        'create' => 'Nova Condição de Pagamento',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'visualize' => 'Visualizar',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Condição de Pagamento criada com sucesso!',
+            'updated' => 'Condição de Pagamento atualizada com sucesso!',
+            'deleted' => 'Condição de Pagamento excluída com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar condição de pagamento.',
+            'not_updated' => 'Erro ao atualizar condição de pagamento.',
+            'not_deleted' => 'Erro ao excluir condição de pagamento.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhuma condição de pagamento encontrada.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados da Condição de Pagamento',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'descricao' => 'Descrição',
+                'revenda_id' => 'Revenda',
+                'diasEntreParcelas' => 'Dias entre Parcelas',
+                'quantidadeParcelas' => 'Quantidade de Parcelas',
+                'situacao_id' => 'Situação',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
 
+    // Acabamento
+    'finish' => [
+        'new' => 'Novo Acabamento',
+        'description' => 'Descrição',
+        'type' => 'Tipo de Acabamento',
+        'color' => 'Cor',
+        'title' => [
+            'index' => 'Acabamentos',
+            'create' => 'Novo Acabamento',
+            'edit' => 'Editar Acabamento',
+            'show' => 'Visualizar Acabamento',
+            'destroy' => 'Excluir Acabamento',
+            'history' => 'Histórico do Acabamento',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Acabamentos',
+        ],
+        // Botões e ações
+        'create' => 'Novo Acabamento',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'visualize' => 'Visualizar',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Acabamento criado com sucesso!',
+            'updated' => 'Acabamento atualizado com sucesso!',
+            'deleted' => 'Acabamento excluído com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar acabamento.',
+            'not_updated' => 'Erro ao atualizar acabamento.',
+            'not_deleted' => 'Erro ao excluir acabamento.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhum acabamento encontrado.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados do Acabamento',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'descricao' => 'Descrição',
+                'tipoAcabamento_id' => 'Tipo de Acabamento',
+                'cor_id' => 'Cor',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
+
+    // Família
+    'family' => [
+        'new' => 'Nova Família',
+        'description' => 'Descrição',
+        'title' => [
+            'index' => 'Famílias',
+            'create' => 'Nova Família',
+            'edit' => 'Editar Família',
+            'show' => 'Visualizar Família',
+            'destroy' => 'Excluir Família',
+            'history' => 'Histórico da Família',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Famílias',
+        ],
+        // Botões e ações
+        'create' => 'Nova Família',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'visualize' => 'Visualizar',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Família criada com sucesso!',
+            'updated' => 'Família atualizada com sucesso!',
+            'deleted' => 'Família excluída com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar família.',
+            'not_updated' => 'Erro ao atualizar família.',
+            'not_deleted' => 'Erro ao excluir família.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhuma família encontrada.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados da Família',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'descricao' => 'Descrição',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
+
+    // Tela
+    'screen' => [
+        'new' => 'Nova Tela',
+        'description' => 'Descrição',
+        'color' => 'Cor',
+        'title' => [
+            'index' => 'Telas',
+            'create' => 'Nova Tela',
+            'edit' => 'Editar Tela',
+            'show' => 'Visualizar Tela',
+            'destroy' => 'Excluir Tela',
+            'history' => 'Histórico da Tela',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Telas',
+        ],
+        // Botões e ações
+        'create' => 'Nova Tela',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'visualize' => 'Visualizar',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Tela criada com sucesso!',
+            'updated' => 'Tela atualizada com sucesso!',
+            'deleted' => 'Tela excluída com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar tela.',
+            'not_updated' => 'Erro ao atualizar tela.',
+            'not_deleted' => 'Erro ao excluir tela.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhuma tela encontrada.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados da Tela',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'descricao' => 'Descrição',
+                'cor_id' => 'Cor',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
+
+    // Produto
+    'product' => [
+        'new' => 'Novo Produto',
+        'description' => 'Descrição',
+        'code' => 'Código',
+        'quantidadeVolumes' => 'Quantidade de Volumes',
+        'peso' => 'Peso',
+        'altura' => 'Altura',
+        'largura' => 'Largura',
+        'comprimento' => 'Comprimento',
+        'precoUnitario' => 'Preço Unitário',
+        'descontoProduto' => 'Desconto',
+        'familia' => 'Família',
+        'acabamento' => 'Acabamento',
+        'tela' => 'Tela',
+        'price' => 'Preço',
+        'title' => [
+            'index' => 'Produtos',
+            'create' => 'Novo Produto',
+            'edit' => 'Editar Produto',
+            'show' => 'Visualizar Produto',
+            'destroy' => 'Excluir Produto',
+            'history' => 'Histórico do Produto',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Produtos',
+        ],
+        // Botões e ações
+        'create' => 'Novo Produto',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'visualize' => 'Visualizar',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Produto criado com sucesso!',
+            'updated' => 'Produto atualizado com sucesso!',
+            'deleted' => 'Produto excluído com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar produto.',
+            'not_updated' => 'Erro ao atualizar produto.',
+            'not_deleted' => 'Erro ao excluir produto.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhum produto encontrado.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados do Produto',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'descricao' => 'Descrição',
+                'codigo' => 'Código',
+                'quantidadeVolumes' => 'Quantidade de Volumes',
+                'peso' => 'Peso',
+                'altura' => 'Altura',
+                'largura' => 'Largura',
+                'comprimento' => 'Comprimento',
+                'precoUnitario' => 'Preço Unitário',
+                'descontoProduto' => 'Desconto',
+                'familia_id' => 'Família',
+                'acabamento_id' => 'Acabamento',
+                'tela_id' => 'Tela',
+                'produtoBase' => 'Produto Base',
+                'produtoBase_id' => 'Produto Base',
+                'especificacao' => 'Especificação',
+                'observacao' => 'Observação',
+                'permitirVenda' => 'Permitir Venda',
+                'permitirTela' => 'Permitir Tela',
+                'codigoBarras' => 'Código de Barras',
+                'ncm' => 'NCM',
+                'cst' => 'CST',
+                'cest' => 'CEST',
+                'origem_id' => 'Origem',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
+
+    // Regra de Desconto
+    'discount_rule' => [
+        'new' => 'Nova Regra de Desconto',
+        'description' => 'Descrição',
+        'period' => 'Período',
+        'valorBase' => 'Valor Base',
+        'descontoAcrescido' => 'Desconto Acrecido',
+        'title' => [
+            'index' => 'Regras de Desconto',
+            'create' => 'Nova Regra de Desconto',
+            'edit' => 'Editar Regra de Desconto',
+            'show' => 'Visualizar Regra de Desconto',
+            'destroy' => 'Excluir Regra de Desconto',
+            'history' => 'Histórico da Regra de Desconto',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Regras de Desconto',
+        ],
+        // Botões e ações
+        'create' => 'Nova Regra de Desconto',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'visualize' => 'Visualizar',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Regra de Desconto criada com sucesso!',
+            'updated' => 'Regra de Desconto atualizada com sucesso!',
+            'deleted' => 'Regra de Desconto excluída com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar regra de desconto.',
+            'not_updated' => 'Erro ao atualizar regra de desconto.',
+            'not_deleted' => 'Erro ao excluir regra de desconto.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhuma regra de desconto encontrada.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados da Regra de Desconto',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'descricao' => 'Descrição',
+                'periodo' => 'Período',
+                'valorBase' => 'Valor Base',
+                'descontoAcrescido' => 'Desconto Acrecido',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
+
+    // Tabela de Preço
+    'price_table' => [
+        'new' => 'Nova Tabela de Preço',
+        'description' => 'Descrição',
+        'vigenciaAte' => 'Vigência Até',
+        'situacao' => 'Situação',
+        'title' => [
+            'index' => 'Tabelas de Preço',
+            'create' => 'Nova Tabela de Preço',
+            'edit' => 'Editar Tabela de Preço',
+            'show' => 'Visualizar Tabela de Preço',
+            'destroy' => 'Excluir Tabela de Preço',
+            'history' => 'Histórico da Tabela de Preço',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Tabelas de Preço',
+        ],
+        // Botões e ações
+        'create' => 'Nova Tabela de Preço',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'visualize' => 'Visualizar',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Tabela de Preço criada com sucesso!',
+            'updated' => 'Tabela de Preço atualizada com sucesso!',
+            'deleted' => 'Tabela de Preço excluída com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar tabela de preço.',
+            'not_updated' => 'Erro ao atualizar tabela de preço.',
+            'not_deleted' => 'Erro ao excluir tabela de preço.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhuma tabela de preço encontrada.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados da Tabela de Preço',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'descricao' => 'Descrição',
+                'vigenciaAte' => 'Vigência Até',
+                'situacao_id' => 'Situação',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
+
+    // Origem Produto
+    'product_origin' => [
+        'new' => 'Nova Origem Produto',
+        'code' => 'Código',
+        'description' => 'Descrição',
+        'situacao' => 'Situação',
+        'title' => [
+            'index' => 'Origens de Produto',
+            'create' => 'Nova Origem Produto',
+            'edit' => 'Editar Origem Produto',
+            'show' => 'Visualizar Origem Produto',
+            'destroy' => 'Excluir Origem Produto',
+            'history' => 'Histórico da Origem Produto',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Origens de Produto',
+        ],
+        // Botões e ações
+        'create' => 'Nova Origem Produto',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'visualize' => 'Visualizar',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Origem Produto criada com sucesso!',
+            'updated' => 'Origem Produto atualizada com sucesso!',
+            'deleted' => 'Origem Produto excluída com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar origem produto.',
+            'not_updated' => 'Erro ao atualizar origem produto.',
+            'not_deleted' => 'Erro ao excluir origem produto.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhuma origem produto encontrada.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados da Origem Produto',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'codigo' => 'Código',
+                'descricao' => 'Descrição',
+                'situacao_id' => 'Situação',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
+
+    // Cliente
+    'customer' => [
+        'title' => [
+            'index' => 'Clientes',
+            'create' => 'Novo Cliente',
+            'edit' => 'Editar Cliente',
+            'show' => 'Visualizar Cliente',
+            'destroy' => 'Excluir Cliente',
+            'history' => 'Histórico do Cliente',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Lista de Clientes',
+        ],
+        // Campos do formulário
+        'form' => [
+            'type' => 'Tipo de Cliente',
+            'name' => 'Nome/Razão Social',
+            'fantasy_name' => 'Nome Fantasia',
+            'cpf' => 'CPF',
+            'cnpj' => 'CNPJ',
+            'birth_date' => 'Data de Nascimento',
+            'rg' => 'RG',
+            'rg_issuer' => 'Órgão Emissor RG',
+            'state_registration' => 'Inscrição Estadual',
+            'municipal_registration' => 'Inscrição Municipal',
+            'simple_option' => 'Optante Simples Nacional',
+            'responsible_name' => 'Nome do Responsável',
+            'responsible_cpf' => 'CPF do Responsável',
+            'responsible_rg' => 'RG do Responsável',
+            'responsible_rg_issuer' => 'Órgão Emissor RG Responsável',
+            'preference_name' => 'Nome de Preferência',
+            'origin' => 'Origem do Cliente',
+            'other_origin' => 'Outra Origem',
+            'registration_date' => 'Data de Cadastro',
+            'credit_limit' => 'Limite de Crédito',
+            'credit_limit_date' => 'Data Limite de Crédito',
+            'situation' => 'Situação',
+            'observations' => 'Observações',
+        ],
+        // Endereços
+        'address' => [
+            'title' => 'Endereços',
+            'add' => 'Adicionar Endereço',
+            'remove' => 'Remover Endereço',
+            'type' => 'Tipo de Endereço',
+            'zip_code' => 'CEP',
+            'street' => 'Logradouro',
+            'number' => 'Número',
+            'complement' => 'Complemento',
+            'neighborhood' => 'Bairro',
+            'city' => 'Cidade',
+            'state' => 'Estado',
+            'country' => 'País',
+        ],
+        // Contatos
+        'contact' => [
+            'title' => 'Contatos',
+            'add' => 'Adicionar Contato',
+            'remove' => 'Remover Contato',
+            'type' => 'Tipo de Contato',
+            'name' => 'Nome do Contato',
+            'phone' => 'Telefone',
+            'email' => 'E-mail',
+            'observations' => 'Observações',
+        ],
+        // Botões e ações
+        'create' => 'Novo Cliente',
+        'new' => 'Novo Cliente',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'type' => 'Tipo de Cliente',
+        'name' => 'Nome/Razão Social',
+        'preferred_name' => 'Nome de Preferência',
+        'trade_name' => 'Nome Fantasia',
+        'cpf' => 'CPF',
+        'cnpj' => 'CNPJ',
+        'birth_date' => 'Data de Nascimento',
+        'rg' => 'RG',
+        'rg_issuer' => 'Órgão Emissor RG',
+        'state_registration' => 'Inscrição Estadual',
+        'city_registration' => 'Inscrição Municipal',
+        'simple_option' => 'Optante Simples Nacional',
+        'responsible' => 'Responsável',
+        'responsible_name' => 'Nome do Responsável',
+        'responsible_cpf' => 'CPF do Responsável',
+        'responsible_rg' => 'RG do Responsável',
+        'responsible_rg_issuer' => 'Órgão Emissor RG Responsável',
+        'situation' => 'Situação',
+        'origin' => 'Origem do Cliente',
+        'other_origin' => 'Outra Origem',
+        'registration_date' => 'Data de Cadastro',
+        'credit_limit' => 'Limite de Crédito',
+        'credit_limit_date' => 'Data Limite de Crédito',
+        'observations' => 'Observações',
+        'addresses' => 'Endereços',
+        'contacts' => 'Contatos',
+        'add_address' => 'Adicionar Endereço',
+        'add_contact' => 'Adicionar Contato',
+        'address_type' => 'Tipo de Endereço',
+        'zip_code' => 'CEP',
+        'street' => 'Logradouro',
+        'number' => 'Número',
+        'complement' => 'Complemento',
+        'neighborhood' => 'Bairro',
+        'city' => 'Cidade',
+        'state' => 'Estado',
+        'country' => 'País',
+        'contact_type' => 'Tipo de Contato',
+        'phone' => 'Telefone',
+        'contact_value' => 'Nome do Contato',
+        'email' => 'E-mail',
+        'contact_observations' => 'Observações do Contato',
+        'contact_observations_placeholder' => 'Digite observações sobre este contato...',
+        'select' => 'Selecione...',
+        'zip_code_placeholder' => '00000-000',
+        'phone_placeholder' => '(00) 00000-0000',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Cliente criado com sucesso!',
+            'updated' => 'Cliente atualizado com sucesso!',
+            'deleted' => 'Cliente excluído com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar cliente.',
+            'not_updated' => 'Erro ao atualizar cliente.',
+            'not_deleted' => 'Erro ao excluir cliente.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhum cliente encontrado.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados do Cliente',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'revenda_id' => 'Revenda',
+                'tipoCliente_id' => 'Tipo de Cliente',
+                'nome' => 'Nome/Razão Social',
+                'nomeFantasia' => 'Nome Fantasia',
+                'cpf' => 'CPF',
+                'cnpj' => 'CNPJ',
+                'dataNascimento' => 'Data de Nascimento',
+                'rg' => 'RG',
+                'rgOrgaoEmissor' => 'Órgão Emissor RG',
+                'inscricaoEstadual' => 'Inscrição Estadual',
+                'inscricaoMunicipal' => 'Inscrição Municipal',
+                'optanteSimples_id' => 'Optante Simples Nacional',
+                'responsavelNome' => 'Nome do Responsável',
+                'responsavelCpf' => 'CPF do Responsável',
+                'responsavelRg' => 'RG do Responsável',
+                'responsavelRgOrgaoEmissor' => 'Órgão Emissor RG Responsável',
+                'nomePreferencia' => 'Nome de Preferência',
+                'origem_id' => 'Origem do Cliente',
+                'outra_origem' => 'Outra Origem',
+                'data_cadastro' => 'Data de Cadastro',
+                'limite_credito' => 'Limite de Crédito',
+                'data_limite_credite' => 'Data Limite de Crédito',
+                'situacao_id' => 'Situação',
+                'observacoes' => 'Observações',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
+
+    'transportadora' => [
+        'title' => [
+            'index' => 'Transportadoras',
+            'create' => 'Nova Transportadora',
+            'edit' => 'Editar Transportadora',
+            'show' => 'Visualizar Transportadora',
+            'destroy' => 'Excluir Transportadora',
+            'history' => 'Histórico da Transportadora',
+        ],
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Lista de Transportadoras',
+        ],
+        // Campos do formulário
+        'form' => [
+            'nomeFantasia' => 'Nome Fantasia',
+            'razaoSocial' => 'Razão Social',
+            'cnpj' => 'CNPJ',
+            'situacao' => 'Situação',
+            'observacao' => 'Observação',
+            'estadosAtendidos' => 'Estados Atendidos',
+        ],
+        // Botões e ações
+        'create' => 'Nova Transportadora',
+        'new' => 'Nova Transportadora',
+        'edit' => 'Editar',
+        'show' => 'Visualizar',
+        'destroy' => 'Excluir',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'actions' => 'Ações',
+        'select' => 'Selecione...',
+        // Mensagens de sucesso
+        'success' => [
+            'created' => 'Transportadora criada com sucesso!',
+            'updated' => 'Transportadora atualizada com sucesso!',
+            'deleted' => 'Transportadora excluída com sucesso!',
+        ],
+        // Mensagens de erro
+        'error' => [
+            'not_created' => 'Erro ao criar transportadora.',
+            'not_updated' => 'Erro ao atualizar transportadora.',
+            'not_deleted' => 'Erro ao excluir transportadora.',
+        ],
+        // Mensagens gerais
+        'no' => [
+            'records' => 'Nenhuma transportadora encontrada.',
+            'history' => 'Nenhum histórico encontrado.',
+        ],
+        // Histórico
+        'history' => [
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados da Transportadora',
+            ],
+            'changes' => [
+                'title' => 'Histórico de Alterações',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+            'fields' => [
+                'id' => 'ID',
+                'nomeFantasia' => 'Nome Fantasia',
+                'razaoSocial' => 'Razão Social',
+                'cnpj' => 'CNPJ',
+                'situacao_id' => 'Situação',
+                'observacao' => 'Observação',
+                'estadosAtendidos' => 'Estados Atendidos',
+                'created_at' => 'Data de Criação',
+                'updated_at' => 'Data de Atualização',
+                'deleted_at' => 'Data de Exclusão',
+            ],
+        ],
+        // Modal
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+    ],
+
+    'revenda' => [
+        'breadcrumb' => [
+            'home' => 'Início',
+            'listing' => 'Listagem de Revendas',
+        ],
+        'title' => [
+            'create' => 'Criar Revenda',
+            'edit' => 'Editar Revenda',
+            'show' => 'Visualizar Revenda',
+            'destroy' => 'Excluir Revenda',
+            'history' => 'Histórico de Revenda',
+        ],
+        'new' => 'Nova Revenda',
+        'save' => 'Salvar',
+        'save_changes' => 'Salvar Alterações',
+        'back' => 'Voltar',
+        'destroy' => 'Excluir',
+        'actions' => 'Ações',
+        'no.records' => 'Nenhum registro encontrado.',
+        'no.history' => 'Nenhum histórico encontrado.',
+        'edit' => 'Editar',
+        'visualize' => 'Visualizar',
+        'delete' => 'Excluir',
+        'history' => [
+            'fields' => [
+                'id' => 'ID',
+                'tipoRevenda_id' => 'Tipo de Revenda',
+                'nomeFantasia' => 'Nome Fantasia',
+                'razaoSocial' => 'Razão Social',
+                'matrizRevenda_id' => 'Matriz Revenda',
+                'dataCriacao' => 'Data de Criação',
+                'cnpj' => 'CNPJ',
+                'inscricaoEstadual' => 'Inscrição Estadual',
+                'inscricaoMunicipal' => 'Inscrição Municipal',
+                'optanteSimples_id' => 'Optante pelo Simples',
+                'responsavelNome' => 'Nome do Responsável',
+                'responsavelRg' => 'RG do Responsável',
+                'responsavelRgOrgaoEmissor' => 'Órgão Emissor do RG',
+                'responsavelCpf' => 'CPF do Responsável',
+                'observacao' => 'Observação',
+                'situacao_id' => 'Situação',
+                'nivelDesconto' => 'Nível de Desconto',
+                'dataUltimaAlteracaoDesconto' => 'Data da Última Alteração de Desconto',
+                'descontoInicial' => 'Desconto Inicial',
+                'descontoMaximo' => 'Desconto Máximo',
+                'descontoAtual' => 'Desconto Atual',
+                'token' => 'Token',
+                'dataAberturaRevenda' => 'Data de Abertura da Revenda',
+                'ramoAtividade' => 'Ramo de Atividade',
+                'tipoRegime_id' => 'Tipo de Regime',
+                'fornecedoresAudio' => 'Fornecedores de Áudio',
+                'fornecedoresVideo' => 'Fornecedores de Vídeo',
+                'fornecedoresAutomacao' => 'Fornecedores de Automação',
+                'tipoShowroom_id' => 'Tipo de Showroom',
+                'areaExposicao' => 'Área de Exposição',
+                'temJardim' => 'Tem Jardim',
+                'descontoVitalicio' => 'Desconto Vitalício',
+                'dataAprovacaoCadastro' => 'Data de Aprovação do Cadastro',
+                'origemCadastro_id' => 'Origem do Cadastro',
+                'created_at' => 'Criado em',
+                'updated_at' => 'Atualizado em',
+                'deleted_at' => 'Deletado em',
+            ],
+            'description' => 'Histórico',
+            'data' => [
+                'title' => 'Dados da Revenda',
+            ],
+            'changes' => [
+                'title' => 'Alterações Realizadas',
+            ],
+            'table' => [
+                'date' => 'Data',
+                'user' => 'Usuário',
+                'type' => 'Tipo de Alteração',
+                'actions' => 'Ações',
+            ],
+            'button' => [
+                'details' => 'Detalhes',
+            ],
+        ],
+        'modal' => [
+            'details' => [
+                'title' => 'Detalhes da Alteração',
+            ],
+            'close' => 'Fechar',
+        ],
+        'select' => 'Selecione',
+        'yes' => 'Sim',
+        'no' => 'Não',
+        'fields' => [
+            'tipoRevenda_id' => 'Tipo de Revenda',
+            'nomeFantasia' => 'Nome Fantasia',
+            'razaoSocial' => 'Razão Social',
+            'matrizRevenda_id' => 'Matriz Revenda',
+            'dataCriacao' => 'Data de Criação',
+            'cnpj' => 'CNPJ',
+            'inscricaoEstadual' => 'Inscrição Estadual',
+            'inscricaoMunicipal' => 'Inscrição Municipal',
+            'optanteSimples_id' => 'Optante pelo Simples',
+            'responsavelNome' => 'Nome do Responsável',
+            'responsavelRg' => 'RG do Responsável',
+            'responsavelRgOrgaoEmissor' => 'Órgão Emissor do RG',
+            'responsavelCpf' => 'CPF do Responsável',
+            'observacao' => 'Observação',
+            'situacao_id' => 'Situação',
+            'nivelDesconto' => 'Nível de Desconto',
+            'dataUltimaAlteracaoDesconto' => 'Data da Última Alteração de Desconto',
+            'descontoInicial' => 'Desconto Inicial',
+            'descontoMaximo' => 'Desconto Máximo',
+            'descontoAtual' => 'Desconto Atual',
+            'token' => 'Token',
+            'dataAberturaRevenda' => 'Data de Abertura da Revenda',
+            'ramoAtividade' => 'Ramo de Atividade',
+            'tipoRegime_id' => 'Tipo de Regime',
+            'fornecedoresAudio' => 'Fornecedores de Áudio',
+            'fornecedoresVideo' => 'Fornecedores de Vídeo',
+            'fornecedoresAutomacao' => 'Fornecedores de Automação',
+            'tipoShowroom_id' => 'Tipo de Showroom',
+            'areaExposicao' => 'Área de Exposição',
+            'temJardim' => 'Tem Jardim',
+            'descontoVitalicio' => 'Desconto Vitalício',
+            'dataAprovacaoCadastro' => 'Data de Aprovação do Cadastro',
+            'origemCadastro_id' => 'Origem do Cadastro',
+        ],
+        'success' => [
+            'created' => 'Revenda criada com sucesso!',
+            'updated' => 'Revenda atualizada com sucesso!',
+            'deleted' => 'Revenda excluída com sucesso!',
+        ],
+        'error' => [
+            'not_created' => 'Erro ao criar revenda',
+            'not_updated' => 'Erro ao atualizar revenda',
+            'not_deleted' => 'Erro ao excluir revenda',
+        ],
+        'sections' => [
+            'basic_info' => 'Informações Básicas',
+            'responsible' => 'Responsável',
+            'discounts' => 'Descontos',
+            'suppliers' => 'Fornecedores',
+            'showroom' => 'Showroom e Exposição',
+            'other' => 'Outros',
+        ],
+
+    ],
 
     "Log Out" => "Sair",
 ];

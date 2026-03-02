@@ -51,7 +51,7 @@ class Tools {
     }
 
     public static function limparValor($valor) {
-        if (is_null($valor)) {
+        if (is_null($valor) || floatval($valor) == 0) {
             return 0;
         }
         // Remove tudo que não for número, vírgula ou ponto

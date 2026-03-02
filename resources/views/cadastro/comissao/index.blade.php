@@ -39,14 +39,16 @@
                 <table class="table-system table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="whiteSpace-nowrap col-md-10">{{__('labels.commission.description')}}</th>
+                            <th class="whiteSpace-nowrap col-md-5">{{__('labels.commission.value')}}</th>
+                            <th class="whiteSpace-nowrap col-md-5">{{__('labels.commission.type')}}</th>
                             <th class="whiteSpace-nowrap col-md-2">{{__('labels.commission.actions')}}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($comissoes as $comissao)
                             <tr>
-                                <td class="whiteSpace-nowrap text-left">{{ $comissao->descricao }}</td>
+                                <td class="whiteSpace-nowrap text-left">{{ number_format($comissao->valor, 2, ',', '.') }}</td>
+                                <td class="whiteSpace-nowrap text-left">{{ $comissao->tipoComissao->descricao }}</td>
                                 <td class="whiteSpace-nowrap text-center">
                                     @if(Auth::user()->canAccess('cadastro.comissao.edit'))
                                         <a class="btn btn-outline-primary move btn-sm" title="{{__('labels.commission.edit')}}"
@@ -68,7 +70,7 @@
                                         </a>
                                     @endif
                                     @if(Auth::user()->canAccess('cadastro.comissao.history'))
-                                        <a class="btn btn-outline-dark move btn-sm" title="{{__('labels.commission.history')}}"
+                                        <a class="btn btn-outline-dark move btn-sm" title="{{__('labels.commission.history.description')}}"
                                            href="{{ URL::signedRoute('cadastro.comissao.history', ['comissao' => $comissao]) }}">
                                             <i class="fas fa-newspaper"></i>
                                         </a>
@@ -77,7 +79,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="2">{{ __('labels.commission.no.records') }}</td>
+                                <td colspan="3">{{ __('labels.commission.no.records') }}</td>
                             </tr>
                         @endforelse
                     </tbody>
